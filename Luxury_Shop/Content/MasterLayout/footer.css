@@ -1,0 +1,37 @@
+﻿footer {
+    margin-bottom: 10px;
+    clear: both;
+    width: 100%;
+    min-height: 500px;
+    background-color: #757171;
+}
+
+.row {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px
+}
+
+.content-footer {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.footer-one {
+    float: left;
+    width: 25%;
+}
+
+.footer-two {
+    float: left;
+    width: 25%;
+}
+
+.footer-three {
+    float: left;
+    width: 20%;
+}
+.row content-bottom{
+    text-align: center;
+}

@@ -1,0 +1,193 @@
+﻿
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.cart {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px; /* Khoảng cách với các phần tử khác */
+}
+
+    .cart img {
+        width: 40px; /* Tăng kích thước biểu tượng giỏ hàng */
+        height: auto;
+    }
+
+.logoweb p {
+    color: white;
+    font-weight: bolder;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.login > a, .register > a {
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+}
+
+    .login > a:hover, .register > a:hover {
+        background-color: grey;
+        font-size: 21px;
+    }
+
+.thanhtimkiem {
+    display: flex;
+}
+
+    .thanhtimkiem input[type="text"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .thanhtimkiem button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #555;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .thanhtimkiem button:hover {
+            background-color: #858585;
+        }
+
+header .giohang img {
+    height: 40px;
+}
+
+.item-thuonghieu {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    border-width: 1px;
+    margin: 10px;
+}
+
+    .item-thuonghieu .logothuonghieu img {
+        max-width: 130px;
+        margin: 10px;
+        max-height: 130px;
+    }
+
+.sanpham-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.sanpham {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+    img {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .sanpham h3 {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .sanpham p {
+        margin: 5px 0;
+    }
+
+    .sanpham .giacu {
+        text-decoration: line-through;
+        color: #888;
+    }
+
+    .sanpham .giamoi {
+        color: black;
+    }
+
+    .sanpham .sale {
+        color: #ff0000;
+        font-weight: bold;
+    }
+
+
+
+.marquee {
+    margin: 5px;
+    border: 1px;
+    height: 30px;
+    font-weight: bolder;
+    color: white;
+    background-color: black;
+}
+/* CSS cho trang giỏ hàng */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .cart-table th, .cart-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background-color: #f4f4f4;
+    }
+
+    .cart-table img {
+        width: 100px;
+        height: auto;
+    }
+
+.remove-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    .remove-btn:hover {
+        background-color: #c0392b;
+    }
+
+.cart-summary {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.checkout-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+    .checkout-btn:hover {
+        background-color: #27ae60;
+    }

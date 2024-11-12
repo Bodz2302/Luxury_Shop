@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIN STORE</title>
+    @*<link rel="stylesheet" href="~/Content/Style1.css">*@
+    <link rel="stylesheet" href="~/Content/MasterLayout/header.css" />
+    <link rel="stylesheet" href="~/Content/MasterLayout/footer.css" />
+</head>
+<body>
+    <header>    
+        <div class="item">
+            <div class="logoweb">
+                <img src="~/Content/images/lgo.jpg" alt="RIN STORE">
+                <p>RIN STORE</p>
+            </div>
+            <nav>
+                <ul>
+                    <li>@Html.ActionLink("TRANG CHỦ","HomePage", "HomePage")</li>
+                    <li class="dropdown">
+                        <a href="#">ÁO NAM</a>
+                        <div class="dropdown-content">
+                            @Html.ActionLink("Gucci", "Gucci", "HomePage")
+                            <a href="#">Burberry</a> <hr>
+                            <a href="#">Dsquared2</a> <hr>
+                            <a href="#">Dolce & Gabbana</a> <hr>
+                            <a href="#">Versace</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">QUẦN NAM</a>
+                        <div class="dropdown-content">
+                            <a href="#">Dsquared2</a> <hr>
+                            <a href="#">Dolce & Gabbana</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">ÁO KHOÁC NAM</a>
+                        <div class="dropdown-content">
+                            <a href="#">Gucci</a> <hr>
+                            <a href="#">Dsquared2</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">DÉP NAM</a>
+                        <div class="dropdown-content">
+                            <a href="#">Gucci</a> <hr>
+                            <a href="#">Burberry</a> <hr>
+                            <a href="#">Dsquared2</a> <hr>
+                            <a href="#">Dolce & Gabbana</a> <hr>
+                            <a href="#">Versace</a>
+                        </div>
+                    </li>
+                    <li class="thanhtimkiem">
+                        <form action="/search" method="get">
+                            <input type="text" name="query" placeholder="Nhập từ khóa tìm kiếm...">
+                            <button type="submit">Tìm kiếm</button>
+                        </form>
+                    </li>
+                    <li class="login">
+                        @Html.ActionLink("Login","login","Users")
+                        
+                    </li>
+                    <li class="register">
+                        @Html.ActionLink("Register", "create", "Users")
+                        
+                    </li>
+                    <li class="cart">
+                        <a href="giohang.html">
+                            <img src="~/Content/images/shopping-cart (1).png" alt="Giỏ hàng">
+                        </a>
+                    </li>
+                </ul>
+                <marquee class="marquee" behavior="" direction="left">
+                    SIÊU SALE MÙA HÈ GIẢM GIÁ SỐC LÊN ĐẾN 30%
+                </marquee>
+            </nav>
+        </div>
+    </header>
+    @RenderBody()
+    <footer>
+        <div class="row">
+            <div class="content-footer">
+                <div class="footer-one">                    
+                    <h4 class="color-footer">TRỢ GIÚP</h4>
+                    <div class="color-a">
+                        Hệ thống cửa hàng <br>
+                        Liên hệ <br>
+                        Chính sách Loyalty <br>
+                        Chính sách bảo mật <br>
+                        Điều khoản sử dụng <br>
+                        Chính sách đổi trả <br>
+                        Câu hỏi thường gặp <br>
+                    </div>
+                </div>
+                <div class="footer-two">
+                    <h4 class="color-footer">THANH TOÁN</h4>
+                    <div class="color-a">
+                        Visa / Mastercard / JCB <br>
+                        ATM / Internet Banking <br>
+                        Quét mã QR <br>
+                        Mua trước trả sau <br>
+                        Ví điện tử <br>
+                        Thanh toán khi nhận hàng (COD) <br>
+                    </div>
+                </div>
+                <div class="footer-three">
+                    <h4 class="color-footer">GIAO HÀNG</h4>
+                    <div class="color-a">
+                        Giao hàng tiêu chuẩn <br>
+                        Maison NOW <br>
+                        <img class="image-footer" src="https://file.hstatic.net/1000284478/file/icon-bct_c5ff22fa4ca24fd58c49573d2114f8b0.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row content-bottom">
+            Bản quyền thuộc về Luxury Shop được phân phối độc quyền tại Việt Nam bởi LUXURY SHOP AUTHENTIC <br>
+            Địa chỉ: Celadon City, Phường Tân Quý, Quận Tân Phú, TP.Hồ Chí Minh  <br>
+            Hotline: 03999979999 | Email: supportLuxury@gmail.com
+        </div>
+    </footer>
+</body>
+</html>
+
+

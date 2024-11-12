@@ -1,0 +1,110 @@
+﻿@model Luxury_Shop.Models.User
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<style>
+    .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full height to center the content vertically */
+    }
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .card-body {
+        padding: 30px;
+        background-color: #f8f9fa;
+    }
+
+    h4.card-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #007bff;
+    }
+
+    .form-control {
+        border-radius: 50px;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 18px;
+        transition: background-color 0.3s ease-in-out;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .alert-danger {
+        text-align: center;
+    }
+
+    p.text-center {
+        font-size: 14px;
+        color: #6c757d;
+    }
+</style>
+<section class="section-conten center">
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+    <div class="card mx-auto" style="max-width: 380px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Đăng nhập</h4>
+            @if (Session["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@Session["ErrorMessage"] </div>
+            }
+            @using (Html.BeginForm("Login", "Users", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <input name="email" class="form-control" placeholder="Email" type="text">
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <input name="password" class="form-control" placeholder="Mật khẩu" type="password">
+                </div> <!-- form-group// -->
+
+                <div class="form-group">
+                    <a href="#" class="float-right">Quên mật khẩu ?</a>
+                    <label class="float-left custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-label"> Ghi nhớ </span>
+                    </label>
+                </div> <!-- form-group form-check .// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Đăng nhập </button>
+                </div>
+                <p class="text-center mt-4">
+                    @Html.ActionLink("Bạn chưa có tài khoản ?", "create", "Users", null, new { @class = "button" })
+                </p>
+            }
+        </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+</section>
+
+
+
+
