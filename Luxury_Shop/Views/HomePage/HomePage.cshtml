@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Luxury_Shop.Models.Product>
 
 @{
-    ViewBag.Title = "HomePage";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
@@ -15,66 +15,27 @@
 </head>
 <body>
     <header>
+        <!-- Header Content Here -->
     </header>
 
     <article>
-
-
         <div class="sanpham-container">
             @foreach (var item in Model)
             {
                 <div class="sanpham">
-                    <!-- Cập nhật đường dẫn hình ảnh sản phẩm -->
-                    <img src="~/img/@item.ImageURL" alt="@item.ProductName" />
+                    <!-- Hiển thị ảnh sản phẩm -->
+                    @if (!string.IsNullOrEmpty(item.ImageURL))
+                    {
+                        <img src="~/img/@item.ImageURL" alt="@item.ProductName" class="sanpham-img" />
+                    }
                     <h3>@item.ProductName</h3>
                     <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p> <!-- Hiển thị giá sản phẩm -->
-                    <a href="@Url.Action("Chitietsanpham", "Home", new { id = item.ProductID })">
-                        <button>Chi tiết</button>
+                    <a href="@Url.Action("Details", "Details", new { id = item.ProductID })">
+                        <button class="btn-detail">Chi tiết</button>
                     </a>
                 </div>
             }
         </div>
     </article>
-
-    <!-- Footer -->
-    <!--
-        <footer>
-            <div class="row">
-                <div class="content-footer">
-                    <div class="footer-one">
-                        <h4 class="color-footer">TRỢ GIÚP</h4>
-                        <div class="color-a">
-                            Hệ thống cửa hàng <br>
-                            Liên hệ <br>
-                            Chính sách Loyalty <br>
-                            Chính sách bảo mật <br>
-                            Điều khoản sử dụng <br>
-                            Chính sách đổi trả <br>
-                            Câu hỏi thường gặp <br>
-                        </div>
-                    </div>
-                    <div class="footer-two">
-                        <h4 class="color-footer">THANH TOÁN</h4>
-                        <div class="color-a">
-                            Visa / Mastercard / JCB <br>
-                            ATM / Internet Banking <br>
-                            Quét mã QR <br>
-                            Mua trước trả sau <br>
-                            Ví điện tử <br>
-                            Thanh toán khi nhận hàng (COD) <br>
-                        </div>
-                    </div>
-                    <div class="footer-three">
-                        <h4 class="color-footer">GIAO HÀNG</h4>
-                        <div class="color-a">
-                            Giao hàng tiêu chuẩn <br>
-                            Maison NOW <br>
-                            <img class="image-footer" src="https://file.hstatic.net/1000284478/file/icon-bct_c5ff22fa4ca24fd58c49573d2114f8b0.svg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    -->
 </body>
 </html>

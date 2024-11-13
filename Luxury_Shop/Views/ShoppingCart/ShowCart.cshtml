@@ -5,38 +5,47 @@
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
-<h2>Giỏ Hàng</h2>
-<a href="@Url.Action("Index", "Product")">Tiếp tục mua hàng</a>
+<head>
+    <link rel="stylesheet" href="~/Content/StyleCart.css" />
+</head>
+<div class="cart-container">
+    <h2>Giỏ Hàng</h2>
+    <a href="@Url.Action("HomePage", "HomePAge")" class="btn">Tiếp tục mua hàng</a>
 
-@if (Model != null && Model.Items.Any())
-{
-    <table class="table">
-        <tr>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Thành tiền</th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>@item.Product.ProductName</td>
-                <td>@item.Product.OriginalPrice.ToString("C")</td>
-                <td>@item.Quantity</td>
-                <td>@(item.Product.OriginalPrice * item.Quantity).ToString("C")</td>
-                <td>
-                    <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })">Xóa</a>
-                </td>
-            </tr>
-        }
-        <tr>
-            <td colspan="3">Tổng tiền</td>
-            <td>@Model.Total_Money().ToString("C")</td>
-        </tr>
-    </table>
-}
-else
-{
-    <p>Giỏ hàng của bạn hiện chưa có sản phẩm nào.</p>
-}
+    @if (Model != null && Model.Items.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Product.OriginalPrice.ToString("C")</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Product.OriginalPrice * item.Quantity).ToString("C")</td>
+                        <td>
+                            <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })" class="btn">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="total-price">
+            Tổng tiền: @Model.Total_Money().ToString("C")
+        </div>
+    }
+    else
+    {
+        <p class="empty-cart">Giỏ hàng của bạn hiện chưa có sản phẩm nào.</p>
+    }
+</div>

@@ -1,7 +1,81 @@
-﻿
+﻿@model Luxury_Shop.Models.Product
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/chitietsanpham.css">
+    <!-- Thêm font awesome cho icon shopping cart -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Chi tiết sản phẩm</h1>
+    </header>
 
+    <article>
+        <div class="card-wrapper">
+            <div class="card">
+                <!-- card left -->
+                <div class="product-imgs">
+                    <div class="img-display">
+                        <!-- Hiển thị ảnh sản phẩm từ thư mục 'img' -->
+                        <img src="~/img/@Model.ImageURL" alt="@Model.ProductName">
+                    </div>
+                </div>
+                <!-- card right -->
+                <div class="product-content">
+                    <h2 class="product-title">@Model.ProductName</h2>
+                    <div class="product-price">
+                        <p><span>@Model.OriginalPrice.ToString("N0") vnd</span></p>
+                    </div>
+                    <div class="product-detail">
+                        <h2>About this item: </h2>
+                        <p>@Model.Description</p>
+                        <ul
+                            <li>
+                                Số lượng:
+                                <input type="number" id="quantity" name="quantity" min="1" max="@Model.StockQuantity" value="1">
+                            </li>
+                            <li>Danh mục: <span>@Model.Category.CategoryName</span></li>
+                        </ul>
+                    </div>
+                    <div class="purchase-info">
+                        <!-- Form gửi thông tin sản phẩm vào giỏ hàng -->
+                        <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                            <input type="hidden" name="productId" value="@Model.ProductID">
+                            <input type="hidden" name="productName" value="@Model.ProductName">
+                            <input type="hidden" name="productPrice" value="@Model.OriginalPrice">
+                            <input type="hidden" name="productImage" value="@Model.ImageURL">
+
+                            <!-- Chọn kích cỡ và số lượng -->
+                            <input type="hidden" id="sizeSelectHidden" name="size" value="">
+
+                            <button type="submit" class="btn">
+                                Add to Cart <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+
+    <script>
+        // Cập nhật giá trị của size khi người dùng chọn
+        document.getElementById('sizeSelect').addEventListener('change', function () {
+            document.getElementById('sizeSelectHidden').value = this.value;
+        });
+    </script>
+</body>
+</html>
