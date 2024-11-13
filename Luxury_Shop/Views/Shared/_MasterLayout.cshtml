@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIN STORE</title>
-    @*<link rel="stylesheet" href="~/Content/Style1.css">*@
+    <link rel="stylesheet" href="~/Content/Style1.css">
     <link rel="stylesheet" href="~/Content/MasterLayout/header.css" />
     <link rel="stylesheet" href="~/Content/MasterLayout/footer.css" />
 </head>
@@ -52,12 +52,6 @@
                             <a href="#">Versace</a>
                         </div>
                     </li>
-                    <li class="thanhtimkiem">
-                        <form action="/search" method="get">
-                            <input type="text" name="query" placeholder="Nhập từ khóa tìm kiếm...">
-                            <button type="submit">Tìm kiếm</button>
-                        </form>
-                    </li>
                     <li class="login">
                         @Html.ActionLink("Login","login","Users")
                         
@@ -67,7 +61,7 @@
                         
                     </li>
                     <li class="cart">
-                        <a href="giohang.html">
+                        <a href="~/Views/ShoppingCart/ShowCart.cshtml">
                             <img src="~/Content/images/shopping-cart (1).png" alt="Giỏ hàng">
                         </a>
                     </li>

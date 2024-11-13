@@ -1,169 +1,80 @@
-﻿
+﻿@model IEnumerable<Luxury_Shop.Models.Product>
+
 @{
     ViewBag.Title = "HomePage";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/Style1.css">
 
-<article>
-    <div class="item-thuonghieu">
-        <div class="logothuonghieu">
-            <img src="~/Content/images/logogucci.png" alt="Gucci">
-            <img src="~/Content/images/logoburberry.png" alt="Burberry">
-            <img src="~/Content/images/logochannel.png" alt="Channel">
-            <img src="~/Content/images/logodior.png" alt="Dior">
-            <img src="~/Content/images/logolouisvuitton.png" alt="Louis Vuitton">
-            <img src="~/Content/images/logoprada.png" alt="Prada">
-            <img src="~/Content/images/logoprada.png" alt="Versace">
-            <img src="~/Content/images/logofendi.png" alt="Fendi">
-        </div>
-    </div>
-    <div class="sanpham-container">
-        <div class="sanpham">
-            <img src="https://images.lvrcdn.com/Big/c/2023/10/26/c1cdf069-410f-4595-bfe9-a34ca8956b9d/817280fe-0769-4b24-a5b8-3d092a284d6f20231027151639.JPG" alt="">
-            <h3>Gucci GG cotton jersey t-shirt</h3>
-            <p class="giacu">Giá cũ: $100</p>
-            <p class="giamoi">Giá mới: $80</p>
-            <p class="sale">Giảm giá: 20%</p>
-            <a href="Details.cshtml"></a> <button>Trang chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://images.lvrcdn.com/Big/c/2024/02/23/4b187c94-63ff-459a-b112-f97da89188be/504785aa-e54f-4ed1-ae06-dd8665b0467220240223154514.JPG" alt="">
-            <h3>Gucci Oversize printed cotton jersey t-shirt</h3>
-            <p class="giacu">Giá cũ: $120</p>
-            <p class="giamoi">Giá mới: $90</p>
-            <p class="sale">Giảm giá: 25%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://images.lvrcdn.com/Big/c/2023/07/12/7804da96-d273-4c0d-8b83-7183b153016e/6f39b8ce-f347-41b3-bd99-d053440e9a0320230713084646.JPG" alt="">
-            <h3>Gucci Stretch cotton blend polo shirt</h3>
-            <p class="giacu">Giá cũ: $450</p>
-            <p class="giamoi">Giá mới: $330</p>
-            <p class="sale">Giảm giá: 16%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/17/16/58/18/17165818_34799862_1000.jpg" alt="">
-            <h3>Burberry check-print silk-wool T-shirt</h3>
-            <p class="giacu">Giá cũ: $300</p>
-            <p class="giamoi">Giá mới: $250</p>
-            <p class="sale">Giảm giá: 20%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/22/99/06/34/22990634_53135374_1000.jpg" alt="Sản phẩm 1">
-            <h3>Versace Jeans Couture logo-print cotton T-shirt</h3>
-            <p class="giacu">Giá cũ: $500</p>
-            <p class="giamoi">Giá mới: $300</p>
-            <p class="sale">Giảm giá: 40%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://images.lvrcdn.com/Big/c/2024/03/20/4d88c282-bc82-431a-b246-788d3a529285/3dd2659a-b65e-4089-9b60-a8f7f068b60c20240321160454.JPG" alt="">
-            <h3>Gucci GG print cotton jacket</h3>
-            <p class="giacu">Giá cũ: $599</p>
-            <p class="giamoi">Giá mới: $500</p>
-            <p class="sale">Giảm giá: 10%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://images.lvrcdn.com/Big/c/p/76I/XBO/070/6dd8e651-c6f3-460d-ba66-359a40e501ce20231214074311.JPG" alt="">
-            <h3>Gucci Tech down bomber jacket</h3>
-            <p class="giacu">Giá cũ: $299</p>
-            <p class="giamoi">Giá mới: $199</p>
-            <p class="sale">Giảm giá: 35%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/23/65/17/96/23651796_53878692_1000.jpg" alt="">
-            <h3>Dsquared2 checked linen shirt</h3>
-            <p class="giacu">Giá cũ: $120</p>
-            <p class="giamoi">Giá mới: $90</p>
-            <p class="sale">Giảm giá: 25%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/19/74/96/85/19749685_44211395_1000.jpg" alt="">
-            <h3>Dsquared2 logo-print cotton T-shirt</h3>
-            <p class="giacu">Giá cũ: $660</p>
-            <p class="giamoi">Giá mới: $499</p>
-            <p class="sale">Giảm giá: 19%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/23/83/57/51/23835751_53862453_1000.jpg" alt="">
-            <h3>Dsquared2 logo-print cotton T-shir</h3>
-            <p class="giacu">Giá cũ: $120</p>
-            <p class="giamoi">Giá mới: $100</p>
-            <p class="sale">Giảm giá: 20%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/23/65/17/65/23651765_53879213_1000.jpg" alt="">
-            <h3>Dsquared2 distressed skinny jean</h3>
-            <p class="giacu">Giá cũ: $399</p>
-            <p class="giamoi">Giá mới: $299</p>
-            <p class="sale">Giảm giá: 15%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/19/38/60/60/19386060_42622636_1000.jpg" alt="">
-            <h3>Dsquared2 logo-print crew-neck sweatshirt</h3>
-            <p class="giacu">Giá cũ: $300</p>
-            <p class="giamoi">Giá mới: $150</p>
-            <p class="sale">Giảm giá: 50%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/19/17/35/80/19173580_42241480_1000.jpg" alt="">
-            <h3>Dolce & Gabbana DG-logo print cotton T-shirt</h3>
-            <p class="giacu">Giá cũ: $100</p>
-            <p class="giamoi">Giá mới: $90</p>
-            <p class="sale">Giảm giá: 10%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/19/17/17/00/19171700_42241490_1000.jpg" alt="">
-            <h3>Dolce & Gabbana DG-logo print cotton T-shirt</h3>
-            <p class="giacu">Giá cũ: $100</p>
-            <p class="giamoi">Giá mới: $80</p>
-            <p class="sale">Giảm giá: 20%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/22/05/38/66/22053866_55522616_2048.jpg" alt="">
-            <h3>GG jacquard cotton polo shirt</h3>
-            <p class="giacu">Giá cũ: $1500</p>
-            <p class="giamoi">Giá mới: $1300</p>
-            <p class="sale">Giảm giá: 20%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/21/91/16/01/21911601_53199817_2048.jpg" alt="">
-            <h3>GG-print cotton bomber jacket</h3>
-            <p class="giacu">Giá cũ: $4000</p>
-            <p class="giamoi">Giá mới: $3,390</p>
-            <p class="sale">Giảm giá: 15%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/22/17/45/16/22174516_53123129_2048.jpg" alt="">
-            <h3>Interlocking G-print cotton hoodie</h3>
-            <p class="giacu">Giá cũ: $1000</p>
-            <p class="giamoi">Giá mới: $901</p>
-            <p class="sale">Giảm giá: 5%</p>
-            <button>Chi tiết</button>
-        </div>
-        <div class="sanpham">
-            <img src="https://cdn-images.farfetch-contents.com/13/68/69/32/13686932_26967291_2048.jpg" alt="">
-            <h3>MX1 distressed-effect skinny jeans</h3>
-            <p class="giacu">Giá cũ: $1000</p>
-            <p class="giamoi">Giá mới: $939</p>
-            <p class="sale">Giảm giá: 5%</p>
-            <button>Chi tiết</button>
-        </div>
-    </div>
-</article>
-@Html.ActionLink("Sản phẩm", "Details", "Details")
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/style.css">
+</head>
+<body>
+    <header>
+    </header>
 
+    <article>
+
+
+        <div class="sanpham-container">
+            @foreach (var item in Model)
+            {
+                <div class="sanpham">
+                    <!-- Cập nhật đường dẫn hình ảnh sản phẩm -->
+                    <img src="~/img/@item.ImageURL" alt="@item.ProductName" />
+                    <h3>@item.ProductName</h3>
+                    <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p> <!-- Hiển thị giá sản phẩm -->
+                    <a href="@Url.Action("Chitietsanpham", "Home", new { id = item.ProductID })">
+                        <button>Chi tiết</button>
+                    </a>
+                </div>
+            }
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <!--
+        <footer>
+            <div class="row">
+                <div class="content-footer">
+                    <div class="footer-one">
+                        <h4 class="color-footer">TRỢ GIÚP</h4>
+                        <div class="color-a">
+                            Hệ thống cửa hàng <br>
+                            Liên hệ <br>
+                            Chính sách Loyalty <br>
+                            Chính sách bảo mật <br>
+                            Điều khoản sử dụng <br>
+                            Chính sách đổi trả <br>
+                            Câu hỏi thường gặp <br>
+                        </div>
+                    </div>
+                    <div class="footer-two">
+                        <h4 class="color-footer">THANH TOÁN</h4>
+                        <div class="color-a">
+                            Visa / Mastercard / JCB <br>
+                            ATM / Internet Banking <br>
+                            Quét mã QR <br>
+                            Mua trước trả sau <br>
+                            Ví điện tử <br>
+                            Thanh toán khi nhận hàng (COD) <br>
+                        </div>
+                    </div>
+                    <div class="footer-three">
+                        <h4 class="color-footer">GIAO HÀNG</h4>
+                        <div class="color-a">
+                            Giao hàng tiêu chuẩn <br>
+                            Maison NOW <br>
+                            <img class="image-footer" src="https://file.hstatic.net/1000284478/file/icon-bct_c5ff22fa4ca24fd58c49573d2114f8b0.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    -->
+</body>
+</html>

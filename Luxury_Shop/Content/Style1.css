@@ -1,63 +1,83 @@
-﻿
+﻿/* Tổng thể cho body */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
+header {
+    background-color: #000;
+    color: white;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    header .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    header .logoweb img {
+        height: 90px;
+    }
+
+    header nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+            header nav ul li a {
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                padding: 5px 0;
+            }
+
+                header nav ul li a:hover {
+                    color: #ccc;
+                }
+
+/* Biểu tượng giỏ hàng */
 .cart {
     position: relative;
     display: inline-block;
-    margin-left: 20px; /* Khoảng cách với các phần tử khác */
+    margin-left: 20px;
 }
 
     .cart img {
-        width: 40px; /* Tăng kích thước biểu tượng giỏ hàng */
+        width: 40px;
         height: auto;
     }
 
-.logoweb p {
-    color: white;
-    font-weight: bolder;
-}
-
-header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-.login > a, .register > a {
-    text-decoration: none;
-    border: 1px solid gray;
-    border-radius: 5px;
-    color: white;
-    padding: 5px;
-    font-size: 20px;
-}
-
-    .login > a:hover, .register > a:hover {
-        background-color: grey;
-        font-size: 21px;
-    }
-
+/* Tìm kiếm */
 .thanhtimkiem {
     display: flex;
+    justify-content: center;
+    margin: 10px 0;
 }
 
     .thanhtimkiem input[type="text"] {
         padding: 10px;
-        border: none;
         border-radius: 5px;
+        border: 1px solid #ccc;
         margin-right: 10px;
+        width: 300px;
     }
 
     .thanhtimkiem button {
         padding: 10px 20px;
+        background-color: #555;
+        color: white;
         border: none;
         border-radius: 5px;
-        background-color: #555;
-        color: #fff;
         cursor: pointer;
     }
 
@@ -65,25 +85,7 @@ header nav ul li a {
             background-color: #858585;
         }
 
-header .giohang img {
-    height: 40px;
-}
-
-.item-thuonghieu {
-    text-align: center;
-    padding: 20px 0;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid grey;
-    border-width: 1px;
-    margin: 10px;
-}
-
-    .item-thuonghieu .logothuonghieu img {
-        max-width: 130px;
-        margin: 10px;
-        max-height: 130px;
-    }
-
+/* Sản phẩm */
 .sanpham-container {
     display: flex;
     flex-wrap: wrap;
@@ -99,13 +101,18 @@ header .giohang img {
     border-radius: 5px;
     text-align: center;
     background-color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-    img {
+    .sanpham:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sanpham img {
         width: 100%;
         height: auto;
         border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
         margin-bottom: 10px;
     }
 
@@ -132,17 +139,96 @@ header .giohang img {
         font-weight: bold;
     }
 
-
-
-.marquee {
-    margin: 5px;
-    border: 1px;
-    height: 30px;
-    font-weight: bolder;
+/* Các thẻ điều hướng và liên kết */
+.login > a, .register > a {
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 5px;
     color: white;
-    background-color: black;
+    padding: 5px;
+    font-size: 20px;
 }
-/* CSS cho trang giỏ hàng */
+
+    .login > a:hover, .register > a:hover {
+        background-color: grey;
+        font-size: 21px;
+    }
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #757171;
+    color: white;
+    padding: 30px 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.content-footer {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.footer-one, .footer-two, .footer-three {
+    width: 30%;
+}
+
+.footer-one, .footer-two {
+    padding: 10px;
+}
+
+.footer-three {
+    padding: 10px;
+}
+
+    .footer-one h4, .footer-two h4, .footer-three h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .footer-one .color-a, .footer-two .color-a, .footer-three .color-a {
+        font-size: 14px;
+    }
+
+        .footer-one .color-a a, .footer-two .color-a a, .footer-three .color-a a {
+            color: white;
+            text-decoration: none;
+        }
+
+            .footer-one .color-a a:hover, .footer-two .color-a a:hover, .footer-three .color-a a:hover {
+                color: #ccc;
+            }
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ececec;
+    min-width: 160px;
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Giỏ hàng */
 .cart-table {
     width: 100%;
     border-collapse: collapse;
@@ -190,4 +276,105 @@ header .giohang img {
 
     .checkout-btn:hover {
         background-color: #27ae60;
+    }
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sanpham {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .sanpham-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-one, .footer-two, .footer-three {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        header nav ul li {
+            margin: 5px 0;
+        }
+}
+
+/* CSS cho login box */
+#loginBox {
+    width: 600px;
+    height: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    #loginBox h4 {
+        font-size: 24px;
+        color: black;
+        margin-bottom: 20px;
+    }
+
+.form-group label {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-group .form-control {
+    width: 80%;
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-default {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* CHI TIET SAN PHAM */
+.product-detail {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 90vh;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+    .product-detail img {
+        width: 9px;
+        height: 16px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-left: 20px;
     }

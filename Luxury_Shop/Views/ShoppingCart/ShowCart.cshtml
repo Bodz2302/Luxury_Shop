@@ -1,12 +1,14 @@
 ﻿@model Luxury_Shop.Models.Cart
 
 @{
-    ViewBag.Title = "ShowCart";
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
 <h2>Giỏ Hàng</h2>
 <a href="@Url.Action("Index", "Product")">Tiếp tục mua hàng</a>
-@if (Model != null)
+
+@if (Model != null && Model.Items.Any())
 {
     <table class="table">
         <tr>
@@ -20,17 +22,21 @@
         {
             <tr>
                 <td>@item.Product.ProductName</td>
-                <td>@item.Product.OriginalPrice</td>
+                <td>@item.Product.OriginalPrice.ToString("C")</td>
                 <td>@item.Quantity</td>
-                <td>@(item.Product.OriginalPrice * item.Quantity)</td>
+                <td>@(item.Product.OriginalPrice * item.Quantity).ToString("C")</td>
                 <td>
-                    <a href="@Url.Action("RemoveItem", "Cart", new { id = item.Product.ProductID })">Xóa</a>
+                    <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })">Xóa</a>
                 </td>
             </tr>
         }
         <tr>
             <td colspan="3">Tổng tiền</td>
-            <td>@Model.Total_Money()</td>
+            <td>@Model.Total_Money().ToString("C")</td>
         </tr>
     </table>
+}
+else
+{
+    <p>Giỏ hàng của bạn hiện chưa có sản phẩm nào.</p>
 }
