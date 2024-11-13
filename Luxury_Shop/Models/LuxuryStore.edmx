@@ -66,7 +66,7 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="IsAdmin" Type="bit" />
         </EntityType>
-        <Association Name="FK__Categorie__Paren__4F7CD00D">
+        <Association Name="FK__Categorie__Paren__3D5E1FD2">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -78,7 +78,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UserID__5BE2A6F2">
+        <Association Name="FK__Orders__UserID__49C3F6B7">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -90,7 +90,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__BrandI__571DF1D5">
+        <Association Name="FK__Products__BrandI__44FF419A">
           <End Role="Brands" Type="Self.Brands" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -102,7 +102,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__Catego__5629CD9C">
+        <Association Name="FK__Products__Catego__440B1D61">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -120,19 +120,19 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Categorie__Paren__4F7CD00D" Association="Self.FK__Categorie__Paren__4F7CD00D">
+          <AssociationSet Name="FK__Categorie__Paren__3D5E1FD2" Association="Self.FK__Categorie__Paren__3D5E1FD2">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UserID__5BE2A6F2" Association="Self.FK__Orders__UserID__5BE2A6F2">
+          <AssociationSet Name="FK__Orders__UserID__49C3F6B7" Association="Self.FK__Orders__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__BrandI__571DF1D5" Association="Self.FK__Products__BrandI__571DF1D5">
+          <AssociationSet Name="FK__Products__BrandI__44FF419A" Association="Self.FK__Products__BrandI__44FF419A">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__Catego__5629CD9C" Association="Self.FK__Products__Catego__5629CD9C">
+          <AssociationSet Name="FK__Products__Catego__440B1D61" Association="Self.FK__Products__Catego__440B1D61">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -150,7 +150,7 @@
           <Property Name="BrandName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LogoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__BrandI__571DF1D5" FromRole="Brands" ToRole="Products" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__BrandI__44FF419A" FromRole="Brands" ToRole="Products" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -160,9 +160,9 @@
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ParentCategoryID" Type="Int32" />
-          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__Paren__4F7CD00D" FromRole="Categories" ToRole="Categories1" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK__Categorie__Paren__4F7CD00D" FromRole="Categories1" ToRole="Categories" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__5629CD9C" FromRole="Categories" ToRole="Products" />
+          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__Paren__3D5E1FD2" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Categorie__Paren__3D5E1FD2" FromRole="Categories1" ToRole="Categories" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__440B1D61" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -175,7 +175,7 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ShippingAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UserID__5BE2A6F2" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UserID__49C3F6B7" FromRole="Orders" ToRole="Users" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -193,8 +193,8 @@
           <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Brand" Relationship="Self.FK__Products__BrandI__571DF1D5" FromRole="Products" ToRole="Brands" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__5629CD9C" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK__Products__BrandI__44FF419A" FromRole="Products" ToRole="Brands" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__440B1D61" FromRole="Products" ToRole="Categories" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -209,9 +209,9 @@
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="IsAdmin" Type="Boolean" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserID__5BE2A6F2" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserID__49C3F6B7" FromRole="Users" ToRole="Orders" />
         </EntityType>
-        <Association Name="FK__Products__BrandI__571DF1D5">
+        <Association Name="FK__Products__BrandI__44FF419A">
           <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -223,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Categorie__Paren__4F7CD00D">
+        <Association Name="FK__Categorie__Paren__3D5E1FD2">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
@@ -235,7 +235,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__Catego__5629CD9C">
+        <Association Name="FK__Products__Catego__440B1D61">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,7 +247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UserID__5BE2A6F2">
+        <Association Name="FK__Orders__UserID__49C3F6B7">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,19 +265,19 @@
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Products__BrandI__571DF1D5" Association="Self.FK__Products__BrandI__571DF1D5">
+          <AssociationSet Name="FK__Products__BrandI__44FF419A" Association="Self.FK__Products__BrandI__44FF419A">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Categorie__Paren__4F7CD00D" Association="Self.FK__Categorie__Paren__4F7CD00D">
+          <AssociationSet Name="FK__Categorie__Paren__3D5E1FD2" Association="Self.FK__Categorie__Paren__3D5E1FD2">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__Catego__5629CD9C" Association="Self.FK__Products__Catego__5629CD9C">
+          <AssociationSet Name="FK__Products__Catego__440B1D61" Association="Self.FK__Products__Catego__440B1D61">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UserID__5BE2A6F2" Association="Self.FK__Orders__UserID__5BE2A6F2">
+          <AssociationSet Name="FK__Orders__UserID__49C3F6B7" Association="Self.FK__Orders__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>

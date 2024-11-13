@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Trang Thanh Toán</h2>
+
+<form method="post" action="/Checkout/Confirm">
+    <label for="bankAccount">Tài khoản ngân hàng:</label>
+    <input type="text" id="bankAccount" name="bankAccount" required />
+
+    <label for="beginDate">Ngày bắt đầu:</label>
+    <input type="date" id="beginDate" name="beginDate" required />
+
+    <label for="endDate">Ngày kết thúc:</label>
+    <input type="date" id="endDate" name="endDate" required />
+
+    <button type="submit">Xác nhận thanh toán</button>
+</form>
+
+@if (ViewBag.Status == "success")
+{
+    <div style="color: green;">
+        <p>Giao dịch thành công!</p>
+        <p>@ViewBag.Message</p>
+    </div>
+}
+else if (ViewBag.Status == "failed")
+{
+    <div style="color: red;">
+        <p>Giao dịch thất bại.</p>
+        <p>@ViewBag.Message</p>
+    </div>
+}
