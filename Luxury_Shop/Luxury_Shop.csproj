@@ -130,35 +130,35 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Brand.cs">
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs">
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LuxuryStore.Context.cs">
+    <Compile Include="Models\Luxury.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LuxuryStore.Context.tt</DependentUpon>
+      <DependentUpon>Luxury.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LuxuryStore.cs">
+    <Compile Include="Models\Luxury.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LuxuryStore.Designer.cs">
+    <Compile Include="Models\Luxury.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LuxuryStore.edmx</DependentUpon>
+      <DependentUpon>Luxury.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>LuxuryStore.tt</DependentUpon>
+      <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -202,22 +202,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\LuxuryStore.Context.tt">
+    <Content Include="Models\Luxury.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LuxuryStore.edmx</DependentUpon>
-      <LastGenOutput>LuxuryStore.Context.cs</LastGenOutput>
+      <DependentUpon>Luxury.edmx</DependentUpon>
+      <LastGenOutput>Luxury.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\LuxuryStore.tt">
+    <Content Include="Models\Luxury.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LuxuryStore.edmx</DependentUpon>
-      <LastGenOutput>LuxuryStore.cs</LastGenOutput>
-    </Content>
-    <EntityDeploy Include="Models\LuxuryStore.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LuxuryStore.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\LuxuryStore.edmx.diagram">
-      <DependentUpon>LuxuryStore.edmx</DependentUpon>
+      <DependentUpon>Luxury.edmx</DependentUpon>
+      <LastGenOutput>Luxury.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -225,6 +218,13 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\Luxury.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Luxury.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Luxury.edmx.diagram">
+      <DependentUpon>Luxury.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

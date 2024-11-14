@@ -13,10 +13,10 @@ namespace Luxury_Shop.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LuxuryEntities : DbContext
+    public partial class LuxuryEntities1 : DbContext
     {
-        public LuxuryEntities()
-            : base("name=LuxuryEntities")
+        public LuxuryEntities1()
+            : base("name=LuxuryEntities1")
         {
         }
     
