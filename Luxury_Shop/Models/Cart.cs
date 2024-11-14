@@ -1,68 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Luxury_Shop.Models;
-namespace Luxury_Shop.Models
+﻿public class ShoppingCartController : Controller
 {
+    private LuxuryEntities database = new LuxuryEntities();
 
-    public class CartItem
+    // GET: ShoppingCart/ShowCart
+    public ActionResult ShowCart()
     {
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
+        // Kiểm tra nếu giỏ hàng không tồn tại trong session
+        if (Session["Cart"] == null)
+        {
+            // Nếu giỏ hàng không có, tạo mới và lưu vào session
+            Session["Cart"] = new Cart();
+        }
+
+        // Lấy giỏ hàng từ session
+        Cart _cart = Session["Cart"] as Cart;
+
+        // Trả về view và truyền giỏ hàng vào view
+        return View(_cart);
     }
 
-    public class Cart
+    // POST: ShoppingCart/AddToCart
+    [HttpPost]
+    public ActionResult AddToCart(int productId, int quantity = 1)
     {
-        private LuxuryEntities1 db = new LuxuryEntities1();
-        private List<CartItem> items = new List<CartItem>();
-        public IEnumerable<CartItem> Items
+        // Lấy sản phẩm từ database
+        var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
+
+        // Kiểm tra sản phẩm có tồn tại hay không
+        if (product == null)
         {
-            get { return items; }
+            return HttpNotFound("Product not found");
         }
 
-        public void Add_Product_Cart(Product pro, int quan = 1)
-        {
+        // Lấy giỏ hàng từ session hoặc tạo mới nếu chưa có
+        var cart = Session["Cart"] as Cart ?? new Cart();
 
-            var item = items.FirstOrDefault(p => p.Product.ProductID == pro.ProductID);
-            if (item == null)
-            {
-                items.Add(new CartItem
-                {
-                    Product = pro,
-                    Quantity = quan
-                });
-            }
-            else
-            {
-                item.Quantity += quan;
-            }
-        }
+        // Thêm sản phẩm vào giỏ hàng
+        cart.Add_Product_Cart(product, quantity);
 
-        public void Remove_Product_Cart(Product pro)
-        {
-            items.RemoveAll(p => p.Product.ProductID == pro.ProductID);
-        }
+        // Cập nhật giỏ hàng vào session
+        Session["Cart"] = cart;
 
-        public int Total_quantity()
-        {
-            return items.Sum(p => p.Quantity);
-        }
-
-        public decimal Total_Money()
-        {
-            return items.Sum(p => p.Quantity * p.Product.OriginalPrice);
-        }
-
-        public void Update_quantity(int id, int quan)
-        {
-            var item = items.Find(p => p.Product.ProductID == id);
-            if (item != null)
-                item.Quantity = quan;
-        }
-
-        public void Clear_cart()
-        {
-            items.Clear();
-        }
+        // Quay lại trang hiển thị giỏ hàng
+        return RedirectToAction("ShowCart");
     }
 }

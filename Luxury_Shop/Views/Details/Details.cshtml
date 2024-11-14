@@ -26,7 +26,7 @@
                 <div class="product-imgs">
                     <div class="img-display">
                         <!-- Hiển thị ảnh sản phẩm từ thư mục 'img' -->
-                        <img src="~/img/@Model.ImageURL" alt="@Model.ProductName">
+                        <img src="@Url.Content("~/img/" + Model.ImageURL)" alt="@Model.ProductName">
                     </div>
                 </div>
                 <!-- card right -->
@@ -36,29 +36,28 @@
                         <p><span>@Model.OriginalPrice.ToString("N0") vnd</span></p>
                     </div>
                     <div class="product-detail">
-                        <h2>About this item: </h2>
+                        <h2>Thông tin sản phẩm:</h2>
                         <p>@Model.Description</p>
-                        <ul
-                            <li>
-                                Số lượng:
-                                <input type="number" id="quantity" name="quantity" min="1" max="@Model.StockQuantity" value="1">
-                            </li>
+                        <ul>
+                            <li>Số lượng còn lại: @Model.StockQuantity</li>
                             <li>Danh mục: <span>@Model.Category.CategoryName</span></li>
                         </ul>
                     </div>
                     <div class="purchase-info">
                         <!-- Form gửi thông tin sản phẩm vào giỏ hàng -->
-                        <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                        <form action="@Url.Action("AddToCart", "ShoppingCart")" method="post">
                             <input type="hidden" name="productId" value="@Model.ProductID">
                             <input type="hidden" name="productName" value="@Model.ProductName">
                             <input type="hidden" name="productPrice" value="@Model.OriginalPrice">
                             <input type="hidden" name="productImage" value="@Model.ImageURL">
 
-                            <!-- Chọn kích cỡ và số lượng -->
-                            <input type="hidden" id="sizeSelectHidden" name="size" value="">
+                            <!-- Nhập số lượng sản phẩm -->
+                            <label for="quantity">Số lượng:</label>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="@Model.StockQuantity">
 
+                            <!-- Nút thêm vào giỏ hàng -->
                             <button type="submit" class="btn">
-                                Add to Cart <i class="fas fa-shopping-cart"></i>
+                                Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                             </button>
                         </form>
                     </div>
@@ -68,14 +67,7 @@
     </article>
 
     <footer>
-        <!-- Footer content here -->
+        <!-- Nội dung footer -->
     </footer>
-
-    <script>
-        // Cập nhật giá trị của size khi người dùng chọn
-        document.getElementById('sizeSelect').addEventListener('change', function () {
-            document.getElementById('sizeSelectHidden').value = this.value;
-        });
-    </script>
 </body>
 </html>

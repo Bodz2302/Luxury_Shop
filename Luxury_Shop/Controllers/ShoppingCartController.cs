@@ -27,5 +27,31 @@ namespace Luxury_Shop.Controllers
             // Trả về view và truyền giỏ hàng vào view
             return View(_cart);
         }
+
+        // POST: ShoppingCart/AddToCart
+        [HttpPost]
+        public ActionResult AddToCart(int productId, int quantity = 1)
+        {
+            // Lấy sản phẩm từ database
+            var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
+
+            // Kiểm tra sản phẩm có tồn tại hay không
+            if (product == null)
+            {
+                return HttpNotFound("Product not found");
+            }
+
+            // Lấy giỏ hàng từ session hoặc tạo mới nếu chưa có
+            var cart = Session["Cart"] as Cart ?? new Cart();
+
+            // Thêm sản phẩm vào giỏ hàng
+            cart.Add_Product_Cart(product, quantity);
+
+            // Cập nhật giỏ hàng vào session
+            Session["Cart"] = cart;
+
+            // Quay lại trang hiển thị giỏ hàng
+            return RedirectToAction("ShowCart");
+        }
     }
 }
