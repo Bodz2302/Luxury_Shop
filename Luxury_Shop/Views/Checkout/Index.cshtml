@@ -75,7 +75,7 @@
                 Cart
                 <span class="price" style="color:black">
                     <i class="fa fa-shopping-cart"></i>
-                    <b>@Model.Items.Count()</b>
+                    <b>@(Model.Items != null ? Model.Items.Count() : 0)</b>
                 </span>
             </h4>
             <!-- Hiển thị các mục trong giỏ hàng -->
