@@ -83,11 +83,11 @@
             {
                 <p>
                     <a href="#">@item.Product.ProductName</a>
-                    <span class="price">@item.Product.OriginalPrice.ToString("C")</span>
+                    <span class="price">@item.Product.OriginalPrice</span>
                 </p>
             }
             <hr>
-            <p>Total <span class="price" style="color:black"><b>@Model.Total_Money().ToString("C")</b></span></p>
+            <p>Total <span class="price" style="color:black"><b>@Model.Total_Money()</b></span></p>
         </div>
     </div>
 </div>

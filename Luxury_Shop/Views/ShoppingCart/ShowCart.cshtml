@@ -29,9 +29,9 @@
                 {
                     <tr>
                         <td>@item.Product.ProductName</td>
-                        <td>@item.Product.OriginalPrice.ToString("C")</td>
+                        <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice)</td>
                         <td>@item.Quantity</td>
-                        <td>@(item.Product.OriginalPrice * item.Quantity).ToString("C")</td>
+                        <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</td>
                         <td>
                             <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })" class="btn">Xóa</a>
                         </td>
@@ -41,7 +41,7 @@
         </table>
 
         <div class="total-price">
-            Tổng tiền: @Model.Total_Money().ToString("C")
+            Tổng tiền: @string.Format("{0:N0} vnd", Model.Total_Money())
         </div>
 
         <!-- Thêm nút Thanh Toán -->

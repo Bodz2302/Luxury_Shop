@@ -1,47 +1,37 @@
-﻿public class ShoppingCartController : Controller
-{
-    private LuxuryEntities database = new LuxuryEntities();
+﻿using System.Collections.Generic;
+using System.Linq;
 
-    // GET: ShoppingCart/ShowCart
-    public ActionResult ShowCart()
+namespace Luxury_Shop.Models
+{
+    public class Cart
     {
-        // Kiểm tra nếu giỏ hàng không tồn tại trong session
-        if (Session["Cart"] == null)
+        public List<CartItem> Items { get; set; } = new List<CartItem>();
+
+        public void AddProductToCart(Product product, int quantity)
         {
-            // Nếu giỏ hàng không có, tạo mới và lưu vào session
-            Session["Cart"] = new Cart();
+            var item = Items.FirstOrDefault(i => i.Product.ProductID == product.ProductID);
+            if (item != null)
+            {
+                // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+                item.Quantity += quantity;
+            }
+            else
+            {
+                // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
+                Items.Add(new CartItem { Product = product, Quantity = quantity });
+            }
         }
 
-        // Lấy giỏ hàng từ session
-        Cart _cart = Session["Cart"] as Cart;
-
-        // Trả về view và truyền giỏ hàng vào view
-        return View(_cart);
+        // Phương thức để tính tổng số tiền của giỏ hàng
+        public decimal Total_Money()
+        {
+            return Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
+        }
     }
 
-    // POST: ShoppingCart/AddToCart
-    [HttpPost]
-    public ActionResult AddToCart(int productId, int quantity = 1)
+    public class CartItem
     {
-        // Lấy sản phẩm từ database
-        var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
-
-        // Kiểm tra sản phẩm có tồn tại hay không
-        if (product == null)
-        {
-            return HttpNotFound("Product not found");
-        }
-
-        // Lấy giỏ hàng từ session hoặc tạo mới nếu chưa có
-        var cart = Session["Cart"] as Cart ?? new Cart();
-
-        // Thêm sản phẩm vào giỏ hàng
-        cart.Add_Product_Cart(product, quantity);
-
-        // Cập nhật giỏ hàng vào session
-        Session["Cart"] = cart;
-
-        // Quay lại trang hiển thị giỏ hàng
-        return RedirectToAction("ShowCart");
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
     }
 }

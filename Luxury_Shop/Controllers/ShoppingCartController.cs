@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Luxury_Shop.Models;
 
@@ -45,7 +43,7 @@ namespace Luxury_Shop.Controllers
             var cart = Session["Cart"] as Cart ?? new Cart();
 
             // Thêm sản phẩm vào giỏ hàng
-            cart.Add_Product_Cart(product, quantity);
+            cart.AddProductToCart(product, quantity);
 
             // Cập nhật giỏ hàng vào session
             Session["Cart"] = cart;
