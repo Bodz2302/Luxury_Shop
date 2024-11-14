@@ -1,0 +1,158 @@
+﻿/* General reset and body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* Tông màu trắng */
+    color: #333; /* Màu chữ đen */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    background-color: #000; /* Nền đen */
+    color: #fff; /* Chữ trắng */
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Card wrapper to center content */
+.card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+/* Product card style */
+.card {
+    display: flex;
+    background-color: #f4f4f4; /* Màu nền xám nhẹ */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
+}
+
+/* Left side - Product images */
+.product-imgs {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.img-display img {
+    max-width: 80%;
+    max-height: 400px; /* Điều chỉnh kích thước ảnh */
+    object-fit: contain; /* Giữ tỷ lệ ảnh */
+}
+
+/* Right side - Product information */
+.product-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Title and price styling */
+.product-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+    .product-price span {
+        color: #000;
+        font-weight: bold;
+    }
+
+/* Product detail section */
+.product-detail {
+    margin-bottom: 30px;
+}
+
+    .product-detail h2 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-detail ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .product-detail li {
+        font-size: 1rem;
+        color: #555;
+    }
+
+        .product-detail li span {
+            font-weight: bold;
+        }
+
+/* Purchase info form */
+.purchase-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+    /* Quantity input and button */
+    .purchase-info input[type="number"] {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-width: 150px;
+    }
+
+    .purchase-info button {
+        padding: 12px 20px;
+        font-size: 1.2rem;
+        background-color: #000; /* Nền đen */
+        color: #fff; /* Chữ trắng */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .purchase-info button:hover {
+            background-color: #444; /* Màu đen nhạt khi hover */
+        }
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .product-imgs {
+        padding: 10px;
+    }
+
+    .product-content {
+        padding: 10px;
+    }
+
+    .img-display img {
+        max-width: 100%;
+        max-height: 300px;
+    }
+}
