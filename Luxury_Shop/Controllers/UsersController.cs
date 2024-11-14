@@ -12,7 +12,7 @@ namespace Luxury_Shop.Controllers
 {
     public class UsersController : Controller
     {
-        private LuxuryEntities db = new LuxuryEntities();
+        private LuxuryEntities1 db = new LuxuryEntities1();
 
         // GET: Users
         public ActionResult Index()

@@ -13,7 +13,7 @@ namespace Luxury_Shop.Models
 
     public class Cart
     {
-        private LuxuryEntities db = new LuxuryEntities();
+        private LuxuryEntities1 db = new LuxuryEntities1();
         private List<CartItem> items = new List<CartItem>();
         public IEnumerable<CartItem> Items
         {

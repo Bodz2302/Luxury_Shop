@@ -11,7 +11,7 @@ namespace Luxury_Shop.Controllers
     public class DetailsController : Controller
     {
         // GET: Details
-        private LuxuryEntities database = new LuxuryEntities();
+        private LuxuryEntities1 database = new LuxuryEntities1();
         [HttpGet]
         public ActionResult Details(int id)
         {

@@ -9,7 +9,7 @@ namespace Luxury_Shop.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private LuxuryEntities database = new LuxuryEntities();
+        private LuxuryEntities1 database = new LuxuryEntities1();
 
         // GET: ShoppingCart/ShowCart
         public ActionResult ShowCart()
