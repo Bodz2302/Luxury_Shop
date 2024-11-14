@@ -259,7 +259,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LuxuryEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="LuxuryEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
@@ -287,7 +287,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LuxuryModelStoreContainer" CdmEntityContainer="LuxuryEntities">
+        <EntityContainerMapping StorageEntityContainer="LuxuryModelStoreContainer" CdmEntityContainer="LuxuryEntities1">
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="LuxuryModel.Brand">
               <MappingFragment StoreEntitySet="Brands">
