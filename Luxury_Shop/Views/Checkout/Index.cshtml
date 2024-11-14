@@ -1,33 +1,93 @@
-﻿@{
+﻿@model Luxury_Shop.Models.Cart
+
+@{
     ViewBag.Title = "Checkout";
 }
 
-<h2>Trang Thanh Toán</h2>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <form action="@Url.Action("ProcessCheckout", "Checkout")" method="post">
 
-<form method="post" action="/Checkout/Confirm">
-    <label for="bankAccount">Tài khoản ngân hàng:</label>
-    <input type="text" id="bankAccount" name="bankAccount" required />
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Billing Address</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="city" placeholder="New York">
 
-    <label for="beginDate">Ngày bắt đầu:</label>
-    <input type="date" id="beginDate" name="beginDate" required />
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" placeholder="NY">
+                            </div>
+                            <div class="col-50">
+                                <label for="zip">Zip</label>
+                                <input type="text" id="zip" name="zip" placeholder="10001">
+                            </div>
+                        </div>
+                    </div>
 
-    <label for="endDate">Ngày kết thúc:</label>
-    <input type="date" id="endDate" name="endDate" required />
+                    <div class="col-50">
+                        <h3>Payment</h3>
+                        <label for="fname">Accepted Cards</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Name on Card</label>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                        <label for="ccnum">Credit card number</label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Exp Month</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
 
-    <button type="submit">Xác nhận thanh toán</button>
-</form>
-
-@if (ViewBag.Status == "success")
-{
-    <div style="color: green;">
-        <p>Giao dịch thành công!</p>
-        <p>@ViewBag.Message</p>
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="expyear">Exp Year</label>
+                                <input type="text" id="expyear" name="expyear" placeholder="2024">
+                            </div>
+                            <div class="col-50">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="352">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label>
+                    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                </label>
+                <input type="submit" value="Continue to checkout" class="btn">
+            </form>
+        </div>
     </div>
-}
-else if (ViewBag.Status == "failed")
-{
-    <div style="color: red;">
-        <p>Giao dịch thất bại.</p>
-        <p>@ViewBag.Message</p>
+
+    <div class="col-25">
+        <div class="container">
+            <h4>
+                Cart
+                <span class="price" style="color:black">
+                    <i class="fa fa-shopping-cart"></i>
+                    <b>@Model.Items.Count()</b>
+                </span>
+            </h4>
+            <!-- Hiển thị các mục trong giỏ hàng -->
+            @foreach (var item in Model.Items)
+            {
+                <p>
+                    <a href="#">@item.Product.ProductName</a>
+                    <span class="price">@item.Product.OriginalPrice.ToString("C")</span>
+                </p>
+            }
+            <hr>
+            <p>Total <span class="price" style="color:black"><b>@Model.Total_Money().ToString("C")</b></span></p>
+        </div>
     </div>
-}
+</div>

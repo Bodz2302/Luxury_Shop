@@ -10,7 +10,7 @@
 </head>
 <div class="cart-container">
     <h2>Giỏ Hàng</h2>
-    <a href="@Url.Action("HomePage", "HomePAge")" class="btn">Tiếp tục mua hàng</a>
+    <a href="@Url.Action("HomePage", "HomePage")" class="btn">Tiếp tục mua hàng</a>
 
     @if (Model != null && Model.Items.Any())
     {
@@ -42,6 +42,13 @@
 
         <div class="total-price">
             Tổng tiền: @Model.Total_Money().ToString("C")
+        </div>
+
+        <!-- Thêm nút Thanh Toán -->
+        <div class="checkout">
+            <form action="@Url.Action("Index", "Checkout")" method="post">
+                <button type="submit" class="btn checkout-btn">Thanh toán</button>
+            </form>
         </div>
     }
     else
