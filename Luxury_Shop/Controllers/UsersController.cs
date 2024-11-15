@@ -35,6 +35,7 @@ namespace Luxury_Shop.Controllers
         [HttpGet]
         public ActionResult Quanlykh(int pageNumber = 1, int pageSize = 6)
         {
+            ViewBag.use = Session["username"];
             if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
@@ -127,7 +128,7 @@ namespace Luxury_Shop.Controllers
                             }
                             catch { data.IsAdmin = false; }
                             Session["username"] = email;
-                            Session["check"] = true;
+                            Session["check"] = true; ViewBag.use = Session["username"];
                             if (data.IsAdmin.Value == true)
                             {
                                 Session["admin"] = true;
@@ -221,6 +222,10 @@ namespace Luxury_Shop.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+                if (Session["admin"] == null)
+                {
+                    return RedirectToAction("Index", "Users");
+                }
                 return RedirectToAction("Quanlykh");
             }
             return View(user);

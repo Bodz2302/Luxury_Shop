@@ -1,0 +1,83 @@
+﻿@model Luxury_Shop.Models.AccountListViewModel
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = ViewBag.Title;
+}
+<link href="~/Css/table.css" rel="stylesheet" />
+<link href="~/Css/palisst.css" rel="stylesheet" />
+<h2>Quan lý đơn hàng</h2>
+
+<div class="table-container">
+
+    <table class="table">
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Địa chỉ giao hàng
+            </th>
+            <th>
+                Phương thanh toán
+            </th>
+            <th>
+                Ngày đặt hàng
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>Hành động</th>
+        </tr>
+        @foreach (var item in Model.listdonhang)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippingAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+
+                <td class="order-status">@item.Status</td>
+                <td>
+                    @using (Html.BeginForm("UpdateStatus", "Quanlydonhang", FormMethod.Post))
+                    {@Html.AntiForgeryToken()
+                    @Html.Hidden("orderId", item.OrderID)
+                    @Html.Hidden("status", "Đã Hủy")
+                    <button type="submit" class="btn btn-danger">Hủy đơn hàng</button>
+                }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })" class="prev">Trước</a>
+    }
+
+    @for (int i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+    {
+        <a href="@Url.Action("index", new { pageNumber = i, pageSize = Model.PageSize })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize))
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
+    }
+</div>

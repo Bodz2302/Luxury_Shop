@@ -13,6 +13,7 @@ namespace Luxury_Shop.Models
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public IEnumerable<Product> Listproduct { get; set; }
+        public IEnumerable<Order> listdonhang { get; set; }
         public IEnumerable<Category> listdanhmuc { get; set; }
         public IEnumerable<Brand> listhuonghiru { get; set; }
     }
