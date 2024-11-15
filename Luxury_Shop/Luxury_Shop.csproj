@@ -276,9 +276,6 @@
     <Content Include="Views\Checkout\Checkout.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
-<<<<<<< HEAD
-  =======
-    >>>>>>> ed2591fd72ac017a0f7e3a80236d9cae49d724dd
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
