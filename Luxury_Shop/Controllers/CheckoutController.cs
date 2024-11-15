@@ -1,65 +1,76 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json.Linq;
 
-namespace Luxury_Shop.Controllers
+public class CheckoutController : Controller
 {
-    public class CheckoutController : Controller
+    private readonly Pay2SService _pay2SService;
+
+    public CheckoutController()
     {
-        private readonly string _apiUrl = "https://my.pay2s.vn/userapi/transactions";
-        private readonly string _pay2sToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiMDkwMjUwNjA5OSIsImltZWkiOiI0MDE0NC1iZmNiNzJjMGIyMjczNjZiZy";
+        _pay2SService = new Pay2SService(); // Khởi tạo đối tượng Pay2SService
+    }
 
-        // GET: Checkout
-        public ActionResult Index()
-        {
-            ViewBag.check = Session["check"];
-            return View();
-        }
+    // GET: Checkout/Index
+    public ActionResult Index()
+    {
+        return View();
+    }
 
-        // POST: Checkout/Confirm
-        [HttpPost]
-        public async Task<ActionResult> Confirm(string bankAccount, string beginDate, string endDate)
+    // POST: Checkout/ProcessPayment
+    [HttpPost]
+    public async Task<ActionResult> ProcessPayment(string paymentMethod)
+    {
+        if (string.IsNullOrWhiteSpace(paymentMethod))
         {
-            var response = await CheckTransaction(bankAccount, beginDate, endDate);
-            if (response != null && response["status"].ToObject<bool>())
-            {
-                // Giao dịch thành công
-                ViewBag.Status = "success";
-                ViewBag.Message = response["messages"].ToString();
-            }
-            else
-            {
-                // Giao dịch thất bại
-                ViewBag.Status = "failed";
-                ViewBag.Message = response?["messages"]?.ToString() ?? "Lỗi không xác định";
-            }
+            ViewBag.Status = "failed";
+            ViewBag.Message = "Vui lòng chọn phương thức thanh toán.";
             return View("Index");
         }
 
-        private async Task<JObject> CheckTransaction(string bankAccount, string beginDate, string endDate)
-        {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("pay2s-token", _pay2sToken);
-                var requestContent = new JObject
-                {
-                    { "bankAccounts", bankAccount },
-                    { "begin", beginDate },
-                    { "end", endDate }
-                };
-                var content = new StringContent(requestContent.ToString(), Encoding.UTF8, "application/json");
+        // Tạo mã đơn hàng duy nhất
+        string orderId = Guid.NewGuid().ToString();
 
-                var response = await client.PostAsync(_apiUrl, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseBody = await response.Content.ReadAsStringAsync();
-                    return JObject.Parse(responseBody);
-                }
-                return null;
-            }
+        if (paymentMethod == "bank_transfer")
+        {
+            // Mã ngân hàng và số tài khoản yêu cầu
+            string bankCode = "ACB";
+            string bankAccount = "35639567";
+
+            // Tạo URL để chuyển hướng sang trang thanh toán của Pay2S với mã ngân hàng và tài khoản
+            string pay2SRedirectUrl = _pay2SService.GetPaymentUrl(orderId, bankCode, bankAccount);
+
+            // Chuyển hướng người dùng đến trang Pay2S để thực hiện thanh toán
+            return Redirect(pay2SRedirectUrl);
+        }
+        else if (paymentMethod == "cash")
+        {
+            // Thanh toán tiền mặt, chuyển trạng thái đơn hàng sang "pending"
+            ViewBag.Status = "pending";
+            ViewBag.Message = "Đơn hàng của bạn đang chờ xử lý. Vui lòng thanh toán tiền mặt khi nhận hàng.";
+            return View("PaymentPending");
+        }
+
+        ViewBag.Status = "failed";
+        ViewBag.Message = "Phương thức thanh toán không hợp lệ.";
+        return View("Index");
+    }
+
+    // GET: Checkout/PaymentSuccess
+    public ActionResult PaymentSuccess(string orderId)
+    {
+        // Kiểm tra xem mã đơn hàng đã được thanh toán thành công chưa
+        var paymentStatus = _pay2SService.CheckPaymentStatus(orderId);
+
+        if (paymentStatus)
+        {
+            ViewBag.Message = "Thanh toán thành công! Cảm ơn bạn đã mua hàng.";
+            return View("PaymentSuccess");
+        }
+        else
+        {
+            ViewBag.Message = "Thanh toán không thành công. Vui lòng thử lại hoặc liên hệ hỗ trợ.";
+            return View("PaymentFailed");
         }
     }
 }
