@@ -1,0 +1,70 @@
+﻿@model Luxury_Shop.Models.AccountListViewModel
+
+@{
+    ViewBag.Title = "Danh Sách Tài Khoản";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = "Quản Lý Thành Viên";
+}
+<link href="~/Css/palisst.css" rel="stylesheet" />
+<h1>Thông tin tất cả khách hàng</h1>
+<a href="@Url.Action("taomoi", "Users")" class="btn-create">Tạo Mới</a>
+<!-- Bảng thông tin -->
+<table class="table">
+    <tr>
+        <th>Full name</th>
+        <th>username</th>
+        <th>password</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>CreatedAt</th>
+        <th>Address</th>
+        <th>Chức vụ</th>
+        <th>Chức năng</th>
+    </tr>
+    @foreach (var itema in Model.ListAcc)
+    {
+        <tr>
+            <td>@itema.FullName</td>
+            <td>@itema.Username</td>
+            <td>@itema.Password</td>
+            <td>@itema.Email</td>
+            <td>@itema.Phone</td>
+            <td>@itema.Address</td>
+            <td>@itema.CreatedAt</td>
+            <td>@(itema.IsAdmin == true ? "Admin" : "Khách hàng")</td>
+            <td>
+                <div class="button-container">
+                    <button class="button edit-button" onclick="location.href='@Url.Action("Edit", "Users", new { id = itema.UserID })'">Edit</button>
+                    @using (Html.BeginForm("Delete", "Users", FormMethod.Post, new { id =itema.UserID }))
+                    {
+                        @Html.AntiForgeryToken() @Html.Hidden("id", itema.UserID)
+                        <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');" class="button delete-button">Xóa</button>
+                    }
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- Phân trang -->
+<div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a href="@Url.Action("Quanlykh", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })" class="prev">Trước</a>
+    }
+
+    @for (int i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+    {
+        <a href="@Url.Action("Quanlykh", new { pageNumber = i, pageSize = Model.PageSize })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize))
+    {
+        <a href="@Url.Action("Quanlykh", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
+    }
+</div>
+
+
+<!-- Nút "Tạo mới" -->
+
+

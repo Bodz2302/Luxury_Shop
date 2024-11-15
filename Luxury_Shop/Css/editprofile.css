@@ -1,0 +1,84 @@
+﻿.form-horizontal {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 60%; /* Điều chỉnh chiều rộng form */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    /* Heading style */
+    .form-horizontal h4 {
+        font-family: 'Arial', sans-serif;
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+/* Form label styling */
+.control-label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Form control input styling */
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    width: 100%;
+    margin-top: 5px;
+}
+hr{
+    margin:20px 0px 20px 0px;
+}
+/* Validation message styling */
+.text-danger {
+    color: #d9534f;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Button styling */
+.btn-default {
+    background-color: #337ab7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+    width:830px;
+}
+
+    .btn-default:hover {
+        background-color: #286090;
+    }
+
+/* Action link styling */
+a {
+    font-size: 16px;
+    color: #337ab7;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: #286090;
+    }
+
+/* Responsive styling for form */
+@media (max-width: 767px) {
+    .form-horizontal {
+        padding: 20px;
+        width: 90%; /* Tăng chiều rộng khi trên các thiết bị nhỏ */
+    }
+
+        .form-horizontal h4 {
+            font-size: 22px;
+        }

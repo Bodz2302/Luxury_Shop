@@ -15,6 +15,7 @@ namespace Luxury_Shop.Controllers
         // GET: Checkout
         public ActionResult Index()
         {
+            ViewBag.check = Session["check"];
             return View();
         }
 

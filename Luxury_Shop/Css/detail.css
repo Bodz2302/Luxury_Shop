@@ -1,0 +1,96 @@
+﻿/* Giao diện cho trang Edit */
+.form-horizontal {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+    .form-horizontal .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-horizontal .control-label {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .form-horizontal .col-md-10 {
+        margin-top: 5px;
+    }
+
+    .form-horizontal .form-control {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+        .form-horizontal .form-control:focus {
+            border-color: #5bc0de;
+            box-shadow: 0 0 8px rgba(91, 188, 222, 0.6);
+        }
+
+/* Căn giữa phần error message */
+.text-danger {
+    color: red;
+    font-size: 12px;
+}
+
+/* Nút Save */
+input[type="submit"] {
+    background-color: #5bc0de;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+}
+
+    input[type="submit"]:hover {
+        background-color: #31b0d5;
+    }
+
+/* Liên kết Back to List */
+div a {
+    text-decoration: none;
+    color: #5bc0de;
+    font-size: 14px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+    div a:hover {
+        color: #31b0d5;
+    }
+
+/* Mobile responsiveness */
+@media screen and (max-width: 767px) {
+    .form-horizontal {
+        padding: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .control-label {
+        font-size: 12px;
+    }
+
+    .form-control {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    input[type="submit"] {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    div a {
+        font-size: 12px;
+        margin-top: 15px;
+    }
+}

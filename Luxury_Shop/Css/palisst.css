@@ -1,0 +1,156 @@
+﻿<style >
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .pagination a:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+    color: #007bff;
+}
+
+    .pagination .prev:hover, .pagination .next:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+.pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.pagination .prev, .pagination .next {
+    background-color: #f1f1f1;
+    padding: 10px 15px;
+    border-radius: 50%;
+}
+
+    .pagination .prev:hover, .pagination .next:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+/* Định dạng bảng */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center; /* Căn giữa nội dung bảng */
+}
+
+    /* Định dạng tiêu đề cột */
+    .table th {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+    }
+
+    /* Định dạng các ô dữ liệu */
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 8px;
+    }
+
+    /* Định dạng hàng khi di chuột qua */
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Định dạng liên kết trong bảng */
+    .table a {
+        text-decoration: none;
+        color: #007bff; /* Màu xanh cho liên kết */
+    }
+
+        .table a:hover {
+            text-decoration: underline; /* Gạch chân liên kết khi di chuột */
+        }
+
+/* Định dạng nút "Create New" */
+a.btn-create {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 15px;
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-edit {
+    color: white;
+    background-color: #007bff; /* Màu xanh cho nút chỉnh sửa */
+}
+
+    .btn-edit:hover {
+        background-color: #0056b3; /* Màu nền khi hover */
+    }
+
+a.btn-create:hover {
+    background-color: #218838; /* Màu xanh đậm hơn khi di chuột */
+}
+
+.button-container {
+    display: flex; /* Sử dụng Flexbox để xếp các nút nằm ngang */
+    gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.button {
+    padding: 10px 20px; /* Padding cho nút bấm */
+    border: none; /* Không có đường viền */
+    border-radius: 5px; /* Bo tròn các góc */
+    cursor: pointer; /* Con trỏ thay đổi khi di chuột */
+    text-decoration: none; /* Không có gạch chân */
+    font-size: 16px; /* Kích thước chữ */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển tiếp */
+}
+
+.edit-button {
+    background-color: #4CAF50; /* Màu nền xanh lá cho nút Chỉnh sửa */
+    color: white; /* Màu chữ trắng */
+}
+
+    .edit-button:hover {
+        background-color: #45a049; /* Màu xanh đậm hơn khi hover */
+    }
+
+.delete-button {
+    background-color: #f44336; /* Màu nền đỏ cho nút Xóa */
+    color: white; /* Màu chữ trắng */
+}
+
+    .delete-button:hover {
+        background-color: #e53935; /* Màu đỏ đậm hơn khi hover */
+    }
+
+</style >

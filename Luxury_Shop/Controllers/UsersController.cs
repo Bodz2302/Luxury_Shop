@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Luxury_Shop.Models;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Luxury_Shop.Controllers
 {
@@ -17,7 +18,69 @@ namespace Luxury_Shop.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
+            if (Session["username"] == null)
+            {
+               
+                {
+                    return RedirectToAction("loi", "Users");
+                }
+            }
+            string use = Session["username"].ToString();
+            var user = db.Users.SingleOrDefault(u => u.Username == use);
+            ViewBag.tk = user;
+            return View(user);
+        }
+        [HttpGet]
+        public ActionResult Quanlykh(int pageNumber = 1, int pageSize = 6)
+        {
+             if (Session["admin"]==null)
+            {
+                return RedirectToAction("loi", "Users");
+            }
+            ViewBag.use = Session["username"];
+            var totalRecords = db.Users.Count();
+            var accounts = db.Users
+                                   .OrderBy(a => a.UserID)
+                                   .Skip((pageNumber - 1) * pageSize)
+                                   .Take(pageSize)
+                                   .ToList();
+
+            var model = new AccountListViewModel
+            {
+                ListAcc = accounts,
+                TotalRecords = totalRecords,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            return View(model);
+        }
+        public ActionResult loi()
+        {
+            
+
+            return View();
+        }
+        public ActionResult Quanlykh()
+        {
+            if (Session["admin"]==null)
+            {
+                return RedirectToAction("loi", "Users");
+            }
+
             return View(db.Users.ToList());
+        }
+        public ActionResult logout()
+        {
+            Session["username"] = null;
+            Session["admin"] = false; ;
+            Session["check"] = false;
+            Session.Clear();
+            return RedirectToAction("HomePage", "HomePage");
+       
         }
 
         // GET: Users/Details/5
@@ -41,7 +104,7 @@ namespace Luxury_Shop.Controllers
             {
                 if (Session["check"].ToString() == "True")
                 {
-                    return RedirectToAction("Index", "Accounts");
+                    return RedirectToAction("Index", "Users");
                 }
             }
             return View();
@@ -56,9 +119,14 @@ namespace Luxury_Shop.Controllers
                     {
                         var data = db.Users.FirstOrDefault(u => u.Username == email && u.Password == password);
                         if (data != null)
-                        {                        
+                        {                  
+                            
                             Session["username"] = email;
                             Session["check"] = true;
+                            if (data.IsAdmin.Value==true)
+                            {
+                                Session["admin"] = true;
+                            }
                             return RedirectToAction("Index", "Users");
                         }
                         else
@@ -87,16 +155,44 @@ namespace Luxury_Shop.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.IsAdmin = false;
+                 user.CreatedAt = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Login");
             }
             return View(user);
         }
-
+        public ActionResult taomoi()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult taomoi([Bind(Include = "UserID,Username,Password,Email,FullName,Phone,Address,CreatedAt,IsAdmin")] User user)
+        {
+             if (Session["admin"]==null)
+            {
+                return RedirectToAction("loi", "Users");
+            }
+            if (ModelState.IsValid)
+            {
+                
+                user.CreatedAt = DateTime.Now;
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Quanlykh");
+            }
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            return View(user);
+        }
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Admin = Session["admin"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -120,7 +216,7 @@ namespace Luxury_Shop.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Quanlykh");
             }
             return View(user);
         }
@@ -146,9 +242,10 @@ namespace Luxury_Shop.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
+            user.IsAdmin = false;
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Quanlykh");
         }
 
         protected override void Dispose(bool disposing)

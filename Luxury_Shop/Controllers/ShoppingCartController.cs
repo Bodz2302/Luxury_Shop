@@ -12,6 +12,12 @@ namespace Luxury_Shop.Controllers
         // GET: ShoppingCart/ShowCart
         public ActionResult ShowCart()
         {
+            ViewBag.check = Session["check"];
+            if (ViewBag.check == null)
+            {
+                ViewBag.mes = "Vui lòng đăng nhập để mua hàng và xem giỏ giỏ hàng";
+                return View();
+            }
             // Kiểm tra nếu giỏ hàng không tồn tại trong session
             if (Session["Cart"] == null)
             {

@@ -1,0 +1,49 @@
+﻿/* Tăng cường bảng hiển thị */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .table td {
+        background-color: #fff;
+        color: #333;
+    }
+
+        .table td a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+            .table td a:hover {
+                text-decoration: underline;
+                color: #0056b3;
+            }
+
+/* Nút Create New */
+p {
+    margin-bottom: 20px;
+}
+
+    p a {
+        padding: 10px 15px;
+        background-color: #5bc0de;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+        p a:hover {
+            background-color: #31b0d5;
+        }

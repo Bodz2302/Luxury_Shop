@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    @RenderSection("Styles", required: false)
+<link href="~/Css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Trang quản lý Admin</div>
+            <nav class="menu">
+                @Html.ActionLink("Dashboard", "Index", "Users", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý người dùng", "Quanlykh", "Users", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý sản phẩm", "Index", "Products", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý Danh mục", "Index", "Categories", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý Thương hiệu", "Index", "Brands", null, new { @class = "menu-link" })
+                @Html.ActionLink("Đăng xuất", "logout", "Users", new { id = @ViewBag.account_id }, new { @class = "logout" })
+
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <header class="topbar">
+                <h1> @ViewBag.ti</h1>
+                <div class="user-info">
+                    <span>Xin chào, @ViewBag.use</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIXIrqiW3R5OstWAjkuFvNwvjYHRaTmwEQWg&s" alt="Avatar" class="avatar">
+                </div>
+            </header>
+            <section class="main-content">
+                @RenderBody()
+            </section>
+        </main>
+    </div>    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
