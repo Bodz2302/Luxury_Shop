@@ -11,9 +11,11 @@ namespace Luxury_Shop.Controllers
     public class HomePageController : Controller
     {
         private LuxuryEntities1 database = new LuxuryEntities1();
-        // GET: HomePage
+        // GET: HomePage  ViewBag.use = Session["username"];
+       
         public ActionResult HomePage()
         {
+            ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             // Lấy tất cả sản phẩm từ cơ sở dữ liệu
             var products = database.Products.ToList();
@@ -23,6 +25,7 @@ namespace Luxury_Shop.Controllers
         }
         public ActionResult Gucci()
         {
+            ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             return View();
         }

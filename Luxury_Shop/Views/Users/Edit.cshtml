@@ -28,10 +28,15 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserID)
 
-    @Html.HiddenFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Password,"Mật khảu", htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, "Mật khảu", htmlAttributes: new { @class = "control-label" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -39,7 +44,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Email,"Email", htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
@@ -47,7 +52,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.FullName,"Họ và tên", htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.FullName, "Họ và tên", htmlAttributes: new { @class = "control-label" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
@@ -55,7 +60,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Phone,"Số điện thoại", htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.Phone, "Số điện thoại", htmlAttributes: new { @class = "control-label" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
@@ -63,7 +68,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Address,"Địa chỉ", htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.Address, "Địa chỉ", htmlAttributes: new { @class = "control-label" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -74,11 +79,11 @@
     @if (ViewBag.Admin != null && ViewBag.Admin == true)
     {
         <div class="form-group">
-            <label  class = "control-label"for="IsAdmin">Quyền Admin</label>
+            <label class="control-label" for="IsAdmin">Quyền Admin</label>
             <div class="col-md-10">
 
 
-                <select id="IsAdmin" name="IsAdmin" required class = "form-control" >
+                <select id="IsAdmin" name="IsAdmin" required class="form-control">
                     <option value="false">Thành Viên</option>
                     <option value="true">Admin</option>
                 </select>
@@ -92,7 +97,7 @@
         <div class="col-md-offset-2 col-md-10">
             <input style="
     width: 785px;
-"type="submit" value="Save" class="btn btn-default" />
+" type="submit" value="Save" class="btn btn-default" />
             <p>
                 <input type="button" value="Back to List" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Quanlykh")'" />
             </p>

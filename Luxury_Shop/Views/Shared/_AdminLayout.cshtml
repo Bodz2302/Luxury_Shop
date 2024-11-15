@@ -16,8 +16,9 @@
                 @Html.ActionLink("Dashboard", "Index", "Users", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý người dùng", "Quanlykh", "Users", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý sản phẩm", "Index", "Products", null, new { @class = "menu-link" })
-                @Html.ActionLink("Quản lý Danh mục", "Index", "Categories", null, new { @class = "menu-link" })
-                @Html.ActionLink("Quản lý Thương hiệu", "Index", "Brands", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý danh mục", "Index", "Categories", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý thương hiệu", "Index", "Brands", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý đơn hàng", "Index", "quanlydonhang", null, new { @class = "menu-link" })
                 @Html.ActionLink("Đăng xuất", "logout", "Users", new { id = @ViewBag.account_id }, new { @class = "logout" })
 
             </nav>

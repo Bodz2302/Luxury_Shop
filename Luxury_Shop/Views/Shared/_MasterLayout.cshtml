@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/Content/Style1.css">
     <link rel="stylesheet" href="~/Content/MasterLayout/header.css" />
     <link rel="stylesheet" href="~/Content/MasterLayout/footer.css" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>    
@@ -48,7 +49,7 @@
                             <a href="#">Gucci</a> <hr>
                             <a href="#">Burberry</a> <hr>
                             <a href="#">Dsquared2</a> <hr>
-                            
+
                         </div>
                     </li>
                     @if (ViewBag.check == null)
@@ -64,8 +65,15 @@
                     }
                     else
                     {
+
+
+                <li class="profile">
+                    <a href="@Url.Action("Index", "Users")"> @ViewBag.use</a>
+                </li>
+
+
                         <li class="logout">
-                            @Html.ActionLink("Logout", "logout", "Users")
+                            @Html.ActionLink("Đăng xuất", "logout", "Users")
 
                         </li>
                     }
