@@ -130,7 +130,6 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QuanlydonhangController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
-    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -142,6 +141,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\Luxury.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,6 +206,10 @@
     <Content Include="Content\images\áoguciitrang.jpg" />
     <Content Include="Content\MasterLayout\footer.css" />
     <Content Include="Content\MasterLayout\header.css" />
+    <Content Include="Content\payment\core.css" />
+    <Content Include="Content\payment\payment.css" />
+    <Content Include="Content\payment\qr.css" />
+    <Content Include="Content\payment\style.css" />
     <Content Include="Content\Style1.css" />
     <Content Include="Content\StyleCart.css" />
     <Content Include="favicon.ico" />
@@ -245,6 +249,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\payment.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -264,7 +269,7 @@
     <Content Include="Views\Details\Details.cshtml" />
     <Content Include="Views\HomePage\Gucci.cshtml" />
     <Content Include="Views\Checkout\Checkout.cshtml" />
-    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\test.cshtml" />
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -291,6 +296,8 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\Transfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

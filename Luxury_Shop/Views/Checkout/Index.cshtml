@@ -1,25 +1,49 @@
-﻿
+﻿@model Luxury_Shop.Models.CheckoutViewModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Thanh toán";
 }
 
-<h2>Chọn phương thức thanh toán</h2>
-<form action="/Checkout/ProcessPayment" method="post">
-    <label>
-        <input type="radio" name="paymentMethod" value="bank_transfer"> Chuyển khoản ngân hàng
-    </label>
-    <input type="text" name="bankAccount" placeholder="Nhập tài khoản ngân hàng">
+<h2>Thông tin thanh toán</h2>
 
-    <label>
-        <input type="radio" name="paymentMethod" value="cash"> Thanh toán tiền mặt
-    </label>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Thông tin giỏ hàng</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Product.OriginalPrice.ToString("C")</td>
+                        <td>@(item.Product.OriginalPrice * item.Quantity).ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p><strong>Tổng tiền: </strong>@Model.TotalAmount.ToString("C")</p>
+    </div>
 
-    <button type="submit">Thanh toán</button>
-</form>
-
-@if (ViewBag.Status != null)
-{
-    <p>@ViewBag.Message</p>
-}
-
-
+    <div class="col-md-6">
+        <h3>Thông tin thanh toán</h3>
+        <form action="@Url.Action("ProcessPayment", "Checkout")" method="post">
+            <div class="form-group">
+                <label for="paymentMethod">Chọn phương thức thanh toán:</label>
+                <select class="form-control" id="paymentMethod" name="paymentMethod">
+                    <option value="0">Chuyển khoản ngân hàng</option>
+                    <option value="1">Thanh toán khi nhận hàng</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Thanh toán</button>
+        </form>
+    </div>
+</div>

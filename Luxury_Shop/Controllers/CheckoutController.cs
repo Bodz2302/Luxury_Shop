@@ -1,76 +1,139 @@
-﻿using System;
+﻿using Luxury_Shop.Models;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System;
+using System.Linq;
 
 public class CheckoutController : Controller
 {
-    private readonly Pay2SService _pay2SService;
-
-    public CheckoutController()
-    {
-        _pay2SService = new Pay2SService(); // Khởi tạo đối tượng Pay2SService
-    }
+    private readonly LuxuryEntities1 database = new LuxuryEntities1();
 
     // GET: Checkout/Index
     public ActionResult Index()
     {
-        return View();
+        Cart cart = Session["Cart"] as Cart;
+        if (cart == null || !cart.Items.Any())
+        {
+            return RedirectToAction("ShowCart", "ShoppingCart");
+        }
+
+        // Tạo CheckoutViewModel để truyền vào view
+        var viewModel = new CheckoutViewModel
+        {
+            CartItems = cart.Items,
+            TotalAmount = GetTotalAmount(),
+        };
+
+        return View(viewModel);
     }
 
-    // POST: Checkout/ProcessPayment
+
+    // Phương thức xử lý thanh toán (POST)
+    public enum PaymentMethod
+    {
+        BankTransfer,
+        Cash
+    }
+
     [HttpPost]
-    public async Task<ActionResult> ProcessPayment(string paymentMethod)
+    public ActionResult ProcessPayment(string paymentMethod)
     {
         if (string.IsNullOrWhiteSpace(paymentMethod))
         {
-            ViewBag.Status = "failed";
-            ViewBag.Message = "Vui lòng chọn phương thức thanh toán.";
-            return View("Index");
+            return Json(new { status = "failed", message = "Vui lòng chọn phương thức thanh toán." });
         }
 
-        // Tạo mã đơn hàng duy nhất
+        decimal totalAmount = GetTotalAmount();
+        if (totalAmount <= 0)
+        {
+            return Json(new { status = "failed", message = "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán." });
+        }
+
         string orderId = Guid.NewGuid().ToString();
 
         if (paymentMethod == "bank_transfer")
         {
-            // Mã ngân hàng và số tài khoản yêu cầu
-            string bankCode = "ACB";
-            string bankAccount = "35639567";
-
-            // Tạo URL để chuyển hướng sang trang thanh toán của Pay2S với mã ngân hàng và tài khoản
-            string pay2SRedirectUrl = _pay2SService.GetPaymentUrl(orderId, bankCode, bankAccount);
-
-            // Chuyển hướng người dùng đến trang Pay2S để thực hiện thanh toán
-            return Redirect(pay2SRedirectUrl);
+            // Chuyển sang trang thanh toán với mã QR
+            return RedirectToAction("Transfer", new { orderId = orderId, totalAmount = totalAmount });
         }
         else if (paymentMethod == "cash")
         {
-            // Thanh toán tiền mặt, chuyển trạng thái đơn hàng sang "pending"
-            ViewBag.Status = "pending";
-            ViewBag.Message = "Đơn hàng của bạn đang chờ xử lý. Vui lòng thanh toán tiền mặt khi nhận hàng.";
-            return View("PaymentPending");
+            return Json(new { status = "pending", message = "Đơn hàng đang chờ xử lý. Vui lòng thanh toán tiền mặt khi nhận hàng." });
         }
 
-        ViewBag.Status = "failed";
-        ViewBag.Message = "Phương thức thanh toán không hợp lệ.";
-        return View("Index");
+        return Json(new { status = "failed", message = "Phương thức thanh toán không hợp lệ." });
     }
 
-    // GET: Checkout/PaymentSuccess
-    public ActionResult PaymentSuccess(string orderId)
+    public async Task<ActionResult> CheckPaymentStatus(string orderId, decimal totalAmount)
     {
-        // Kiểm tra xem mã đơn hàng đã được thanh toán thành công chưa
-        var paymentStatus = _pay2SService.CheckPaymentStatus(orderId);
+        // Gọi API kiểm tra trạng thái thanh toán
+        string apiUrl = $"https://api.sieuthicode.net/historyapiacbv2/777a5476ec426a80d379b348d097f03d";
+        var response = await GetBankTransactionHistory(apiUrl);
 
-        if (paymentStatus)
+        if (response.status == "success")
         {
-            ViewBag.Message = "Thanh toán thành công! Cảm ơn bạn đã mua hàng.";
-            return View("PaymentSuccess");
+            var transactions = response.transactions as List<Transaction>;
+            bool isPaymentValid = transactions != null && transactions.Exists(t => t.Amount == totalAmount && t.Description.Contains(orderId));
+
+            if (isPaymentValid)
+            {
+                return Json(new { status = "success", message = "Thanh toán thành công!" });
+            }
         }
-        else
+
+        return Json(new { status = "failed", message = "Chưa tìm thấy giao dịch thanh toán." });
+    }
+
+
+    // Phương thức tính tổng số tiền trong giỏ hàng
+    private decimal GetTotalAmount()
+    {
+        // Lấy giỏ hàng từ session
+        Cart cart = Session["Cart"] as Cart;
+        if (cart == null || cart.Items == null || cart.Items.Count == 0)
         {
-            ViewBag.Message = "Thanh toán không thành công. Vui lòng thử lại hoặc liên hệ hỗ trợ.";
-            return View("PaymentFailed");
+            return 0;
+        }
+
+        // Tính tổng số tiền của giỏ hàng
+        return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
+    }
+
+    // Phương thức gọi API lấy lịch sử giao dịch ngân hàng
+    private async Task<dynamic> GetBankTransactionHistory(string apiUrl)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+
+                    if (responseData.status == "success" && responseData.transactions != null)
+                    {
+                        var transactions = JsonConvert.DeserializeObject<List<Transaction>>(responseData.transactions.ToString());
+                        return new { status = "success", transactions = transactions };
+                    }
+                    else
+                    {
+                        return new { status = "failed", message = "Không thể lấy lịch sử giao dịch." };
+                    }
+                }
+                else
+                {
+                    return new { status = "failed", message = "Không thể lấy lịch sử giao dịch." };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { status = "failed", message = $"Lỗi khi gọi API: {ex.Message}" };
+            }
         }
     }
 }

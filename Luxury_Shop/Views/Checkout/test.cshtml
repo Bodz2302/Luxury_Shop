@@ -1,0 +1,569 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" content="e48b6b60-26fd-4aaf-b284-16d1ad3bf246" />
+    <meta name="_csrf_header" content="X-CSRF-TOKEN" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="Thanh toán hóa đơn dịch vụ Pay2S"
+    />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="366" />
+    <!-- <meta property="og:image" content="https://evps.vn/wp-content/uploads/2023/03/giai-phap-cong-nghe-evps-1.png" />-->
+    <meta id="dynamic-meta" name="dynamic-id" content="" />
+    <link
+      href="https://my.pay2s.vn/assets/media/favicons/favicon-192x192.png"
+      rel="SHORTCUT ICON"
+    />
+    <title>Cổng thanh toán trực tuyến - Pay2S</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.spayment.vn/Scripts/sweetalert/sweetalert.min.js"></script>
+    <link
+      href="https://api.spayment.vn/Scripts/sweetalert/sweetalert.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+    <link href="~/Content/payment/qr.css" rel="stylesheet" />
+    <link href="~/Content/payment/core.css" rel="stylesheet" />
+    <link href="~/Content/payment/payment.css" rel="stylesheet" />
+    <link href="~/Content/payment/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="d-flex flex-column justify-content-between">
+    <header>
+      <nav class="py-4">
+        <div class="container d-flex align-items-center">
+          <img
+            class="me-4"
+            src="https://docs.pay2s.vn/assets/logo.png"
+            width="75"
+          />
+          <span class="me-auto">
+           Cổng thanh toán trực tuyến - Pay2S
+          </span>
+        </div>
+      </nav>
+    </header>
+    <div id="alert" class="mainContent mb-auto apply-bg-bidv">
+      <div class="container col-md-12 col-lg-12 col-xl-12 pt-4 pb-4">
+        <!-------------------------------------------------- CONTENT -------------------------------------------------->
+        <div class="dynamic-filter-list-container dynamic-filter-min-height">
+          <div
+            class="modal-background modal momoModal"
+            id="paymentModal"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div
+              class="modal-instruction modal-dialog-centered w-75"
+              role="document"
+            ></div>
+          </div>
+          <!-------------------------------------------------- MOMO -------------------------------------------------->
+         <div class="filter-content-box" style="display: block;">
+          <div class="header position-relative py-4">
+            <div class="d-flex align-items-center gap-4">
+              <img src="https://payment.pay2s.vn/public/payment/images/BIDV.svg" width="50">
+              <h5 class="title-method bidvbank">Cổng thanh toán qua Ngân hàng BIDV (BIDV)</h5>
+            </div>
+            <div>
+            </div>
+          </div>
+          <div class="contentWapper_card bidv pt-1 pb-0 pb-0 d-flex gap-4 ">
+            <div class="mainCard cardLeft flex-grow-1 border rounded-3 p-3 p-md-4">
+              <p class="order-title fw-bold">Thông tin thanh toán</p>
+              <ul class="info-card-holder mt-3 mt-lg-4">
+                <li class="d-flex flex-column  gap-2">
+                  <p class="info-title">Nhà cung cấp: </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <img class="logo rounded py-3 px-2" src="https://docs.pay2s.vn/assets/logo.png">
+                    <p class="content fw-semibold">Giải pháp thanh toán Pay2S</p>
+                  </div>
+                </li>
+                <div class="line-detail"></div>
+                <li class="d-flex flex-column  gap-2">
+                  <p class="info-title">Họ và tên: </p>
+                  <p class="content fw-semibold">NGUYỄN TRỌNG VỸ</p>
+                </li>
+                <div class="line-detail"></div>
+                <li class="d-flex flex-column  gap-2">
+                  <p class="info-title">Số tài khoản: </p>
+                  <div class="d-flex align-items-end justify-content-between gap-2">
+                    <p id="phoneCopy" class="content fw-semibold">9638698888</p>
+                    <button id="PhoneCopyBtn" data-clipboard-target="#phoneCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Sao
+                      chép</button>
+                  </div>
+                </li>
+                <div class="line-detail"></div>
+                <li class="d-flex flex-column gap-2">
+                  <p class="info-title">Số tiền: </p>
+                  <div class="d-flex align-items-end justify-content-between gap-2">
+                    <p id="priceCopy" class="content fw-semibold">96,666</p>
+                    <button id="priceCopyBtn" data-clipboard-target="#priceCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Sao
+                      chép</button>
+                  </div>
+                </li>
+                <div class="line-detail"></div>
+                <li class="d-flex flex-column  gap-2">
+                  <p class="info-title">Nội dung chuyển tiền: </p>
+                  <div class="d-flex align-items-end justify-content-between gap-2">
+                    <p id="textCopy" class="content fw-semibold">INV672F24087C582</p>
+                    <button id="textCopyBtn" data-clipboard-target="#textCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Sao
+                      chép</button>
+                  </div>
+                </li>
+                <li class="mobile">
+                    <div class="text-center">
+                    <h6>Quét mã QR để thanh toán</h6>
+                  </div>
+                  <div class="qrcode_scan_container">
+                    <div class="qrcode_scan">
+                      <div class="qrcode_image">
+                        <img id="qrCodeImage" alt="paymentcode" class="image-qr-code" src="https://apiqr.web2m.com/api/generate/BIDV/9638698888/NGUYEN TRONG VY?amount=96666&memo=INV672F24087C582&is_mask=0&bg=0
+                        ">
+                    </div>
+                  </div>
+                   <div class="text-center">
+            <button id="downloadQrCodeButton" class="btn copyBtn">Tải ảnh về</button>
+        </div>
+            </div></li>
+              </ul>
+            </div>
+            <div class="mainCard cardRight flex-grow-1 d-none d-md-block rounded-3 p-4 py-md-4 text-light">
+            
+              <div class="qr-code col-lg-8">
+            <div class="payment-content" id="body-payment-content">
+              <div
+                class="payment-qr col-sm-7 mx-auto pb-0 pt-3 pb-3 text-white"
+              >
+                <div class="payment-cta p-0">
+                  <div>
+                    <h4>Quét mã QR để thanh toán</h4>
+                  </div>
+                  <div id="momo-mark" class="mx-auto pt-3"></div>
+
+                  <div class="qrcode_scan_container">
+                    <div class="qrcode_scan">
+                      <div class="qrcode_gradient">
+                        <img
+                          alt=""
+                          src="../../..//public/payment/assets/qrcode-gradient-ecfeda44ae2870718219b2046c4abe3e.png"
+                          loading="lazy"
+                          class="jsx-d22f6bd0771ae323 img-fluid"
+                        />
+                      </div>
+                      <div class="qrcode_border">
+                        <img
+                          alt=""
+                          src="../../../public/payment/assets/border-qrcode-deab3eb55f9ef6d6a8d6d1b5b194b36c.svg"
+                          class="jsx-d22f6bd0771ae323 img-fluid"
+                        />
+                      </div>
+                      <div class="qrcode_image">
+                        <img
+                          alt="paymentcode"
+                          
+                          class="image-qr-code"
+                          src="https://img.vietqr.io/image/ACB-35639567-qr_only.png"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+              <p class="text-center col">
+                Sử dụng <b>ứng dụng Ngân hàng hoặc, điện tử</b> hoặc<br>
+                Camera hỗ trợ QR code để quét mã
+              </p>
+             
+            </div>
+          </div>
+        </div>
+          <!-------------------------------------------------- BANK CARDS -------------------------------------------------->
+          
+        </div>
+        <!-------------------------------------------------- EXPIRE -------------------------------------------------->
+        <div class="expire-content mb-3">
+          <div class="box-expire p-3">
+            <div class="expire-text text-center">
+              <div id="thanhcong"></div>
+              <div id="hide_2">
+                <p
+                  class="m-0 d-flex flex-column flex-md-row justify-content-center align-items-center gap-md-2"
+                >
+                  Đơn hàng sẽ hết hạn sau:
+                  <span class="time-expire-text fw-medium fs-3" name="expiredAt"
+                    >09:25</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-------------------------------------------------- BACK -------------------------------------------------->
+          <div class="support text-center mt-4">
+            <span
+              style="display: none"
+              class="filter-content-close-mobile filter-item-open"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              data-original-title="close"
+            >
+              Chọn phương thức thanh toán khác
+            </span>
+            <div class="mb-5 backBtn">
+              <a
+                id="backButton"
+                class="momo-color hover-momo-color hover-none-decoration"
+                >Hủy giao dịch</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+      <div class="container py-4">
+        <div
+          class="footer-wrap flex-column gap-4 flex-md-row d-flex justify-content-between"
+        >
+          <div class="footer-wrap-version d-flex flex-column gap-2">
+            <a class="footer-logo">
+              <img
+                alt="logo"
+                id="logofooter"
+                class="img-fluid"
+                src="https://docs.pay2s.vn/assets/logo.png" /></a
+            ><span
+              >© 2024 - Cổng thanh toán online phát triển bởi
+              <a href="https://pay2s.vn">pay2s.vn</a>
+            </span>
+          </div>
+
+          <div class="footer-wrap-info">
+            <p class="mb-1">Hỗ trợ khách hàng:</p>
+            <div>
+              <a
+                class="momo-phone-icon"
+                href="tel:0928568000"
+                >0928568000</a
+              >
+            </div>
+            <div>
+              <a
+                class="momo-mail-icon"
+                href="mailto:info@pay2s.vn"
+              >
+                info@pay2s.vn</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- <script async="" src="./assets/js/js"></script>-->
+    <script src="~/Scripts/payment.js">
+    </script>
+<script>
+    document.getElementById('downloadQrCodeButton').addEventListener('click', function() {
+        const img = document.getElementById('qrCodeImage');
+        const url = img.src;
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'qrcode.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+</script>
+    <script>
+      var offset = 598626;
+      var second = offset / 1000;
+      var countdown = parseInt(second);
+      var retry = 500;
+      var isTablet = false;
+      var device;
+      if (false) {
+        device = "mobile";
+      } else if (false) {
+        device = "tablet";
+      } else device = "desktop";
+      var trackingModel = {
+        merchant_id: "MOMOWXYJ20190613",
+        order_id: "1689953460:586539",
+        service_name: "payment_momowallet",
+        screen_name: "wallet_pgw",
+        event_name: null,
+        device: "desktop",
+        api: null,
+        button_name: null,
+        status: null,
+        component_name: null,
+        category: null,
+        field_name: null,
+      };
+
+      function back() {
+        if (trackingModel) {
+          const params = trackingModel;
+          params.component_name = "cancel_confirmation";
+          params.category = "popup";
+          params.button_name = "confirm";
+        }
+        window.location = "https://my.pay2s.vn/invoices";
+      }
+
+      function closeCommonModalAndSendEvent() {
+        if (trackingModel) {
+          const params = trackingModel;
+          params.component_name = "cancel_confirm";
+          params.category = "popup";
+          params.button_name = "close";
+        }
+        $(".common-modal").remove();
+        $(".modal-backdrop").remove();
+      }
+
+      function showCommonModal(
+        title,
+        message,
+        confirmText,
+        confirmAction,
+        closeText,
+        closeAction
+      ) {
+        // Create the modal HTML
+        var modalHtml = `
+        <div class="modal common-modal" tabindex="-1" role="dialog">
+          <div class="popup-modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <img class="button-modal-close hover-none-decoration" src="https://pay2s.vn/public/payment/assets/images/navigation-close-circle.svg" onclick="${closeAction}">
+                <h5 class="modal-popup-title">${title}</h5>
+                <div>${message}</div>
+                <div class="modal-buttons-container"><a class="text-gray-dark hover-black font-weight-bold-600 mx-3 hover-none-decoration" style="cursor: pointer" onclick="${closeAction}">${closeText}</a><a class="momo-color font-weight-bold-600 hover-momo-color mx-3 hover-none-decoration" style="cursor: pointer" onclick="${confirmAction}">${confirmText}</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+        // Append the modal to the body
+        $("body").append(modalHtml);
+
+        // Show the modal
+        $(".common-modal").modal("show");
+      }
+
+      document.onreadystatechange = function () {
+        if (document.readyState === "complete") {
+          setTimeout(function () {
+            const interactiveElement = document.getElementById("interactive");
+            const loadElement = document.getElementById("load");
+            const contentsElement = document.getElementById("contents");
+
+            if (loadElement) {
+              loadElement.remove();
+            }
+
+            if (contentsElement) {
+              contentsElement.classList.remove("d-none");
+            }
+          }, 1000); // 1 second
+        }
+      };
+
+      $(document).ready(function () {
+        var e = offset / 1e3,
+          t = parseInt(e),
+          n = setInterval(function () {
+            var a = parseInt(e / 60),
+              c = parseInt(e - 60 * a);
+            e--,
+              t--,
+              a < 10 && (a = "0" + a),
+              c < 10 && (c = "0" + c),
+              $("span[name=expiredAt]").html(a + ":" + c),
+              $("b[name=expiredAt]").html(a + ":" + c),
+              t <= 0 &&
+                (clearInterval(n),
+                swal({
+                  title: "Thanh toán không thành công!",
+                  text: "Vui lòng thanh toán lại hoặc liên hệ với Quản trị viên!",
+                  type: "error",
+                  showCloseButton: true,
+                  focusConfirm: false,
+                }),
+                (window.location = ""));
+          }, 1000);
+        $.ajaxSetup({ cache: !1 });
+        setUpUI();
+      });
+
+      function redirect(data) {
+        if (trackingModel) {
+          const params = trackingModel;
+          params.api = "redirectUrl";
+          params.status = "success";
+        }
+        if (data.return_url) {
+          window.location.replace(data.return_url);
+        } else if (data.returnUrl) {
+          window.location.replace(data.returnUrl);
+        }
+      }
+
+      function executeXML() {
+        var invoiceNumber = "INV-672F24087C582";
+        var retry = 5; // số lần retry
+        function checkInvoiceStatus() {
+          $.ajax({
+            url: "/v1/gateway/querySession",
+            method: "POST",
+            data: { invoiceNumber: invoiceNumber },
+            dataType: "json",
+            success: function (data) {
+              if (data.code === "200") {
+                $("#hide").html("");
+                $("#hide_2").html("");
+                $("#dynamic-filter-list").html("");
+                $("#content-list").html("");
+                $("#backButton").html("");
+                $("#thanhcong").html(
+                  '<div class="expire-text">Thanh toán thành công.<br/>Vui lòng chờ trong giây lát.</div>'
+                );
+                  setTimeout(function () {
+                  window.location = data.redirect_url;
+                }, 3000);
+              } else if (
+                data.code === "400" &&
+                data.message === "Invoice is pending"
+              ) {
+                retry--;
+                setTimeout(checkInvoiceStatus, 1000);
+              } else if (
+                data.code === "400" &&
+                data.message === "Invoice has been cancelled"
+              ) {
+                $("#hide").html("");
+                $("#hide_2").html("");
+                $("#dynamic-filter-list").html("");
+                $("#content-list").html("");
+                $("#thanhcong").html(
+                  '<div class="expire-text">Hóa đơn đã bị hủy.</div>'
+                );
+              } else {
+                retry--;
+                setTimeout(checkInvoiceStatus, 1000);
+              }
+            },
+            error: function () {
+              retry--;
+              setTimeout(checkInvoiceStatus, 1000);
+            },
+          });
+        }
+
+        checkInvoiceStatus();
+      }
+      $(document).ready(function () {
+        $.ajaxSetup({
+          cache: false,
+        });
+        setTimeout(executeXML, 1000);
+      });
+
+      function showModal() {
+        if (trackingModel) {
+          const params = trackingModel;
+          params.button_name = "user_guide";
+        }
+        $(".modal-background").css("display", "block");
+      }
+
+      function closeModal() {
+        $(".modal-background").css("display", "none");
+      }
+
+      function setUpUI() {
+        if ("152.900" == 0) {
+          var expireText = $(
+            "<div class='expire-content mb-3'> <div class='box-expire' style='width: 350px; margin: auto'> <div class='expire-text'><p>Đơn hàng sẽ hết hạn sau: <span class='font-weight-normal time-expire-text' name='expiredAt'></span></p></div></div></div>"
+          );
+          var instruction = $(
+            "<div class='text-center my-3 font-size-14'><a class='black12-color mr-1'>Gặp khó khăn khi thanh toán?</a><a onclick='return showModal()' class='blue-color font-weight-bold-600' href='#'>Xem Hướng dẫn</a></div>"
+          );
+          var backButtonObjectRender = $(
+            "<div class='text-center my-3 font-size-14 font-weight-bold-600'><a class='momo-color backButton' href='#'>Quay về</a></div>"
+          );
+
+          $(".payment-qr").css("padding", "30px 0px 30px 0px");
+
+          $("#orderInfo").remove();
+          $("#form-qr-code").removeClass("col-lg-8");
+
+          isTablet
+            ? $("#form-qr-code").addClass("col-lg-12")
+            : $("#form-qr-code").addClass("col-lg-12");
+
+          $(".payment-qr")
+            .append(expireText)
+            .append(instruction)
+            .append(backButtonObjectRender);
+        }
+
+        $("#backButton").click(function () {
+          var stringPartner =
+            "Bạn chắc chắn muốn hủy giao dịch thanh toán với " +
+            "<strong>" +
+            "" +
+            "</strong>" +
+            "?";
+          showCommonModal(
+            "Huỷ giao dịch thanh toán",
+            stringPartner,
+            "HUỶ GIAO DỊCH",
+            "back()",
+            "ĐÓNG",
+            "closeCommonModalAndSendEvent()"
+          );
+          return false;
+        });
+      }
+    </script>
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+    </script>
+    <script src="../../public/payment/assets/js/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+@if (ViewBag.Status != null)
+{
+    <p>@ViewBag.Message</p>
+}
+
+
