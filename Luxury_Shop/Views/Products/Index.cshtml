@@ -1,0 +1,72 @@
+﻿@model Luxury_Shop.Models.AccountListViewModel
+
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = ViewBag.Title;
+}
+
+<link href="~/Css/table.css" rel="stylesheet" />
+<link href="~/Css/palisst.css" rel="stylesheet" />
+<h2>Danh sách sản phẩm</h2>
+
+<a href="@Url.Action("create")" class="btn-create">Tạo Mới</a>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>giá sale</th>
+                <th>số lượng</th>
+                <th>Tên thương hiệu</th>
+                <th>Danh mục</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Listproduct)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OriginalPrice)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SalePrice)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StockQuantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Brand.BrandName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+                    <td>
+                        <div class="button-container">
+                            <button class="button edit-button" onclick="location.href='@Url.Action("Edit", "Products", new { id = item.ProductID })'">Edit</button>
+                            <button class="button product-detail" onclick="location.href='@Url.Action("Details", "Products", new { id = item.ProductID })'">Details</button>
+
+                            @using (Html.BeginForm("Delete", "Products", FormMethod.Post, new { id = item.ProductID }))
+                            {
+                                @Html.AntiForgeryToken() @Html.Hidden("id", item.ProductID)
+                                <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');" class="button delete-button">Xóa</button>
+                            }
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div><div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })" class="prev">Trước</a>
+    }
+
+    @for (int i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+    {
+        <a href="@Url.Action("index", new { pageNumber = i, pageSize = Model.PageSize })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize))
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
+    }
+</div>

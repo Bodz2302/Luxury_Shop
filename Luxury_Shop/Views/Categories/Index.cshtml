@@ -1,0 +1,71 @@
+﻿@model Luxury_Shop.Models.AccountListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = "Quản Lý Danh mục";
+}
+
+
+<link href="~/Css/table.css" rel="stylesheet" />
+<link href="~/Css/palisst.css" rel="stylesheet" />
+<h2>Thêm danh mục</h2>
+<a href="@Url.Action("create")" class="btn-create">Tạo Mới</a>
+<div class="table-container">
+    <table class="table">
+        <tr>
+            <th>
+                Tên danh mục
+            </th>
+            <th>
+                Mô tả
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.listdanhmuc)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category1.CategoryName)
+                </td>
+                <td>
+                    <div class="button-container">
+                        <button class="button edit-button" onclick="location.href='@Url.Action("Edit", "Categories", new { id = item.CategoryID })'">Edit</button>
+
+                        @using (Html.BeginForm("Delete", "Categories", FormMethod.Post, new { id = item.CategoryID }))
+                        {
+                            @Html.AntiForgeryToken() @Html.Hidden("id", item.CategoryID)
+                            <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa không?');" class="button delete-button">Xóa</button>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div><div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })" class="prev">Trước</a>
+    }
+
+    @for (int i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+    {
+        <a href="@Url.Action("index", new { pageNumber = i, pageSize = Model.PageSize })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize))
+    {
+        <a href="@Url.Action("index", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
+    }
+</div>

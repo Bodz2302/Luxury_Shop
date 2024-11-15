@@ -14,6 +14,7 @@ namespace Luxury_Shop.Controllers
         // GET: HomePage
         public ActionResult HomePage()
         {
+            ViewBag.check = Session["check"];
             // Lấy tất cả sản phẩm từ cơ sở dữ liệu
             var products = database.Products.ToList();
 
@@ -22,6 +23,7 @@ namespace Luxury_Shop.Controllers
         }
         public ActionResult Gucci()
         {
+            ViewBag.check = Session["check"];
             return View();
         }
     }

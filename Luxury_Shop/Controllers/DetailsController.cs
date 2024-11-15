@@ -15,6 +15,7 @@ namespace Luxury_Shop.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
+            ViewBag.check = Session["check"];
             var product = database.Products
                                    .Include(p => p.Category)  // Load thông tin category
                                    .FirstOrDefault(p => p.ProductID == id);

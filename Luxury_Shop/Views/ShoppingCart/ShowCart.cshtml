@@ -9,50 +9,56 @@
     <link rel="stylesheet" href="~/Content/StyleCart.css" />
 </head>
 <div class="cart-container">
-    <h2>Giỏ Hàng</h2>
-    <a href="@Url.Action("HomePage", "HomePage")" class="btn">Tiếp tục mua hàng</a>
-
-    @if (Model != null && Model.Items.Any())
+    @if (ViewBag.mes != null)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Thành tiền</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Items)
-                {
-                    <tr>
-                        <td>@item.Product.ProductName</td>
-                        <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice)</td>
-                        <td>@item.Quantity</td>
-                        <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</td>
-                        <td>
-                            <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })" class="btn">Xóa</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <div class="total-price">
-            Tổng tiền: @string.Format("{0:N0} vnd", Model.Total_Money())
-        </div>
-
-        <!-- Thêm nút Thanh Toán -->
-        <div class="checkout">
-            <form action="@Url.Action("Index", "Checkout")" method="post">
-                <button type="submit" class="btn checkout-btn">Thanh toán</button>
-            </form>
-        </div>
+        <h2>@ViewBag.mes</h2>
     }
     else
     {
-        <p class="empty-cart">Giỏ hàng của bạn hiện chưa có sản phẩm nào.</p>
-    }
+        <h2>Giỏ Hàng</h2>
+        <a href="@Url.Action("HomePage", "HomePage")" class="btn">Tiếp tục mua hàng</a>
+
+        if (Model != null && Model.Items.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Product.ProductName</td>
+                            <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice)</td>
+                            <td>@item.Quantity</td>
+                            <td>@string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</td>
+                            <td>
+                                <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Product.ProductID })" class="btn">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="total-price">
+                Tổng tiền: @string.Format("{0:N0} vnd", Model.Total_Money())
+            </div>
+
+            <!-- Thêm nút Thanh Toán -->
+            <div class="checkout">
+                <form action="@Url.Action("Index", "Checkout")" method="post">
+                    <button type="submit" class="btn checkout-btn">Thanh toán</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <p class="empty-cart">Giỏ hàng của bạn hiện chưa có sản phẩm nào.</p>
+        }}
 </div>
