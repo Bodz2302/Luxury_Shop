@@ -46,10 +46,11 @@
 
         <!-- Thêm nút Thanh Toán -->
         <div class="checkout">
-            <form action="@Url.Action("Index", "Checkout")" method="post">
+            <form action="@Url.Action("Checkout", "ShoppingCart")" method="get">
                 <button type="submit" class="btn checkout-btn">Thanh toán</button>
             </form>
         </div>
+
     }
     else
     {

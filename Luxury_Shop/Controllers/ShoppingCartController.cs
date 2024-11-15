@@ -51,5 +51,51 @@ namespace Luxury_Shop.Controllers
             // Quay lại trang hiển thị giỏ hàng
             return RedirectToAction("ShowCart");
         }
+
+        // GET: ShoppingCart/Checkout
+        public ActionResult Checkout()
+        {
+            // Lấy giỏ hàng từ session
+            var cart = Session["Cart"] as Cart;
+
+            // Kiểm tra nếu giỏ hàng trống hoặc không có sản phẩm nào
+            if (cart == null || !cart.Items.Any())
+            {
+                return RedirectToAction("ShowCart");
+            }
+
+            // Trả về view Checkout
+            return View(cart);
+        }
+
+        // POST: ShoppingCart/ProcessCheckout
+        [HttpPost]
+        public ActionResult ProcessCheckout()
+        {
+            // Lấy giỏ hàng từ session
+            var cart = Session["Cart"] as Cart;
+
+            // Kiểm tra nếu giỏ hàng trống
+            if (cart == null || !cart.Items.Any())
+            {
+                return RedirectToAction("ShowCart");
+            }
+
+            // Xử lý logic thanh toán tại đây
+            // Ví dụ: lưu thông tin đơn hàng vào database
+
+            // Xóa giỏ hàng sau khi thanh toán thành công
+            Session["Cart"] = null;
+
+            // Điều hướng đến trang cảm ơn hoặc xác nhận thanh toán
+            return RedirectToAction("OrderConfirmation");
+        }
+
+        // GET: ShoppingCart/OrderConfirmation
+        public ActionResult OrderConfirmation()
+        {
+            // Trả về trang xác nhận đơn hàng
+            return View();
+        }
     }
 }
