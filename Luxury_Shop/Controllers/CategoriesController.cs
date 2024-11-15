@@ -18,7 +18,7 @@ namespace Luxury_Shop.Controllers
         [HttpGet]
         public ActionResult Index(int pageNumber = 1, int pageSize = 6)
         {
-             if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }
@@ -45,7 +45,7 @@ namespace Luxury_Shop.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
-             if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }
@@ -64,7 +64,7 @@ namespace Luxury_Shop.Controllers
         // GET: Categories/Create
         public ActionResult Create()
         {
-             if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }

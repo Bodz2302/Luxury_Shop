@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Luxury_Shop.Models;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Luxury_Shop.Controllers
 {
@@ -23,7 +22,7 @@ namespace Luxury_Shop.Controllers
             ViewBag.Admin = Session["admin"];
             if (Session["username"] == null)
             {
-               
+
                 {
                     return RedirectToAction("loi", "Users");
                 }
@@ -36,7 +35,7 @@ namespace Luxury_Shop.Controllers
         [HttpGet]
         public ActionResult Quanlykh(int pageNumber = 1, int pageSize = 6)
         {
-             if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }
@@ -60,13 +59,13 @@ namespace Luxury_Shop.Controllers
         }
         public ActionResult loi()
         {
-            
+
 
             return View();
         }
         public ActionResult Quanlykh()
         {
-            if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }
@@ -80,7 +79,7 @@ namespace Luxury_Shop.Controllers
             Session["check"] = false;
             Session.Clear();
             return RedirectToAction("HomePage", "HomePage");
-       
+
         }
 
         // GET: Users/Details/5
@@ -119,11 +118,17 @@ namespace Luxury_Shop.Controllers
                     {
                         var data = db.Users.FirstOrDefault(u => u.Username == email && u.Password == password);
                         if (data != null)
-                        {                  
-                            
+                        {
+                            try { 
+                            if (data.IsAdmin.Value == null)
+                            {
+                                data.IsAdmin = false;
+                            }
+                            }
+                            catch { data.IsAdmin = false; }
                             Session["username"] = email;
                             Session["check"] = true;
-                            if (data.IsAdmin.Value==true)
+                            if (data.IsAdmin.Value == true)
                             {
                                 Session["admin"] = true;
                             }
@@ -156,7 +161,7 @@ namespace Luxury_Shop.Controllers
             if (ModelState.IsValid)
             {
                 user.IsAdmin = false;
-                 user.CreatedAt = DateTime.Now;
+                user.CreatedAt = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Login");
@@ -171,13 +176,13 @@ namespace Luxury_Shop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult taomoi([Bind(Include = "UserID,Username,Password,Email,FullName,Phone,Address,CreatedAt,IsAdmin")] User user)
         {
-             if (Session["admin"]==null)
+            if (Session["admin"] == null)
             {
                 return RedirectToAction("loi", "Users");
             }
             if (ModelState.IsValid)
             {
-                
+
                 user.CreatedAt = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
