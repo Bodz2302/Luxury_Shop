@@ -1,37 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Luxury_Shop.Models;
+using System;
 
-namespace Luxury_Shop.Models
+public class Product
 {
-    public class Cart
-    {
-        public List<CartItem> Items { get; set; } = new List<CartItem>();
-
-        public void AddProductToCart(Product product, int quantity)
-        {
-            var item = Items.FirstOrDefault(i => i.Product.ProductID == product.ProductID);
-            if (item != null)
-            {
-                // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
-                item.Quantity += quantity;
-            }
-            else
-            {
-                // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
-                Items.Add(new CartItem { Product = product, Quantity = quantity });
-            }
-        }
-
-        // Phương thức để tính tổng số tiền của giỏ hàng
-        public decimal Total_Money()
-        {
-            return Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
-        }
-    }
-
-    public class CartItem
-    {
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
-    }
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public string Description { get; set; }
+    public int? CategoryID { get; set; }
+    public int? BrandID { get; set; }
+    public decimal OriginalPrice { get; set; }
+    public decimal? SalePrice { get; set; }
+    public decimal? DiscountPercentage { get; set; }
+    public int? StockQuantity { get; set; }
+    public string ImageURL { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public virtual Brand Brand { get; set; }
+    public virtual Category Category { get; set; }
 }

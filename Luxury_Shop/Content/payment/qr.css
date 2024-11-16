@@ -1,0 +1,95 @@
+﻿.qrcode_scan_container {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: white;
+    width: 280px;
+    height: 280px;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.qrcode_image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+    .qrcode_image img {
+        width: 220px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+.qrcode_scan {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qrcode_border {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.qrcode_gradient {
+    position: absolute;
+    opacity: 0.6;
+    width: 98%;
+    height: 98%;
+    top: 1%;
+    left: 1%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 255, 0, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: QRCodeScan 3s infinite cubic-bezier(0.45, 0.03, 0.81, 0.63);
+    backface-visibility: hidden;
+}
+
+@keyframes QRCodeScan {
+    0% {
+        transform: translate3d(0, -110%, 0);
+    }
+
+    90% {
+        transform: translate3d(0, 30%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 30%, 0);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .qrcode_gradient {
+        display: none;
+    }
+
+    .qrcode_border {
+        display: none;
+    }
+
+    .qrcode_scan {
+        background-color: unset;
+    }
+
+    .qrcode_image img {
+        width: 90%;
+    }
+
+    .qrcode_scan_container {
+        padding: unset;
+        margin-top: unset;
+        background-color: unset;
+    }
+}
