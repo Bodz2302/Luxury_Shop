@@ -9,6 +9,7 @@ public class CheckoutController : Controller
 
     // GET: Checkout/Index
     // GET: Checkout/Index
+    // GET: Checkout/Index
     public ActionResult Index()
     {
         // Kiểm tra xem Cart đã tồn tại trong session hay chưa
@@ -26,20 +27,23 @@ public class CheckoutController : Controller
             return RedirectToAction("ShowCart", "ShoppingCart");
         }
 
-        // Tạo CheckoutViewModel để truyền vào view
-        var viewModel = new CheckoutViewModel
+        // Tạo OrderViewModel để truyền vào view
+        var orderViewModel = new OrderViewModel
         {
             CartItems = cart.Items,
-            TotalAmount = GetTotalAmount()
+            TotalAmount = GetTotalAmount() // Giả sử phương thức này tính tổng tiền trong giỏ hàng
         };
 
-        return View(viewModel);
+        return View(orderViewModel);
     }
+
+
+
 
 
     // POST: Checkout/ProcessPayment
     [HttpPost]
-    public ActionResult ProcessPayment(CheckoutViewModel model)
+    public ActionResult ProcessPayment(OrderViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -56,23 +60,18 @@ public class CheckoutController : Controller
         // Tạo mã đơn hàng ngẫu nhiên
         string orderId = GenerateOrderId();
 
-        // Kiểm tra phương thức thanh toán
-        if (model.PaymentMethod == 1) // COD - Thanh toán khi nhận hàng
-        {
-            // Lưu đơn hàng vào cơ sở dữ liệu với trạng thái "confirmed"
-            SaveOrderToDatabase(orderId, "confirmed", model);
+        // Lưu đơn hàng vào cơ sở dữ liệu
+        SaveOrderToDatabase(orderId, "confirmed", model);
 
-            // Xóa giỏ hàng sau khi đặt hàng thành công
-            Session["Cart"] = null;
+        // Xóa giỏ hàng sau khi đặt hàng thành công
+        Session["Cart"] = null;
 
-            return Json(new { status = "success", message = "Đơn hàng đã được xác nhận. Vui lòng chuẩn bị thanh toán khi nhận hàng." });
-        }
-
-        return Json(new { status = "failed", message = "Phương thức thanh toán không hợp lệ." });
+        // Chuyển hướng tới trang "Thanh toán thành công"
+        return Json(new { status = "success", message = "Đơn hàng đã được xác nhận. Vui lòng chuẩn bị thanh toán khi nhận hàng.", redirectUrl = Url.Action("OrderConfirmation", "Checkout") });
     }
 
     // Phương thức lưu đơn hàng vào cơ sở dữ liệu
-    private void SaveOrderToDatabase(string orderId, string status, CheckoutViewModel model)
+    private void SaveOrderToDatabase(string orderId, string status, OrderViewModel model)
     {
         try
         {
@@ -82,16 +81,22 @@ public class CheckoutController : Controller
                 throw new Exception("Order ID không hợp lệ. Không thể chuyển đổi sang số nguyên.");
             }
 
-            // Tạo đối tượng Order
+            // Chuyển đổi PhoneNumber từ string sang int
+            if (!int.TryParse(model.PhoneNumber, out int numericPhoneNumber))
+            {
+                throw new Exception("Phone number không hợp lệ. Không thể chuyển đổi sang số nguyên.");
+            }
+
+            // Tạo đối tượng Order từ OrderViewModel
             Order order = new Order
             {
                 OrderID = numericOrderId,
                 Status = status,
                 OrderDate = DateTime.Now,
                 TotalAmount = model.TotalAmount,
-                FullName = model.FullName,
-                PhoneNumber = model.PhoneNumber,
-                Address = model.Address
+                FullName = model.FullName, // Sử dụng thuộc tính FullName từ OrderViewModel
+                PhoneNumber = numericPhoneNumber, // Sử dụng thuộc tính PhoneNumber từ OrderViewModel
+                ShippingAddress = model.Address // Sử dụng thuộc tính Address từ OrderViewModel
             };
 
             // Lưu vào cơ sở dữ liệu
@@ -103,6 +108,7 @@ public class CheckoutController : Controller
             throw new Exception("Lỗi khi lưu đơn hàng: " + ex.Message);
         }
     }
+
 
     // Phương thức tạo mã đơn hàng ngẫu nhiên
     private string GenerateOrderId()

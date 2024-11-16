@@ -1,92 +1,104 @@
-﻿using System;
+﻿using Luxury_Shop.Models;
 using System.Linq;
 using System.Web.Mvc;
-using Luxury_Shop.Models;
 
-namespace Luxury_Shop.Controllers
+public class ShoppingCartController : Controller
 {
-    public class ShoppingCartController : Controller
+    private LuxuryEntities1 database = new LuxuryEntities1();
+
+    // GET: ShoppingCart/ShowCart
+    public ActionResult ShowCart()
     {
-        private LuxuryEntities1 database = new LuxuryEntities1();
+        // Lấy giỏ hàng từ session
+        var cart = Session["Cart"] as Cart ?? new Cart();
 
-        // GET: ShoppingCart/ShowCart
-        public ActionResult ShowCart()
+        var orderViewModel = new OrderViewModel
         {
-            ViewBag.check = Session["check"];
-            if (ViewBag.check == null)
-            {
-                ViewBag.mes = "Vui lòng đăng nhập để mua hàng và xem giỏ hàng";
-                return View();
-            }
+            Cart = cart // Gán giỏ hàng cho OrderViewModel
+        };
 
-            if (Session["Cart"] == null)
-            {
-                Session["Cart"] = new Cart();
-            }
+        return View(orderViewModel); // Truyền OrderViewModel vào view
+    }
 
-            Cart _cart = Session["Cart"] as Cart;
-            return View(_cart);
+
+    // POST: ShoppingCart/AddToCart
+    [HttpPost]
+    public ActionResult AddToCart(int productId, int quantity = 1)
+    {
+        // Kiểm tra sản phẩm có tồn tại trong cơ sở dữ liệu không
+        var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
+        if (product == null)
+        {
+            return HttpNotFound("Product not found");
         }
 
-        // POST: ShoppingCart/AddToCart
-        [HttpPost]
-        public ActionResult AddToCart(int productId, int quantity = 1)
-        {
-            var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
-            if (product == null)
-            {
-                return HttpNotFound("Product not found");
-            }
+        // Lấy giỏ hàng từ session hoặc tạo mới nếu không có
+        var cart = Session["Cart"] as Cart ?? new Cart();
 
-            var cart = Session["Cart"] as Cart ?? new Cart();
-            cart.AddProductToCart(product, quantity);
-            Session["Cart"] = cart;
+        // Thêm sản phẩm vào giỏ hàng
+        cart.AddToCart(product, quantity);
+
+        // Lưu giỏ hàng vào session
+        Session["Cart"] = cart;
+
+        return RedirectToAction("ShowCart");
+    }
+
+    // GET: ShoppingCart/Checkout
+    public ActionResult Checkout()
+    {
+        var cart = Session["Cart"] as Cart;
+
+        // Kiểm tra nếu giỏ hàng rỗng, quay lại trang giỏ hàng
+        if (cart == null || !cart.Items.Any())
+        {
             return RedirectToAction("ShowCart");
         }
 
-        // GET: ShoppingCart/Checkout
-        public ActionResult Checkout()
+        // Hiển thị giỏ hàng để người dùng kiểm tra
+        return View(cart);
+    }
+
+    // POST: ShoppingCart/ProcessCheckout
+    [HttpPost]
+    public ActionResult ProcessCheckout()
+    {
+        var cart = Session["Cart"] as Cart;
+
+        // Kiểm tra nếu giỏ hàng trống, quay lại trang giỏ hàng
+        if (cart == null || !cart.Items.Any())
         {
-            var cart = Session["Cart"] as Cart;
-            if (cart == null || !cart.Items.Any())
-            {
-                return RedirectToAction("ShowCart");
-            }
-            return View(cart);
+            return RedirectToAction("ShowCart");
         }
 
-        // POST: ShoppingCart/ProcessCheckout
-        [HttpPost]
-        public ActionResult ProcessCheckout()
-        {
-            var cart = Session["Cart"] as Cart;
-            if (cart == null || !cart.Items.Any())
-            {
-                return RedirectToAction("ShowCart");
-            }
+        // Xử lý thanh toán (giả sử bạn có phương thức thanh toán tại đây)
+        // ...
 
-            // Xử lý logic thanh toán tại đây
-            Session["Cart"] = null;
-            return RedirectToAction("OrderConfirmation");
+        // Sau khi thanh toán thành công, xóa giỏ hàng trong session
+        Session["Cart"] = null;
+
+        // Chuyển tới trang xác nhận đơn hàng
+        return RedirectToAction("OrderConfirmation");
+    }
+
+    // GET: ShoppingCart/OrderConfirmation
+    public ActionResult OrderConfirmation()
+    {
+        return View();
+    }
+
+    // Phương thức tính tổng số tiền trong giỏ hàng
+    public decimal GetTotalAmount()
+    {
+        var cart = Session["Cart"] as Cart;
+
+        // Nếu không có giỏ hàng hoặc giỏ hàng trống, trả về 0
+        if (cart == null || !cart.Items.Any())
+        {
+            return 0;
         }
 
-        // GET: ShoppingCart/OrderConfirmation
-        public ActionResult OrderConfirmation()
-        {
-            return View();
-        }
-
-        // PHƯƠNG THỨC LẤY TỔNG SỐ TIỀN TRONG GIỎ HÀNG
-        public decimal GetTotalAmount()
-        {
-            var cart = Session["Cart"] as Cart;
-            if (cart == null || !cart.Items.Any())
-            {
-                return 0;
-            }
-
-            // Tính tổng số tiền từ các sản phẩm trong giỏ
-            return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
-        }
+        // Tính tổng số tiền của các sản phẩm trong giỏ hàng
+        return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
     }
 }

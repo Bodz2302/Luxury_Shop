@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Luxury_Shop.Models; // Add this using directive
 
 public class CheckoutViewModel
 {

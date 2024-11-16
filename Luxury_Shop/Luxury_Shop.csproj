@@ -160,6 +160,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\PaymentWebhookModel.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
@@ -304,6 +305,7 @@
     <Content Include="Views\quanlydonhang\Edit.cshtml" />
     <Content Include="Views\quanlydonhang\Index.cshtml" />
     <Content Include="Views\Users\Dashboard.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

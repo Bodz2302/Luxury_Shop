@@ -1,20 +1,66 @@
-﻿using Luxury_Shop.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-public class Product
+namespace Luxury_Shop.Models
 {
-    public int ProductID { get; set; }
-    public string ProductName { get; set; }
-    public string Description { get; set; }
-    public int? CategoryID { get; set; }
-    public int? BrandID { get; set; }
-    public decimal OriginalPrice { get; set; }
-    public decimal? SalePrice { get; set; }
-    public decimal? DiscountPercentage { get; set; }
-    public int? StockQuantity { get; set; }
-    public string ImageURL { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public virtual Brand Brand { get; set; }
-    public virtual Category Category { get; set; }
+    public class Cart
+    {
+        // Danh sách các sản phẩm trong giỏ hàng
+        public List<CartItem> Items { get; set; }
+
+        // Constructor khởi tạo giỏ hàng
+        public Cart()
+        {
+            Items = new List<CartItem>();
+        }
+
+        // Phương thức thêm sản phẩm vào giỏ
+        public void AddToCart(Product product, int quantity)
+        {
+            // Kiểm tra nếu sản phẩm đã có trong giỏ
+            var existingItem = Items.FirstOrDefault(item => item.Product.ProductID == product.ProductID);
+
+            if (existingItem != null)
+            {
+                existingItem.Quantity += quantity; // Nếu sản phẩm đã tồn tại, tăng số lượng
+            }
+            else
+            {
+                // Nếu chưa có sản phẩm trong giỏ, thêm sản phẩm mới vào
+                Items.Add(new CartItem { Product = product, Quantity = quantity });
+            }
+        }
+
+        // Phương thức xóa sản phẩm khỏi giỏ hàng
+        public void RemoveFromCart(int productId)
+        {
+            var item = Items.FirstOrDefault(i => i.Product.ProductID == productId);
+            if (item != null)
+            {
+                Items.Remove(item); // Xóa sản phẩm khỏi giỏ
+            }
+        }
+
+        // Phương thức tính tổng số tiền trong giỏ hàng
+        public decimal GetTotalAmount()
+        {
+            // Tính tổng tiền của giỏ hàng
+            return Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
+        }
+
+        // Phương thức kiểm tra nếu giỏ hàng có sản phẩm hay không
+        public bool HasItems()
+        {
+            return Items.Any(); // Kiểm tra giỏ hàng có sản phẩm không
+        }
+    }
+
+    public class CartItem
+    {
+        // Sản phẩm trong giỏ
+        public Product Product { get; set; }
+        // Số lượng sản phẩm trong giỏ
+        public int Quantity { get; set; }
+    }
 }

@@ -1,83 +1,61 @@
-﻿@model Luxury_Shop.Models.CheckoutViewModel
+﻿@model Luxury_Shop.Models.OrderViewModel
 
 @{
-    ViewBag.Title = "Thanh toán";
-    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    ViewBag.Title = "Thanh Toán";
 }
-<link rel="stylesheet" href="~/Content/Cart/Checkout.css" />
-<div class="container">
-    <div class="row form-checkout">
-        <!-- Bảng sản phẩm -->
-        <div class="col-lg-7 form-check">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Số lượng</th>
-                        <th>Đơn giá</th>
-                        <th>Tổng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.CartItems)
-                    {
-                        <tr>
-                            <td>@item.ProductName</td>
-                            <td>@item.Quantity</td>
-                            <td>@item.Price.ToString("#,0", new System.Globalization.CultureInfo("vi-VN"))</td>
-                            <td>@((item.Quantity * item.Price).ToString("#,0", new System.Globalization.CultureInfo("vi-VN")))</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
 
-        </div>
+<h2>Thanh Toán</h2>
 
-        <!-- Thông tin thanh toán -->
-        <div class="col-lg-4 form-info">
-            <h4>Thông tin</h4>
-            @using (Html.BeginForm())
-            {
-                <div class="form-group">
-                    <label for="FullName">Họ và tên:</label>
-                    @Html.TextBoxFor(m => m.Address.FullName, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <div class="form-group">
-                    <label for="Phone">Số điện thoại:</label>
-                    @Html.TextBoxFor(m => m.Address.Phone, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <div class="form-group">
-                    <label for="Province">Tỉnh/Thành phố:</label>
-                    @Html.TextBoxFor(m => m.Address.Province, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <div class="form-group">
-                    <label for="Town">Quận/Huyện:</label>
-                    @Html.TextBoxFor(m => m.Address.Town, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <div class="form-group">
-                    <label for="Block">Khu vực:</label>
-                    @Html.TextBoxFor(m => m.Address.Block, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <div class="form-group">
-                    <label for="SpecificAddress">Địa chỉ cụ thể:</label>
-                    @Html.TextBoxFor(m => m.Address.SpecificAddress, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-
-                <!-- Tổng tiền -->
-                <div class="form-group">
-                    <label for="TotalAmount">Tổng số tiền:</label>
-                    <strong>@Model.TotalAmount.ToString("#,0", new System.Globalization.CultureInfo("vi-VN"))</strong>
-                </div>
-
-                <!-- Nút thanh toán -->
-                <button type="submit" class="btn btn-primary">Thanh toán</button>
-            }
-        </div>
-    </div>
+@using (Html.BeginForm("ProcessPayment", "Checkout", FormMethod.Post))
+{
+<div class="form-group">
+    <label for="FullName">Họ và Tên</label>
+    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Nhập họ tên" })
 </div>
 
+<div class="form-group">
+    <label for="PhoneNumber">Số Điện Thoại</label>
+    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+</div>
+
+<div class="form-group">
+    <label for="Address">Địa Chỉ</label>
+    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ giao hàng" })
+</div>
+
+<h3>Thông Tin Giỏ Hàng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên Sản Phẩm</th>
+            <th>Số Lượng</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)  // Accessing CartItems
+            {
+        <tr>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@(item.Product.OriginalPrice * item.Quantity)</td>
+        </tr>
+            }
+    </tbody>
+</table>
+
+<div class="form-group">
+    <label for="PaymentMethod">Chọn Phương Thức Thanh Toán</label>
+    <select class="form-control" id="PaymentMethod" name="PaymentMethod">
+        <option value="1">Thanh toán khi nhận hàng</option>
+        <option value="2">Chuyển khoản</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Tổng Tiền</label>
+    <p>@Model.TotalAmount.ToString("C")</p>
+</div>
+
+<button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+}
