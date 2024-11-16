@@ -7,6 +7,7 @@
 }
 <link href="~/Css/table.css" rel="stylesheet" />
 <link href="~/Css/palisst.css" rel="stylesheet" />
+<link href="~/Content/manhne.css" rel="stylesheet" />
 <h2>Quan lý đơn hàng</h2>
 
 <div class="table-container">
@@ -31,11 +32,11 @@
             <th>
                 Trạng thái
             </th>
-            <th>Hành động</th>
+
         </tr>
         @foreach (var item in Model.listdonhang)
         {
-            <tr>
+            <tr id="order-@item.OrderID">
                 <td>
                     @Html.DisplayFor(modelItem => item.User.Username)
                 </td>
@@ -51,15 +52,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderDate)
                 </td>
-
-                <td class="order-status">@item.Status</td>
                 <td>
-                    @using (Html.BeginForm("UpdateStatus", "Quanlydonhang", FormMethod.Post))
-                    {@Html.AntiForgeryToken()
-                    @Html.Hidden("orderId", item.OrderID)
-                    @Html.Hidden("status", "Đã Hủy")
-                    <button type="submit" class="btn btn-danger">Hủy đơn hàng</button>
-                }
+                    <select class="status-dropdown" data-order-id="@item.OrderID" onchange="updateStatus(@item.OrderID)">
+                        <option value="Pending" @if (item.Status == "Pending") { <text> selected</text> }>Pending</option>
+                        <option value="Shipped" @if (item.Status == "Shipped") { <text> selected</text> }>Shipped</option>
+                        <option value="Completed" @if (item.Status == "Completed") { <text> selected</text> }>Completed</option>
+                        <option value="Cancelled" @if (item.Status == "Cancelled") { <text> selected</text> }>Cancelled</option>
+                    </select>
                 </td>
             </tr>
         }
@@ -80,4 +79,39 @@
     {
         <a href="@Url.Action("index", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
     }
-</div>
+</div>@section Scripts {
+    <script>
+    // Hàm JavaScript để gửi yêu cầu AJAX khi chọn trạng thái
+    function updateStatus(orderId) {
+        // Sử dụng selector chính xác để lấy giá trị của dropdown
+        var status = $(`#order-${orderId} .status-dropdown`).val(); // Lấy giá trị trạng thái từ dropdown
+
+        if (!status) {
+            console.error('Status is null or undefined');
+            alert('Vui lòng chọn trạng thái');
+            return;
+        }
+
+        // Gửi yêu cầu AJAX để cập nhật trạng thái đơn hàng
+        $.ajax({
+            url: '@Url.Action("UpdateStatus", "Quanlydonhang")',  // Đảm bảo URL này đúng
+            type: 'POST',
+            data: {
+                orderId: orderId,
+                status: status
+            },
+            success: function(response) {
+                // Xử lý khi cập nhật thành công
+                alert('Thay đổi trạng thái thành công!');
+            },
+            error: function(xhr, status, error) {
+                // Hiển thị chi tiết lỗi để dễ dàng debug
+                console.log("Error Status: " + status);
+                console.log("Error Message: " + error);
+                alert('Lỗi khi cập nhật trạng thái');
+            }
+        });
+    }
+    </script>
+
+}

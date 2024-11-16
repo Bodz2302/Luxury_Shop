@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "dashboard";
-    if (ViewBag.Admin!=null&&ViewBag.Admin==true)
+    if (ViewBag.Admin != null && ViewBag.Admin == true)
     {
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
     }
@@ -79,7 +79,6 @@
         .edit-button:hover {
             background-color: #45a049;
         }
-    
 </style>
 
 <body>
@@ -105,12 +104,12 @@
                 <strong>Địa Chỉ:</strong>
                 <p>@Model.Address</p>
             </div><div class="info">
-                      <strong>CreatedAt:</strong>
+                <strong>CreatedAt:</strong>
                 <p>@Model.CreatedAt</p>
-           
+
+            </div>
         </div>
-        </div>
-         @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.UserID }, new { @class = "edit-button" })
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.UserID }, new { @class = "edit-button" })
     </div>
 </body>
 

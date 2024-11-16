@@ -100,22 +100,33 @@ namespace Luxury_Shop.Controllers
         }
         // POST: Quanlydonhang/UpdateStatus
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult UpdateStatus(int orderId, string status)
         {
-          
+            
             var order = db.Orders.Find(orderId);
+
             if (order == null)
             {
-                return HttpNotFound("Order not found");
+                
+                return Json(new { success = false, message = "Order not found" });
             }
 
-   
+            
             order.Status = status;
-            db.SaveChanges();
 
-
-            return RedirectToAction("Index");
+          
+            try
+            {
+                
+                db.SaveChanges();
+               
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+               
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
         // POST: Quanlydonhang/Edit/5

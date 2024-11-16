@@ -1,0 +1,67 @@
+﻿@model Luxury_Shop.Models.DashboardViewModel
+
+@{
+    ViewBag.Title = "dashboard";
+    if (ViewBag.Admin != null && ViewBag.Admin == true)
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    }
+    ViewBag.ti = ViewBag.Title;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="~/Content/manhne.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+
+<body>
+
+    <div class="dashboard-stats">
+        <div class="stat">
+            <h3>Tổng Khách Hàng</h3>
+            <p>@Model.TotalCustomers</p>
+            <a href="@Url.Action("taomoi", "Users")" class="btn btn-primary">Thêm Khách Hàng</a>
+        </div>
+        <div class="stat">
+            <h3>Tổng Sản Phẩm</h3>
+            <p>@Model.TotalProducts</p>
+            <a href="@Url.Action("Create", "Products")" class="btn btn-primary">Thêm Sản Phẩm</a>
+        </div>
+        <div class="stat">
+            <h3>Tổng Thươnng Hiệu</h3>
+            <p>@Model.TotalBrands</p>
+            <a href="@Url.Action("Create", "Brands")" class="btn btn-primary">Thêm Thương Hiệu</a>
+        </div>
+        <div class="stat">
+            <h3>Tổng Danh Mục</h3>
+            <p>@Model.TotalCategories</p>
+            <a href="@Url.Action("Create", "Categories")" class="btn btn-primary">Thêm Danh Mục</a>
+        </div>
+
+        <div class="stat">
+            <h3>Tổng Đơn Hàng</h3>
+            <p>@Model.TotalOrders</p>
+
+        </div>
+        <div class="stat">
+            <h3>Tổng Đơn Đã Giao</h3>
+            <p>@Model.Totaldagiao</p>
+
+        </div>  <div class="stat">
+            <h3>Tổng Đơn Đang Giao</h3>
+            <p>@Model.Totaldanggiao</p>
+
+        </div>    <div class="stat">
+            <h3>Tổng Đơn Đã Hủy </h3>
+            <p>@Model.Totaldahuy</p>
+
+        </div>
+
+        <div class="stat">
+            <h3>Doanh Thu</h3>
+            <p>@Model.TotalRevenue.ToString("C")</p>
+        </div>
+    </div>
+</body>
+
