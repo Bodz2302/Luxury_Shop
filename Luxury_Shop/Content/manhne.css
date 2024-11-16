@@ -1,0 +1,112 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Màu nền sáng */
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Căn giữa nội dung */
+}
+
+.stat {
+    background: #ffffff; /* Màu nền trắng */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .stat:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat h3 {
+        font-size: 20px;
+        color: #333333; /* Màu tiêu đề đậm */
+        margin-bottom: 15px;
+    }
+
+    .stat p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff; /* Màu xanh nổi bật */
+        margin: 10px 0;
+    }
+
+    .stat a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #007bff;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .stat a:hover {
+            background-color: #0056b3;
+        }
+
+@media (max-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ */
+    }
+}
+/* Tùy chỉnh thẻ <select> */
+.status-dropdown {
+    width: 150px; /* Đặt chiều rộng của dropdown */
+    padding: 10px; /* Khoảng cách trong dropdown */
+    font-size: 14px; /* Cỡ chữ */
+    font-family: Arial, sans-serif; /* Chọn phông chữ */
+    color: #333; /* Màu chữ */
+    background-color: #f8f9fa; /* Màu nền cho dropdown */
+    border: 1px solid #ccc; /* Đường viền */
+    border-radius: 5px; /* Bo góc cho dropdown */
+    appearance: none; /* Tắt kiểu mặc định của dropdown */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+}
+
+    /* Hiệu ứng hover cho dropdown */
+    .status-dropdown:hover {
+        background-color: #e9ecef; /* Màu nền khi hover */
+        border-color: #007bff; /* Đổi màu viền khi hover */
+    }
+
+    /* Hiệu ứng focus khi người dùng click vào dropdown */
+    .status-dropdown:focus {
+        outline: none; /* Loại bỏ viền mặc định của trình duyệt */
+        border-color: #28a745; /* Đổi màu viền khi focus */
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.2); /* Thêm bóng mờ khi focus */
+    }
+
+    /* Tùy chỉnh các option bên trong <select> */
+    .status-dropdown option {
+        padding: 10px; /* Khoảng cách của các option */
+        background-color: #ffffff; /* Màu nền cho các option */
+        color: #333; /* Màu chữ của các option */
+    }
+
+        /* Thay đổi màu của option khi hover */
+        .status-dropdown option:hover {
+            background-color: #007bff; /* Màu nền khi hover */
+            color: white; /* Màu chữ khi hover */
+        }
+
+/* Tùy chỉnh cho dropdown ở những thiết bị nhỏ hơn */
+@media (max-width: 600px) {
+    .status-dropdown {
+        width: 100%; /* Chiều rộng 100% cho màn hình nhỏ */
+        font-size: 16px; /* Cỡ chữ lớn hơn một chút cho màn hình nhỏ */
+    }
+}

@@ -15,6 +15,32 @@ namespace Luxury_Shop.Controllers
         private LuxuryEntities1 db = new LuxuryEntities1();
 
         // GET: Users
+        public ActionResult Dashboard()
+        {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
+       var soucess=     db.Orders.Where(c => c.Status == "Completed").ToList();
+            var custumer = db.Users.Where(c => c.IsAdmin == false).ToList();
+            var chogiao = db.Orders.Where(c => c.Status == "Pending").ToList();
+            var fall=     db.Orders.Where(c => c.Status == "Đã Hủy").ToList();
+            var dashboardData = new DashboardViewModel
+            { Totaldagiao = soucess.Count(),
+            Totaldahuy=fall.Count(),    Totaldanggiao = chogiao.Count(),
+                TotalBrands = db.Brands.Count(),
+                TotalProducts = db.Products.Count(),
+                TotalCategories = db.Categories.Count(),
+                TotalCustomers = custumer.Count(),
+                TotalOrders = db.Orders.Count(),
+                TotalRevenue = (decimal)(db.Orders.Sum(o => o.TotalAmount) ?? 0),
+                Products = db.Products.ToList(), 
+                Categories = db.Categories.ToList() 
+            };
+
+          
+            return View(dashboardData);
+          
+        }
         public ActionResult Index()
         {
             ViewBag.use = Session["username"];
@@ -133,7 +159,7 @@ namespace Luxury_Shop.Controllers
                             {
                                 Session["admin"] = true;
                             }
-                            return RedirectToAction("Index", "Users");
+                            return RedirectToAction("Dashboard", "Users");
                         }
                         else
                         {

@@ -141,6 +141,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\Luxury.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -200,6 +201,7 @@
     <Content Include="Content\images\áogucci.jpg" />
     <Content Include="Content\images\áoguciiden.jpg" />
     <Content Include="Content\images\áoguciitrang.jpg" />
+    <Content Include="Content\manhne.css" />
     <Content Include="Content\MasterLayout\footer.css" />
     <Content Include="Content\MasterLayout\header.css" />
     <Content Include="Content\Style1.css" />
@@ -292,6 +294,7 @@
     <Content Include="Views\quanlydonhang\Details.cshtml" />
     <Content Include="Views\quanlydonhang\Edit.cshtml" />
     <Content Include="Views\quanlydonhang\Index.cshtml" />
+    <Content Include="Views\Users\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
