@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Thanh toán qua ngân hàng";
     var orderId = Request.QueryString["orderId"];
     var totalAmount = Request.QueryString["totalAmount"];
@@ -20,18 +18,33 @@
 
 <script>
     // Giả lập thời gian chờ xác nhận thanh toán
+    var timeout = 10 * 60 * 1000; // 10 phút
+    var timeoutId = setTimeout(function() {
+        // Gửi yêu cầu xóa đơn hàng nếu không nhận được kết quả sau 10 phút
+        $.ajax({
+            url: '@Url.Action("CancelOrder", "Checkout")',
+            type: 'POST',
+            data: { orderId: "@orderId" },
+            success: function(response) {
+                alert('Đơn hàng đã hết thời gian thanh toán và bị hủy.');
+                window.location.href = '@Url.Action("Index", "Home")'; // Điều hướng về trang chủ
+            }
+        });
+    }, timeout);
+
+    // Kiểm tra trạng thái thanh toán
     setTimeout(function() {
-        // Gọi API để kiểm tra giao dịch thanh toán
         var orderId = "@orderId";
         var totalAmount = "@totalAmount";
-        
+
         $.ajax({
             url: '@Url.Action("CheckPaymentStatus", "Checkout")',
             type: 'GET',
             data: { orderId: orderId, totalAmount: totalAmount },
             success: function(response) {
                 if (response.status === "success") {
-                    window.location.href = '@Url.Action("Success", "Checkout")';
+                    clearTimeout(timeoutId); // Hủy bỏ thời gian chờ nếu thanh toán thành công
+                    window.location.href = '@Url.Action("Success", "Checkout")'; // Điều hướng tới trang thành công
                 } else {
                     $('#status-message').text('Chưa tìm thấy giao dịch thanh toán. Vui lòng thử lại sau.');
                 }
@@ -42,5 +55,3 @@
         });
     }, 5000); // Kiểm tra sau 5 giây (thay đổi thời gian nếu cần)
 </script>
-
-

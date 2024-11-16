@@ -160,6 +160,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaymentWebhookModel.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Luxury.tt</DependentUpon>
     </Compile>
@@ -302,6 +303,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Transaction\" />
+    <Folder Include="Views\Webhook\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
