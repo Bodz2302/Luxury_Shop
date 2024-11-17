@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "CheckOut_Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        height: 100vh;
+    }
+
+    .success-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 500px;
+        text-align: center;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+
+
+    .success-icon img {
+        width: 100px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        color: #28a745;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    a.btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin: 10px 5px;
+        transition: background-color 0.3s;
+    }
+
+    a.btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+        a.btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    a.btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+        a.btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>
+<div class="success-container">
+    <div class="success-icon">
+        <img src="https://static.ladipage.net/5ad01a4c58c2cb43196e7531/icon-dat-hang-thanh-cong-09-20221122095214-eyqix.jpg" alt="Success">
+    </div>
+    <h1>Đặt hàng thành công!</h1>
+    <p>Cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi.</p>
+    <p>Chúng tôi sẽ liên hệ bạn để xác nhận đơn hàng và giao hàng trong thời gian sớm nhất.</p>
+    <a href="/" class="btn btn-primary">Quay về trang chủ</a>
+    
+</div>

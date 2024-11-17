@@ -306,6 +306,7 @@
     <Content Include="Views\Users\Dashboard.cshtml" />
     <Content Include="Views\Users\Dashboard.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\SuccessCheckout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,28 +47,41 @@ public class CheckoutController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return Json(new { status = "failed", message = "Vui lòng điền đầy đủ thông tin." });
+            // Trả về lại view với thông báo lỗi
+            TempData["Error"] = "Dữ liệu không hợp lệ. Vui lòng kiểm tra thông tin.";
+            return RedirectToAction("Index");
         }
 
         // Lấy giỏ hàng từ session
         Cart cart = Session["Cart"] as Cart;
         if (cart == null || !cart.Items.Any())
         {
-            return Json(new { status = "failed", message = "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán." });
+            TempData["Error"] = "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.";
+            return RedirectToAction("Index");
         }
 
-        // Tạo mã đơn hàng ngẫu nhiên
-        string orderId = GenerateOrderId();
+        try
+        {
+            // Tạo mã đơn hàng
+            string orderId = GenerateOrderId();
 
-        // Lưu đơn hàng vào cơ sở dữ liệu
-        SaveOrderToDatabase(orderId, "confirmed", model);
+            // Lưu đơn hàng vào cơ sở dữ liệu
+            SaveOrderToDatabase(orderId, "confirmed", model);
 
-        // Xóa giỏ hàng sau khi đặt hàng thành công
-        Session["Cart"] = null;
+            // Xóa giỏ hàng sau khi đặt hàng thành công
+            Session["Cart"] = null;
 
-        // Chuyển hướng tới trang "Thanh toán thành công"
-        return Json(new { status = "success", message = "Đơn hàng đã được xác nhận. Vui lòng chuẩn bị thanh toán khi nhận hàng.", redirectUrl = Url.Action("OrderConfirmation", "Checkout") });
+            // Chuyển hướng tới trang SuccessCheckout
+            return RedirectToAction("SuccessCheckout");
+        }
+        catch (Exception ex)
+        {
+            // Ghi lỗi vào log nếu cần
+            TempData["Error"] = "Đã xảy ra lỗi khi xử lý đơn hàng: " + ex.Message;
+            return RedirectToAction("Index");
+        }
     }
+
 
     // Phương thức lưu đơn hàng vào cơ sở dữ liệu
     private void SaveOrderToDatabase(string orderId, string status, OrderViewModel model)
@@ -139,5 +152,9 @@ public class CheckoutController : Controller
 
         // Tính tổng số tiền của giỏ hàng
         return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
+    }
+    public ActionResult SuccessCheckout()
+    {
+        return View();
     }
 }
