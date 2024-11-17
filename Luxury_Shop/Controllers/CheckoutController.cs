@@ -1,65 +1,139 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Luxury_Shop.Models;
+using System;
+using System.Linq;
 using System.Web.Mvc;
-using Newtonsoft.Json.Linq;
 
-namespace Luxury_Shop.Controllers
+public class CheckoutController : Controller
 {
-    public class CheckoutController : Controller
+    private readonly LuxuryEntities1 database = new LuxuryEntities1();
+
+    // GET: Checkout/Index
+    // GET: Checkout/Index
+    // GET: Checkout/Index
+    public ActionResult Index()
     {
-        private readonly string _apiUrl = "https://my.pay2s.vn/userapi/transactions";
-        private readonly string _pay2sToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiMDkwMjUwNjA5OSIsImltZWkiOiI0MDE0NC1iZmNiNzJjMGIyMjczNjZiZy";
-
-        // GET: Checkout
-        public ActionResult Index()
+        // Kiểm tra xem Cart đã tồn tại trong session hay chưa
+        Cart cart = Session["Cart"] as Cart;
+        if (cart == null)
         {
-            ViewBag.check = Session["check"];
-            return View();
+            // Nếu giỏ hàng chưa được khởi tạo, tạo một giỏ hàng mới và thêm vào session
+            cart = new Cart();
+            Session["Cart"] = cart;
         }
 
-        // POST: Checkout/Confirm
-        [HttpPost]
-        public async Task<ActionResult> Confirm(string bankAccount, string beginDate, string endDate)
+        if (!cart.Items.Any())
         {
-            var response = await CheckTransaction(bankAccount, beginDate, endDate);
-            if (response != null && response["status"].ToObject<bool>())
-            {
-                // Giao dịch thành công
-                ViewBag.Status = "success";
-                ViewBag.Message = response["messages"].ToString();
-            }
-            else
-            {
-                // Giao dịch thất bại
-                ViewBag.Status = "failed";
-                ViewBag.Message = response?["messages"]?.ToString() ?? "Lỗi không xác định";
-            }
-            return View("Index");
+            // Nếu giỏ hàng rỗng, chuyển hướng về trang giỏ hàng
+            return RedirectToAction("ShowCart", "ShoppingCart");
         }
 
-        private async Task<JObject> CheckTransaction(string bankAccount, string beginDate, string endDate)
+        // Tạo OrderViewModel để truyền vào view
+        var orderViewModel = new OrderViewModel
         {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("pay2s-token", _pay2sToken);
-                var requestContent = new JObject
-                {
-                    { "bankAccounts", bankAccount },
-                    { "begin", beginDate },
-                    { "end", endDate }
-                };
-                var content = new StringContent(requestContent.ToString(), Encoding.UTF8, "application/json");
+            CartItems = cart.Items,
+            TotalAmount = GetTotalAmount() // Giả sử phương thức này tính tổng tiền trong giỏ hàng
+        };
 
-                var response = await client.PostAsync(_apiUrl, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseBody = await response.Content.ReadAsStringAsync();
-                    return JObject.Parse(responseBody);
-                }
-                return null;
-            }
+        return View(orderViewModel);
+    }
+
+
+
+
+
+    // POST: Checkout/ProcessPayment
+    [HttpPost]
+    public ActionResult ProcessPayment(OrderViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Json(new { status = "failed", message = "Vui lòng điền đầy đủ thông tin." });
         }
+
+        // Lấy giỏ hàng từ session
+        Cart cart = Session["Cart"] as Cart;
+        if (cart == null || !cart.Items.Any())
+        {
+            return Json(new { status = "failed", message = "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán." });
+        }
+
+        // Tạo mã đơn hàng ngẫu nhiên
+        string orderId = GenerateOrderId();
+
+        // Lưu đơn hàng vào cơ sở dữ liệu
+        SaveOrderToDatabase(orderId, "confirmed", model);
+
+        // Xóa giỏ hàng sau khi đặt hàng thành công
+        Session["Cart"] = null;
+
+        // Chuyển hướng tới trang "Thanh toán thành công"
+        return Json(new { status = "success", message = "Đơn hàng đã được xác nhận. Vui lòng chuẩn bị thanh toán khi nhận hàng.", redirectUrl = Url.Action("OrderConfirmation", "Checkout") });
+    }
+
+    // Phương thức lưu đơn hàng vào cơ sở dữ liệu
+    private void SaveOrderToDatabase(string orderId, string status, OrderViewModel model)
+    {
+        try
+        {
+            // Chuyển đổi OrderID sang kiểu int
+            if (!int.TryParse(orderId, out int numericOrderId))
+            {
+                throw new Exception("Order ID không hợp lệ. Không thể chuyển đổi sang số nguyên.");
+            }
+
+            // Chuyển đổi PhoneNumber từ string sang int
+            if (!int.TryParse(model.PhoneNumber, out int numericPhoneNumber))
+            {
+                throw new Exception("Phone number không hợp lệ. Không thể chuyển đổi sang số nguyên.");
+            }
+
+            // Tạo đối tượng Order từ OrderViewModel
+            Order order = new Order
+            {
+                OrderID = numericOrderId,
+                Status = status,
+                OrderDate = DateTime.Now,
+                TotalAmount = model.TotalAmount,
+                FullName = model.FullName, // Sử dụng thuộc tính FullName từ OrderViewModel
+                PhoneNumber = numericPhoneNumber, // Sử dụng thuộc tính PhoneNumber từ OrderViewModel
+                ShippingAddress = model.Address // Sử dụng thuộc tính Address từ OrderViewModel
+            };
+
+            // Lưu vào cơ sở dữ liệu
+            database.Orders.Add(order);
+            database.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Lỗi khi lưu đơn hàng: " + ex.Message);
+        }
+    }
+
+
+    // Phương thức tạo mã đơn hàng ngẫu nhiên
+    private string GenerateOrderId()
+    {
+        // Tạo một số ngẫu nhiên gồm 4 chữ số
+        Random random = new Random();
+        int randomPart = random.Next(1000, 10000); // Sinh ra một số ngẫu nhiên từ 1000 đến 9999
+
+        // Kết hợp 4 chữ số đầu là "2024" với phần ngẫu nhiên
+        string orderId = "2024" + randomPart.ToString();
+
+        return orderId;
+    }
+
+    // Phương thức tính tổng số tiền trong giỏ hàng
+    private decimal GetTotalAmount()
+    {
+        // Lấy giỏ hàng từ session
+        Cart cart = Session["Cart"] as Cart;
+        if (cart == null || cart.Items == null || !cart.Items.Any())
+        {
+            return 0;
+        }
+
+        // Tính tổng số tiền của giỏ hàng
+        return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
     }
 }

@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Thanh toán qua ngân hàng";
+    var orderId = Request.QueryString["orderId"];
+    var totalAmount = Request.QueryString["totalAmount"];
+}
+
+<h2>Thanh toán qua ngân hàng</h2>
+
+<p>Vui lòng quét mã QR dưới đây để thanh toán cho đơn hàng <strong>@orderId</strong> với số tiền <strong>@totalAmount</strong> VND</p>
+
+<!-- Hiển thị mã QR -->
+<div class="qr-code">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=bank_transfer://@orderId?amount=@totalAmount" alt="QR Code" />
+</div>
+
+<!-- Chờ xác nhận thanh toán -->
+<p id="status-message">Đang chờ xác nhận thanh toán...</p>
+
+<script>
+    // Giả lập thời gian chờ xác nhận thanh toán
+    var timeout = 10 * 60 * 1000; // 10 phút
+    var timeoutId = setTimeout(function() {
+        // Gửi yêu cầu xóa đơn hàng nếu không nhận được kết quả sau 10 phút
+        $.ajax({
+            url: '@Url.Action("CancelOrder", "Checkout")',
+            type: 'POST',
+            data: { orderId: "@orderId" },
+            success: function(response) {
+                alert('Đơn hàng đã hết thời gian thanh toán và bị hủy.');
+                window.location.href = '@Url.Action("Index", "Home")'; // Điều hướng về trang chủ
+            }
+        });
+    }, timeout);
+
+    // Kiểm tra trạng thái thanh toán
+    setTimeout(function() {
+        var orderId = "@orderId";
+        var totalAmount = "@totalAmount";
+
+        $.ajax({
+            url: '@Url.Action("CheckPaymentStatus", "Checkout")',
+            type: 'GET',
+            data: { orderId: orderId, totalAmount: totalAmount },
+            success: function(response) {
+                if (response.status === "success") {
+                    clearTimeout(timeoutId); // Hủy bỏ thời gian chờ nếu thanh toán thành công
+                    window.location.href = '@Url.Action("Success", "Checkout")'; // Điều hướng tới trang thành công
+                } else {
+                    $('#status-message').text('Chưa tìm thấy giao dịch thanh toán. Vui lòng thử lại sau.');
+                }
+            },
+            error: function() {
+                $('#status-message').text('Lỗi khi kiểm tra thanh toán. Vui lòng thử lại.');
+            }
+        });
+    }, 5000); // Kiểm tra sau 5 giây (thay đổi thời gian nếu cần)
+</script>

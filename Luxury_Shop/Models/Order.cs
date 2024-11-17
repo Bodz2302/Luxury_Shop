@@ -21,6 +21,9 @@ namespace Luxury_Shop.Models
         public string Status { get; set; }
         public string ShippingAddress { get; set; }
         public string PaymentMethod { get; set; }
+        public Nullable<int> PhoneNumber { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
     
         public virtual User User { get; set; }
     }

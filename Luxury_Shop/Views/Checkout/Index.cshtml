@@ -1,92 +1,61 @@
-﻿@model Luxury_Shop.Models.Cart
+﻿@model Luxury_Shop.Models.OrderViewModel
 
 @{
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = "Thanh Toán";
 }
 
-<div class="row">
-    <div class="col-75">
-        <div class="container">
-            <form action="@Url.Action("ProcessCheckout", "ShoppingCart")" method="post">
-                <div class="row">
-                    <div class="col-50">
-                        <h3>Billing Address</h3>
-                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com">
-                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-                        <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="city" placeholder="New York">
+<h2>Thanh Toán</h2>
 
-                        <div class="row">
-                            <div class="col-50">
-                                <label for="state">State</label>
-                                <input type="text" id="state" name="state" placeholder="NY">
-                            </div>
-                            <div class="col-50">
-                                <label for="zip">Zip</label>
-                                <input type="text" id="zip" name="zip" placeholder="10001">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-50">
-                        <h3>Payment</h3>
-                        <label for="fname">Accepted Cards</label>
-                        <div class="icon-container">
-                            <i class="fa fa-cc-visa" style="color:navy;"></i>
-                            <i class="fa fa-cc-amex" style="color:blue;"></i>
-                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                            <i class="fa fa-cc-discover" style="color:orange;"></i>
-                        </div>
-                        <label for="cname">Name on Card</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-                        <label for="ccnum">Credit card number</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                        <label for="expmonth">Exp Month</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
-
-                        <div class="row">
-                            <div class="col-50">
-                                <label for="expyear">Exp Year</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2024">
-                            </div>
-                            <div class="col-50">
-                                <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <label>
-                    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                </label>
-                <input type="submit" value="Continue to checkout" class="btn">
-            </form>
-        </div>
-    </div>
-
-    <div class="col-25">
-        <div class="container">
-            <h4>
-                Cart
-                <span class="price" style="color:black">
-                    <i class="fa fa-shopping-cart"></i>
-                    <b>@(Model.Items != null ? Model.Items.Count() : 0)</b>
-                </span>
-            </h4>
-            <!-- Hiển thị các mục trong giỏ hàng -->
-            @foreach (var item in Model.Items)
-            {
-                <p>
-                    <a href="#">@item.Product.ProductName</a>
-                    <span class="price">@item.Product.OriginalPrice</span>
-                </p>
-            }
-            <hr>
-            <p>Total <span class="price" style="color:black"><b>@Model.Total_Money()</b></span></p>
-        </div>
-    </div>
+@using (Html.BeginForm("ProcessPayment", "Checkout", FormMethod.Post))
+{
+<div class="form-group">
+    <label for="FullName">Họ và Tên</label>
+    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Nhập họ tên" })
 </div>
+
+<div class="form-group">
+    <label for="PhoneNumber">Số Điện Thoại</label>
+    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+</div>
+
+<div class="form-group">
+    <label for="Address">Địa Chỉ</label>
+    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ giao hàng" })
+</div>
+
+<h3>Thông Tin Giỏ Hàng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên Sản Phẩm</th>
+            <th>Số Lượng</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)  // Accessing CartItems
+            {
+        <tr>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@(item.Product.OriginalPrice * item.Quantity)</td>
+        </tr>
+            }
+    </tbody>
+</table>
+
+<div class="form-group">
+    <label for="PaymentMethod">Chọn Phương Thức Thanh Toán</label>
+    <select class="form-control" id="PaymentMethod" name="PaymentMethod">
+        <option value="1">Thanh toán khi nhận hàng</option>
+        <option value="2">Chuyển khoản</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Tổng Tiền</label>
+    <p>@Model.TotalAmount.ToString("C")</p>
+</div>
+
+<button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+}
