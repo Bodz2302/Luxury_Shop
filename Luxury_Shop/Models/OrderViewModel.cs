@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Luxury_Shop.Models
 {
+    public enum PaymentMethodType
+    {
+        COD = 0,  // Cash On Delivery
+        BankTransfer = 1  // Bank Transfer
+    }
+
     public class OrderViewModel
     {
         public Cart Cart { get; set; } // Cart information
@@ -20,8 +26,7 @@ namespace Luxury_Shop.Models
         public string Address { get; set; } // Delivery address
 
         [Required(ErrorMessage = "Vui lòng chọn phương thức thanh toán.")]
-        [Range(0, 1, ErrorMessage = "Phương thức thanh toán không hợp lệ.")] // 0: COD, 1: Bank transfer
-        public int PaymentMethod { get; set; } // Payment method (COD or bank transfer)
+        public PaymentMethodType PaymentMethod { get; set; } // Payment method (COD or bank transfer)
 
         [Range(0, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn hoặc bằng 0.")]
         public decimal TotalAmount { get; set; } // Total amount for the order

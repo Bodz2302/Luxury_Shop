@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "BankTransfer";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Chuyển Khoản Ngân Hàng</title>
+    <link rel="stylesheet" href="~/Content/payment/style.css" />
+</head>
+<body>
+
+    <div class="container">
+        <!-- Khung bên trái -->
+        <div class="box box-left">
+            <div class="info">
+                <b>Ngân Hàng:</b> Á Châu (ACB)
+            </div>
+            <div class="info">
+                <b>SỐ TÀI KHOẢN:</b> 35639567
+            </div>
+            <div class="info">
+                <b>SỐ TIỀN:</b> 10000 VND
+            </div>
+            <div class="info">
+                <b>NỘI DUNG CHUYỂN KHOẢN:</b> 20241123
+            </div>
+        </div>
+
+        <!-- Khung bên phải -->
+        <div class="box box-right">
+            <div>
+                <b>QUÉT MÃ QR ĐỂ CHUYỂN KHOẢN</b>
+            </div>
+            <img src="https://vietqr.io/api/qr?data=35639567" alt="QR Code" class="qr-image">
+        </div>
+    </div>
+
+</body>
+</html>

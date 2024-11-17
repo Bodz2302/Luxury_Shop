@@ -65,7 +65,7 @@ public class CheckoutController : Controller
             // Tạo mã đơn hàng
             string orderId = GenerateOrderId();
 
-            // Lưu đơn hàng vào cơ sở dữ liệu
+            // Lưu đơn hàng vào cơ sở dữ liệu, bao gồm PaymentMethod
             SaveOrderToDatabase(orderId, "confirmed", model);
 
             // Xóa giỏ hàng sau khi đặt hàng thành công
@@ -81,6 +81,7 @@ public class CheckoutController : Controller
             return RedirectToAction("Index");
         }
     }
+
 
 
     // Phương thức lưu đơn hàng vào cơ sở dữ liệu
@@ -112,7 +113,8 @@ public class CheckoutController : Controller
                 TotalAmount = model.TotalAmount,
                 FullName = model.FullName, // Sử dụng thuộc tính FullName từ OrderViewModel
                 PhoneNumber = phoneNumber, // Chuyển đổi số điện thoại sang số nguyên
-                ShippingAddress = model.Address // Sử dụng thuộc tính Address từ OrderViewModel
+                ShippingAddress = model.Address, // Sử dụng thuộc tính Address từ OrderViewModel
+                PaymentMethod = model.PaymentMethod.ToString() // Chuyển đổi PaymentMethod sang chuỗi
             };
 
             // Lưu vào cơ sở dữ liệu
@@ -124,6 +126,8 @@ public class CheckoutController : Controller
             throw new Exception("Lỗi khi lưu đơn hàng: " + ex.Message);
         }
     }
+
+
 
 
 
@@ -154,6 +158,11 @@ public class CheckoutController : Controller
         return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
     }
     public ActionResult SuccessCheckout()
+    {
+        return View();
+    }
+
+    public ActionResult BankTransfer()
     {
         return View();
     }

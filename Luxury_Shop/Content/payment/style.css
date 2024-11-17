@@ -1,686 +1,75 @@
-﻿:root {
-    --white: #ffffff;
-    --black: #1a1d21;
-    --main-color: #1c6cdb;
-    --link-icon: #f7fd92;
-    --link-yellow: #fcd34d;
-    --card-border-hover: var(--main-color);
-    --expire-bg: #fffbf2;
-    --expire-border: #df6c19;
-    --border-color: #ebebeb;
-    --footer-bg: #f9f9f9;
-    --btn-gray-bg: #d9d9d9;
-    --shadow-1: 0 8px 16px rgb(175 175 175 / 14%);
-    --header-height: 85px;
-    --footer-height: 126px
+﻿body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
-
-span,
-p,
-a,
-.title-method {
-    font-size: clamp(0.9rem, 0.8636rem + 0.1818vw, 1rem);
-}
-
-p {
-    margin-bottom: 0;
-}
-
-body {
-    min-height: 100vh;
-    margin: auto;
-    background: var(--white);
-}
-/* .mainContent {
-  height: calc(100vh - (var(--header-height) + var(--footer-height)))
-} */
-header nav span {
-    line-height: 1.2;
-}
-
-header {
-    background: var(--white);
-    box-shadow: var(--shadow-1);
-    z-index: 1;
-    position: relative;
-    /* height: var(--header-height); */
-}
-
-footer {
-    border-top: 1px solid var(--border-color);
-    background: var(--footer-bg);
-    /* height: var(--footer-height); */
-}
-
-    footer :is(a, p) {
-        color: var(--black);
-    }
 
 .container {
-    max-width: 1200px;
-}
-
-.dynamic-filter-list-container #dynamic-filter-list p {
-    text-decoration: none;
-}
-
-@media screen and (min-width: 992px) {
-    .dynamic-filter-list-container #dynamic-filter-list {
-        margin-left: 0.5rem;
-    }
-}
-
-.dynamic-filter-list-container #dynamic-filter-list {
-    margin-left: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-}
-
-.dynamic-filter-list-container {
-    padding: 25px 0;
-    border-radius: 10px;
-    position: relative;
-}
-
-.title-method {
-    margin-bottom: 0;
-}
-
-.dynamic-filter-list-container ul.info-card-holder {
-    padding: 0;
-}
-
-    .dynamic-filter-list-container ul.info-card-holder li {
-        padding: 0.8rem 0;
-    }
-
-        .dynamic-filter-list-container ul.info-card-holder li .logo {
-            width: clamp(3.125rem, 2.9375rem + 0.8333vw, 3.9375rem);
-            border: 1px solid var(--border-color);
-        }
-
-        .dynamic-filter-list-container ul.info-card-holder li .content {
-            font-size: clamp(1rem, 0.9538rem + 0.2051vw, 1.2rem);
-        }
-
-        .dynamic-filter-list-container ul.info-card-holder li .copyBtn {
-            background: rgba(217, 217, 217, 1);
-            color: var(--black);
-        }
-
-            .dynamic-filter-list-container ul.info-card-holder li .copyBtn:hover {
-                background: var(--black);
-                color: var(--white);
-            }
-
-    .dynamic-filter-list-container ul.info-card-holder .line-detail {
-        border-top: 1px solid #e8e8e8;
-        background-color: transparent;
-    }
-
-.dynamic-filter-list #dynamic-filter-list p {
-    text-decoration: none;
-}
-
-@media screen and (min-width: 992px) {
-    .dynamic-filter-list #dynamic-filter-list {
-        margin-left: 0.5rem;
-    }
-}
-
-.dynamic-filter-list #dynamic-filter-list {
-    margin-left: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-}
-
-.dynamic-filter-list {
-    padding: 25px 0;
-    border-radius: 10px;
-    position: relative;
-}
-
-.title-method {
-    margin-bottom: 0;
-}
-
-.dynamic-filter-list ul.info-card-holder {
-    padding: 0;
-}
-
-    .dynamic-filter-list ul.info-card-holder li {
-        padding: 0.8rem 0;
-    }
-
-        .dynamic-filter-list ul.info-card-holder li .logo {
-            width: clamp(3.125rem, 2.9375rem + 0.8333vw, 3.9375rem);
-            border: 1px solid var(--border-color);
-        }
-
-        .dynamic-filter-list ul.info-card-holder li .content {
-            font-size: clamp(1rem, 0.9538rem + 0.2051vw, 1.2rem);
-        }
-
-        .dynamic-filter-list ul.info-card-holder li .copyBtn {
-            background: rgba(217, 217, 217, 1);
-            color: var(--black);
-        }
-
-            .dynamic-filter-list ul.info-card-holder li .copyBtn:hover {
-                background: var(--black);
-                color: var(--white);
-            }
-
-    .dynamic-filter-list ul.info-card-holder .line-detail {
-        border-top: 1px solid #e8e8e8;
-        background-color: transparent;
-    }
-
-.contentWapper_card.momo ul.info-card-holder .line-detail {
-    border-top: 1px solid #e8e8e8;
-    background-color: transparent;
-}
-
-.qr-title,
-.order-title {
-    font-size: clamp(1rem, 0.8846rem + 0.5128vw, 1.5rem);
-}
-
-.dynamic-filter-list-container .filter-content-box:has(p) {
-    line-height: 1.2;
-}
-
-.dynamic-filter-list-container .filter-content-box {
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    border-radius: 10px;
-    min-height: 550px;
-}
-
-.dynamic-filter-list .filter-content-box:has(p) {
-    line-height: 1.2;
-}
-
-.dynamic-filter-list .filter-content-box {
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    border-radius: 10px;
-    min-height: 550px;
-}
-
-@media (max-width: 767.9px) {
-    .dynamic-filter-list-container .filter-content-box .header h5 {
-        width: 100%;
-    }
-
-    .dynamic-filter-list .filter-content-box .header h5 {
-        width: 100%;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1200px) {
-    .dynamic-filter-list-container .filter-content-box .header h5 {
-        width: 50%;
-    }
-
-    .dynamic-filter-list .filter-content-box .header h5 {
-        width: 50%;
-    }
-}
-
-.filter-content-close {
-    text-decoration: none !important;
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: max-content;
-    padding: 5px;
-    text-align: center;
-    z-index: 1;
-    padding: 6px 0 9px;
-}
-
-    .filter-content-close:hover {
-        color: var(--card-border-hover);
-    }
-
-.filter-content-close-mobile {
-    border-radius: 5px;
-    margin-bottom: 20px;
-    padding: 6px 15px;
-    background: var(--black);
-    color: var(--white);
-}
-
-@media (max-width: 767.9px) {
-    .filter-content-close {
-        display: none;
-    }
-}
-
-@media (min-width: 768px) {
-    .filter-content-close-mobile {
-        display: none;
-    }
-}
-
-#dynamic-filter-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 900px;
     width: 100%;
-    border: 0;
-    height: 53px;
-    padding-left: 55px;
-    font-weight: 500;
-    outline: 0;
-    font-size: 16px;
-    background: #fff;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    -ms-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-    border-radius: 10px;
-    position: relative;
-    z-index: 1;
-    color: #21282b;
+    margin: 20px;
+    flex-wrap: wrap; /* Đảm bảo các khung có thể gập lại khi cần */
 }
 
-#dynamic-filter-list {
-    padding-left: 0;
-    margin-bottom: 0;
-}
-
-    #dynamic-filter-list li {
-        list-style: none;
-        border: 1px solid var(--black);
-        cursor: pointer;
-        transition: 0.1s all;
-        position: relative;
-    }
-
-        #dynamic-filter-list li:hover {
-            border: 1px solid var(--card-border-hover);
-            box-shadow: 0 0 1px 1px var(--card-border-hover);
-        }
-
-        #dynamic-filter-list li::before {
-            content: "";
-            background: url(./images/check.svg) no-repeat;
-            background-size: contain;
-            width: 0;
-            height: 0;
-            position: absolute;
-            top: clamp(0.3125rem, 0.2404rem + 0.3205vw, 0.625rem);
-            right: clamp(0.3125rem, 0.2404rem + 0.3205vw, 0.625rem);
-        }
-
-        #dynamic-filter-list li:hover::before {
-            width: clamp(1.0625rem, 1.0192rem + 0.1923vw, 1.25rem);
-            height: clamp(1.0625rem, 1.0192rem + 0.1923vw, 1.25rem);
-        }
-
-        #dynamic-filter-list li p {
-            min-height: 48px;
-        }
-
-.dynamic-filter-container {
-    position: relative;
-    margin-bottom: 5px;
-    box-shadow: 0 3px 0 1px var(--black);
-    border-radius: 10px;
-    border: 1px solid var(--black);
-}
-
-    .dynamic-filter-container .btn.search {
-        min-height: 30px;
-        min-width: 50px;
-        background: var(--black);
-        border: var(--black);
-        color: #fff;
-        position: absolute;
-        right: 16px;
-        z-index: 2;
-    }
-
-        .dynamic-filter-container .btn.search:hover {
-            background: #3f3d3d;
-            border: #3f3d3d;
-        }
-
-    .dynamic-filter-container .search-img {
-        position: absolute;
-        top: 17px;
-        font-size: 18px;
-        color: #a7afb3;
-        left: 16px;
-        z-index: 2;
-    }
-
-.dynamic-filter-min-height {
-    display: block !important;
-    min-height: 655px;
-}
-
-@media (max-width: 768px) {
-    .mainContent.apply-bg-momo .dynamic-filter-min-height {
-        min-height: 540px;
-    }
-
-    .mainContent.apply-bg-vcb .dynamic-filter-min-height {
-        min-height: 560px;
-    }
-
-    .mainContent.apply-bg-acb .dynamic-filter-min-height,
-    .mainContent.apply-bg-mb .dynamic-filter-min-height {
-        min-height: 600px;
-    }
-}
-
-.logo-momo {
-    width: 60px;
-}
-
-.logo-vcb {
-    width: 130px;
-}
-
-.logo-acb {
-    width: 80px;
-}
-
-.logo-mbb {
-    width: 100px;
-}
-
-@media (max-width: 405px) {
-    .logo-acb {
-        width: 60px;
-    }
-
-    .logo-mbb {
-        width: 90px;
-    }
-}
-
-.logo-vcb-invoice,
-.logo-mb-invoice {
-    width: 90px;
-}
-
-.expire-content {
+.box {
+    background-color: #b0e0e6; /* Màu xanh pastel */
+    padding: 20px;
+    border: 2px solid #4caf50;
     border-radius: 8px;
+    width: 45%; /* Chiếm 45% chiều rộng */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Khoảng cách giữa các khung */
 }
 
-    .expire-content .box-expire {
-        background-color: var(--expire-bg);
-        border-radius: 8px;
-        border: 1px solid var(--expire-border);
+.box-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-left {
+    font-size: 16px;
+}
+
+    .box-left b {
+        font-weight: bold;
     }
 
-        .expire-content .box-expire .expire-text {
-            color: var(--expire-border);
-        }
-
-            .expire-content .box-expire .expire-text p:not(span) {
-                font-size: clamp(0.9rem, 0.8192rem + 0.359vw, 1.25rem);
-            }
-
-.support a {
-    color: var(--black);
-}
-
-.contentWapper_card {
-    min-height: 460px;
-}
-
-    .contentWapper_card .cardLeft {
-        background: var(--white);
-    }
-
-    .contentWapper_card .notice {
-        font-size: clamp(0.9rem, 0.8636rem + 0.1818vw, 1rem);
-    }
-
-    .contentWapper_card.momo .cardRight {
-        background: url(https://static.mservice.io/jk/momo2020/img/intro/qrcode-pattern.png) no-repeat, linear-gradient(-120deg, #c1177c, #e11b90);
-        background-position: right top;
-        background-size: contain;
-    }
-
-    .contentWapper_card.vcb .cardRight {
-        background: url(https://static.mservice.io/jk/momo2020/img/intro/qrcode-pattern.png) no-repeat, linear-gradient(to bottom, rgba(128, 193, 65, 1), rgba(1, 108, 66, 1));
-        background-repeat: no-repeat;
-        background-position: right;
-        background-size: contain;
-    }
-
-    .contentWapper_card.acb .cardRight {
-        background: url(https://static.mservice.io/jk/momo2020/img/intro/qrcode-pattern.png) no-repeat, linear-gradient(to bottom, rgba(85, 162, 245, 1), rgba(0, 123, 255, 1));
-        background-repeat: no-repeat;
-        background-size: contain;
-    }
-
-    .contentWapper_card.bidv .cardRight {
-        background-image: linear-gradient(120deg, #00bfae 0, #0066ad 100%);
-        background-repeat: no-repeat;
-        background-size: contain;
-    }
-
-    .contentWapper_card.mbb .cardRight {
-        background: url(https://static.mservice.io/jk/momo2020/img/intro/qrcode-pattern.png) no-repeat, linear-gradient(to bottom, rgba(48, 142, 235, 1), rgba(0, 84, 166, 1));
-        background-repeat: no-repeat;
-        background-size: contain;
-    }
-
-.apply-bg-momo {
-    background-image: url(./images/patterns-top.svg), url(./images/patterns-right-top.svg), url(./images/patterns-right-bottom.svg), linear-gradient(to top, #fff, #fffbfe);
-    background-repeat: no-repeat, no-repeat, no-repeat, repeat-x;
-    background-position: left top, right top, right bottom;
-    background-size: 15%, 15%, 15%;
-}
-
-.apply-bg-vcb {
-    background-image: url(./images/bg-vcb.svg), linear-gradient(to top, #fff, #e7fbef);
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: contain;
-}
-
-.apply-bg-acb {
-    background: url(./images/bg-acb.jpeg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.apply-bg-bidv {
-    background: url(./images/bg-acb.jpeg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.apply-bg-mb {
-    background-image: url(./images/bg-mbb.jpg);
-    background-repeat: no-repeat;
-    background-position: 78% top;
-    background-size: cover;
-}
-
-@media (max-width: 767.9px) {
-    .apply-bg-vcb {
-        background-size: cover;
-    }
-
-    .apply-bg-acb {
-        background-position: 90%;
-    }
-
-    .dynamic-filter-min-height {
-        min-height: 570px;
-    }
-
-    .lh-1 {
-        line-height: 1.5 !important;
-    }
-
-    .logo-momo {
-        width: 80px;
-    }
-}
-
-footer #logofooter {
-    max-width: 100px;
-}
-
-.footer-wrap-info a {
-    font-size: 14px;
-    line-height: 18px;
-    display: block;
-    text-decoration: none;
-}
-
-.footer-wrap-version span {
-    display: block;
-    font-weight: 400;
-    line-height: 18px;
-    font-size: 14px;
-}
-
-.footer-wrap-info {
-    font-weight: 400;
-    flex: 0 0 30%;
-}
-
-.footer-wrap-version {
-    flex: 0 0 70%;
-    padding-bottom: 15px;
-}
-
-.notfound {
-    max-width: 767px;
-    width: 100%;
-    line-height: 1.4;
-    text-align: center;
-    padding: 15px;
-}
-
-#notfound .notfound {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-#notfound {
-    position: relative;
-    height: 80vh;
-}
-
-.notfound p {
+.box-right b {
     font-size: 20px;
-    font-weight: 700;
-    margin-top: 25px;
-    margin-bottom: 0;
+    font-weight: bold;
 }
 
-.notfound .notfound-404 {
-    position: relative;
+.qr-image {
+    width: 200px; /* Kích thước QR */
+    margin-top: 20px;
 }
 
-.qr-code.col-lg-8 {
-    width: unset !important;
+.info {
+    margin-bottom: 10px;
 }
 
-
-#dynamic-filter-list li {
-    cursor: pointer;
-}
-
-.filter-content-close,
-.filter-content-close-mobile {
-    cursor: pointer;
-    color: red;
-    float: right;
-}
-
-.mobile {
-    display: none;
-}
-
-@media (max-width: 767px) {
-    .filter-content-box {
-        position: static;
+/* Responsive */
+@media only screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .mobile {
-        display: block;
+    .box {
+        width: 100%;
     }
 
-        .mobile .qrcode_image img {
-            width: 290px !important;
-            margin-bottom: -30px;
-            margin-top: 10px;
-            margin-left: -56px;
-        }
-
-        .mobile .qrcode_scan {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto;
-            overflow: hidden;
-            background-color: white;
-            position: relative;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -moz-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -moz-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-        }
-
-        .mobile .qrcode_scan_container {
-            margin-top: 0px !important;
-            padding: 0px !important;
-            background-color: white;
-            width: 280px;
-            height: 200px;
-            -webkit-border-radius: 20px;
-            -moz-border-radius: 20px;
-            border-radius: 20px;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            margin: 0 auto;
-            margin-top: 20px;
-        }
-
-    .mainContent.apply-bg-acb .dynamic-filter-min-height, .mainContent.apply-bg-mb .dynamic-filter-min-height {
-        min-height: 820px !important;
+    .box-right {
+        margin-top: 20px;
     }
-}
-
-
-.inline-div {
-    display: inline-block;
 }
