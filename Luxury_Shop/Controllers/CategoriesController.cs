@@ -23,42 +23,28 @@ namespace Luxury_Shop.Controllers
                 return RedirectToAction("loi", "Users");
             }
             ViewBag.use = Session["username"];
-            var totalRecords = db.Categories.Count();
-            var accounts = db.Categories
-                                   .OrderBy(a => a.CategoryID)
-                                   .Skip((pageNumber - 1) * pageSize)
-                                   .Take(pageSize)
-                                   .ToList();
 
-            var model = new AccountListViewModel
+            // Lấy tất cả danh mục cùng với các danh mục con
+            var categories = db.Categories
+                               .Where(c => c.ParentCategoryID == null) // Lọc các danh mục cha
+                               .ToList();
+
+            var categoryList = categories.Select(c => new CategoryViewModel
             {
-                listdanhmuc = accounts,
-                TotalRecords = totalRecords,
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                SubCategories = db.Categories.Where(sub => sub.ParentCategoryID == c.CategoryID).ToList()
+            }).ToList();
+
+            var model = new CategoryListViewModel
+            {
+                Categories = categoryList,
+                TotalRecords = db.Categories.Count(),
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
 
             return View(model);
-        }
-
-
-        // GET: Categories/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (Session["admin"] == null)
-            {
-                return RedirectToAction("loi", "Users");
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
         }
 
         // GET: Categories/Create
@@ -69,13 +55,13 @@ namespace Luxury_Shop.Controllers
                 return RedirectToAction("loi", "Users");
             }
             ViewBag.use = Session["username"];
-            ViewBag.ParentCategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+
+            // Tạo danh sách các danh mục cha cho dropdown
+            ViewBag.ParentCategoryID = new SelectList(db.Categories.Where(c => c.ParentCategoryID == null), "CategoryID", "CategoryName");
             return View();
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CategoryID,CategoryName,Description,ParentCategoryID")] Category category)
@@ -86,8 +72,7 @@ namespace Luxury_Shop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ParentCategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", category.ParentCategoryID);
+            ViewBag.ParentCategoryID = new SelectList(db.Categories.Where(c => c.ParentCategoryID == null), "CategoryID", "CategoryName", category.ParentCategoryID);
             return View(category);
         }
 
@@ -103,13 +88,11 @@ namespace Luxury_Shop.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ParentCategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", category.ParentCategoryID);
+            ViewBag.ParentCategoryID = new SelectList(db.Categories.Where(c => c.ParentCategoryID == null), "CategoryID", "CategoryName", category.ParentCategoryID);
             return View(category);
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CategoryID,CategoryName,Description,ParentCategoryID")] Category category)
@@ -120,7 +103,7 @@ namespace Luxury_Shop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ParentCategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", category.ParentCategoryID);
+            ViewBag.ParentCategoryID = new SelectList(db.Categories.Where(c => c.ParentCategoryID == null), "CategoryID", "CategoryName", category.ParentCategoryID);
             return View(category);
         }
 
