@@ -75,17 +75,20 @@ public class CheckoutController : Controller
     {
         try
         {
-            // Chuyển đổi OrderID sang kiểu int
+            // Chuyển đổi OrderID sang kiểu int (nếu cần thiết)
             if (!int.TryParse(orderId, out int numericOrderId))
             {
                 throw new Exception("Order ID không hợp lệ. Không thể chuyển đổi sang số nguyên.");
             }
 
-            // Chuyển đổi PhoneNumber từ string sang int
-            if (!int.TryParse(model.PhoneNumber, out int numericPhoneNumber))
+            // Kiểm tra tính hợp lệ của số điện thoại
+            if (string.IsNullOrEmpty(model.PhoneNumber) || !model.PhoneNumber.All(char.IsDigit))
             {
-                throw new Exception("Phone number không hợp lệ. Không thể chuyển đổi sang số nguyên.");
+                throw new Exception("Phone number không hợp lệ. Vui lòng nhập đúng định dạng số.");
             }
+
+            // Chuyển đổi số điện thoại từ chuỗi sang số nguyên
+            int phoneNumber = int.Parse(model.PhoneNumber);
 
             // Tạo đối tượng Order từ OrderViewModel
             Order order = new Order
@@ -95,7 +98,7 @@ public class CheckoutController : Controller
                 OrderDate = DateTime.Now,
                 TotalAmount = model.TotalAmount,
                 FullName = model.FullName, // Sử dụng thuộc tính FullName từ OrderViewModel
-                PhoneNumber = numericPhoneNumber, // Sử dụng thuộc tính PhoneNumber từ OrderViewModel
+                PhoneNumber = phoneNumber, // Chuyển đổi số điện thoại sang số nguyên
                 ShippingAddress = model.Address // Sử dụng thuộc tính Address từ OrderViewModel
             };
 
@@ -108,6 +111,7 @@ public class CheckoutController : Controller
             throw new Exception("Lỗi khi lưu đơn hàng: " + ex.Message);
         }
     }
+
 
 
     // Phương thức tạo mã đơn hàng ngẫu nhiên
