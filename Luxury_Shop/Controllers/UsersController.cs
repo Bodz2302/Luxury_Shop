@@ -17,10 +17,17 @@ namespace Luxury_Shop.Controllers
         // GET: Users
         public ActionResult Dashboard()
         {
+            if (Session["admin"] == null)
+            {
+
+                {
+                    return RedirectToAction("HomePage", "HomePage");
+                }
+            }
             ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             ViewBag.Admin = Session["admin"];
-       var soucess=     db.Orders.Where(c => c.Status == "Completed").ToList();
+            var soucess=     db.Orders.Where(c => c.Status == "Completed").ToList();
             var custumer = db.Users.Where(c => c.IsAdmin == false).ToList();
             var chogiao = db.Orders.Where(c => c.Status == "Pending").ToList();
             var fall=     db.Orders.Where(c => c.Status == "Đã Hủy").ToList();
@@ -46,7 +53,7 @@ namespace Luxury_Shop.Controllers
             ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             ViewBag.Admin = Session["admin"];
-            if (Session["username"] == null)
+            if (Session["admin"] == null)
             {
 
                 {
@@ -175,6 +182,13 @@ namespace Luxury_Shop.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
+            if (Session["admin"] == null)
+            {
+
+                {
+                    return RedirectToAction("loi", "Users");
+                }
+            }
             return View();
         }
 
@@ -197,6 +211,13 @@ namespace Luxury_Shop.Controllers
         }
         public ActionResult taomoi()
         {
+            if (Session["admin"] == null)
+            {
+
+                {
+                    return RedirectToAction("loi", "Users");
+                }
+            }
             return View();
         }
         [HttpPost]
