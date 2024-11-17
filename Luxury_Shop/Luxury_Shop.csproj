@@ -304,6 +304,7 @@
     <Content Include="Views\quanlydonhang\Edit.cshtml" />
     <Content Include="Views\quanlydonhang\Index.cshtml" />
     <Content Include="Views\Users\Dashboard.cshtml" />
+    <Content Include="Views\Users\Dashboard.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
