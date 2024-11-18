@@ -7,49 +7,67 @@ using Newtonsoft.Json.Linq;
 
 public class Pay2SService
 {
-    private readonly string _apiUrl = "https://payment.pay2s.vn/v1/gateway/api/create";
-    private readonly string _pay2sToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyIjoiMDkwMjUwNjA5OSIsImltZWkiOiI0MDE0NC1iZmNiNzJjMGIyMjczNjZiZy"; // Thay bằng token thực tế của bạn
+    private readonly string _apiUrl = "https://payment.pay2s.vn/v1/gateway/api/create"; // API URL Pay2S
+    private readonly string _pay2sToken = "your-pay2s-token"; // Thay bằng token thực tế của bạn
 
-    // Phương thức tạo yêu cầu thanh toán qua Pay2S
-    public async Task<string> CreatePaymentRequest(string orderId, string bankCode, string bankAccount, decimal amount, string description)
+    /// <summary>
+    /// Tạo thanh toán qua Pay2S
+    /// </summary>
+    /// <param name="orderId">Mã đơn hàng</param>
+    /// <param name="bankCode">Mã ngân hàng</param>
+    /// <param name="bankAccount">Số tài khoản ngân hàng</param>
+    /// <param name="amount">Số tiền cần thanh toán</param>
+    /// <param name="description">Mô tả giao dịch</param>
+    /// <returns>Phản hồi JSON từ API</returns>
+    public async Task<JObject> CreatePayment(string orderId, string bankCode, string bankAccount, decimal amount, string description)
     {
-        using (var client = new HttpClient())
+        try
         {
-            // Thiết lập tiêu đề yêu cầu
-            client.DefaultRequestHeaders.Add("pay2s-token", _pay2sToken);
-
-            // Tạo payload yêu cầu thanh toán
-            var requestData = new
+            using (var client = new HttpClient())
             {
-                orderId = orderId,
-                bankCode = bankCode,
-                bankAccount = bankAccount,
-                amount = amount,
-                description = description,
-                returnUrl = "https://yourwebsite.com/Checkout/PaymentSuccess",
-                cancelUrl = "https://yourwebsite.com/Checkout/PaymentFailed"
-            };
+                // Thêm tiêu đề xác thực
+                client.DefaultRequestHeaders.Add("pay2s-token", _pay2sToken);
 
-            string jsonContent = JsonConvert.SerializeObject(requestData);
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                // Tạo payload yêu cầu
+                var requestData = new
+                {
+                    orderId = orderId,
+                    bankCode = bankCode,
+                    bankAccount = bankAccount,
+                    amount = amount,
+                    description = description,
+                    returnUrl = "https://yourwebsite.com/Checkout/PaymentSuccess", // URL trả về khi thanh toán thành công
+                    cancelUrl = "https://yourwebsite.com/Checkout/PaymentFailed",   // URL trả về khi người dùng hủy
+                    ipnUrl = "https://yourwebsite.com/Checkout/PaymentIPN"         // URL nhận kết quả qua IPN
+                };
 
-            // Gửi yêu cầu POST đến API
-            HttpResponseMessage response = await client.PostAsync(_apiUrl, content);
+                // Chuyển đổi payload thành JSON
+                string jsonContent = JsonConvert.SerializeObject(requestData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            if (response.IsSuccessStatusCode)
-            {
-                // Chuyển đổi nội dung phản hồi thành JSON object
-                string responseContent = await response.Content.ReadAsStringAsync();
-                JObject jsonResponse = JObject.Parse(responseContent);
+                // Gửi POST request đến API Pay2S
+                HttpResponseMessage response = await client.PostAsync(_apiUrl, content);
 
-                // Trả về URL thanh toán từ phản hồi
-                return jsonResponse["paymentUrl"]?.ToString();
+                // Kiểm tra trạng thái phản hồi
+                if (response.IsSuccessStatusCode)
+                {
+                    // Đọc nội dung phản hồi
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JObject.Parse(responseContent); // Chuyển đổi thành đối tượng JSON
+                }
+                else
+                {
+                    // Xử lý khi API trả lỗi
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Failed to create payment. Status: {response.StatusCode}, Reason: {response.ReasonPhrase}, Content: {errorContent}");
+                }
             }
-            else
-            {
-                // Xử lý lỗi nếu phản hồi không thành công
-                throw new Exception($"Failed to create payment request. Status Code: {response.StatusCode}");
-            }
+        }
+        catch (Exception ex)
+        {
+            // Ghi log lỗi (tùy theo hệ thống của bạn)
+            Console.WriteLine($"Error while creating payment: {ex.Message}");
+            throw;
         }
     }
 }

@@ -54,6 +54,7 @@
           <Property Name="ImageURL" Type="varchar" MaxLength="255" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="Size" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -200,6 +201,7 @@
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Brand" Relationship="Self.FK__Products__BrandI__44FF419A" FromRole="Products" ToRole="Brands" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__440B1D61" FromRole="Products" ToRole="Categories" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -332,6 +334,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="LuxuryModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
