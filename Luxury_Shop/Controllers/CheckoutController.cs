@@ -68,6 +68,19 @@ public class CheckoutController : Controller
             // Lưu đơn hàng vào cơ sở dữ liệu, bao gồm PaymentMethod
             SaveOrderToDatabase(orderId, "confirmed", model);
 
+            // Kiểm tra phương thức thanh toán
+            if (model.PaymentMethod == PaymentMethodType.BankTransfer) // 1 = Chuyển khoản ngân hàng
+                                                                       // 1 = Chuyển khoản ngân hàng
+            {
+                // Lưu thông tin cần thiết vào TempData để hiển thị trên trang BankTransfer
+                TempData["OrderID"] = orderId;
+                TempData["TotalAmount"] = cart.GetTotalAmount();
+
+                // Chuyển hướng đến trang BankTransfer
+                return RedirectToAction("BankTransfer", "Checkout");
+            }
+
+            // Nếu thanh toán COD, tiếp tục xử lý
             // Xóa giỏ hàng sau khi đặt hàng thành công
             Session["Cart"] = null;
 
@@ -164,6 +177,24 @@ public class CheckoutController : Controller
 
     public ActionResult BankTransfer()
     {
+        // Giả sử bạn có lớp `Cart` chứa các mặt hàng trong giỏ hàng
+        var cart = Session["Cart"] as Cart; // Lấy giỏ hàng từ Session
+        if (cart == null || !cart.Items.Any())
+        {
+            return RedirectToAction("Index", "Cart"); // Chuyển về giỏ hàng nếu trống
+        }
+
+        // Tính tổng tiền
+        decimal totalAmount = cart.Items.Sum(item => item.Quantity * item.Product.OriginalPrice);
+
+        // Tạo mã đơn hàng (giả sử mã đơn hàng là ngày giờ hiện tại)
+        string orderCode = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+        // Truyền dữ liệu sang View
+        ViewBag.TotalAmount = totalAmount;
+        ViewBag.OrderCode = orderCode;
+
         return View();
     }
+
 }

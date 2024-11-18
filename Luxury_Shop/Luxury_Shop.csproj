@@ -271,7 +271,7 @@
     <Content Include="Views\Details\Details.cshtml" />
     <Content Include="Views\HomePage\Gucci.cshtml" />
     <Content Include="Views\Checkout\Checkout.cshtml" />
-    <Content Include="Views\Checkout\test.cshtml" />
+    <Content Include="Views\Checkout\BankTransfer.cshtml" />
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -307,7 +307,7 @@
     <Content Include="Views\Users\Dashboard.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Checkout\SuccessCheckout.cshtml" />
-    <Content Include="Views\Checkout\BankTransfer.cshtml" />
+    <Content Include="Views\Checkout\BankTransfer2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
