@@ -26,6 +26,7 @@ namespace Luxury_Shop.Models
         public string ImageURL { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
+        public string Size { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
