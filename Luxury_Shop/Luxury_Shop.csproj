@@ -209,6 +209,7 @@
     <Content Include="Content\MasterLayout\footer.css" />
     <Content Include="Content\MasterLayout\header.css" />
     <Content Include="Content\payment\core.css" />
+    <Content Include="Content\payment\failedpayment.css" />
     <Content Include="Content\payment\payment.css" />
     <Content Include="Content\payment\qr.css" />
     <Content Include="Content\payment\style.css" />
@@ -308,6 +309,7 @@
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Checkout\SuccessCheckout.cshtml" />
     <Content Include="Views\Checkout\BankTransfer2.cshtml" />
+    <Content Include="Views\Checkout\FailedPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

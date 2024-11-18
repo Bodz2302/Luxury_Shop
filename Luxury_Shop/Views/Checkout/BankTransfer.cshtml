@@ -25,24 +25,15 @@
     <link href="https://api.spayment.vn/Scripts/sweetalert/sweetalert.css"
           rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
-    <link href="../../../public/payment/assets/css/qr.css" rel="stylesheet" />
-    <link href="../../..//public/payment/assets/css/core.css" rel="stylesheet" />
-    <link href="../../../public/payment/assets/css/payment.css" rel="stylesheet" />
-    <link href="../../../public/payment/style.css" rel="stylesheet" />
+    <link href="~/Content/payment/qr.css" rel="stylesheet" />
+    <link href="~/Content/payment/core.css" rel="stylesheet" />
+    <link href="~/Content/payment/payment.css" rel="stylesheet" />
+    <link href="~/Content/payment/style.css" rel="stylesheet" />
 </head>
 
 <body class="d-flex flex-column justify-content-between">
     <header>
-        <nav class="py-4">
-            <div class="container d-flex align-items-center">
-                <img class="me-4"
-                     src="https://docs.pay2s.vn/assets/logo.png"
-                     width="75" />
-                <span class="me-auto">
-                    Cổng thanh toán trực tuyến - Pay2S
-                </span>
-            </div>
-        </nav>
+        
     </header>
     <div id="alert" class="mainContent mb-auto apply-bg-bidv">
         <div class="container col-md-12 col-lg-12 col-xl-12 pt-4 pb-4">
@@ -59,8 +50,8 @@
                 <div class="filter-content-box" style="display: block;">
                     <div class="header position-relative py-4">
                         <div class="d-flex align-items-center gap-4">
-                            <img src="https://payment.pay2s.vn/public/payment/images/BIDV.svg" width="50">
-                            <h5 class="title-method bidvbank">Cổng thanh toán qua Ngân hàng BIDV (BIDV)</h5>
+                            <img src="https://payment.pay2s.vn/public/payment/images/ACB.svg" width="50">
+                            <h5 class="title-method bidvbank">Cổng thanh toán qua Ngân hàng Á CHÂU (ACB)</h5>
                         </div>
                         <div>
                         </div>
@@ -69,23 +60,16 @@
                         <div class="mainCard cardLeft flex-grow-1 border rounded-3 p-3 p-md-4">
                             <p class="order-title fw-bold">Thông tin thanh toán</p>
                             <ul class="info-card-holder mt-3 mt-lg-4">
-                                <li class="d-flex flex-column  gap-2">
-                                    <p class="info-title">Nhà cung cấp: </p>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <img class="logo rounded py-3 px-2" src="https://docs.pay2s.vn/assets/logo.png">
-                                        <p class="content fw-semibold">Giải pháp thanh toán Pay2S</p>
-                                    </div>
-                                </li>
                                 <div class="line-detail"></div>
                                 <li class="d-flex flex-column  gap-2">
                                     <p class="info-title">Họ và tên: </p>
-                                    <p class="content fw-semibold">NGUYỄN TRỌNG VỸ</p>
+                                    <p class="content fw-semibold">LÊ PHẠM BÌNH</p>
                                 </li>
                                 <div class="line-detail"></div>
                                 <li class="d-flex flex-column  gap-2">
                                     <p class="info-title">Số tài khoản: </p>
                                     <div class="d-flex align-items-end justify-content-between gap-2">
-                                        <p id="phoneCopy" class="content fw-semibold">9638698888</p>
+                                        <p id="phoneCopy" class="content fw-semibold">35639567</p>
                                         <button id="PhoneCopyBtn" data-clipboard-target="#phoneCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                             Sao
                                             chép
@@ -96,7 +80,7 @@
                                 <li class="d-flex flex-column gap-2">
                                     <p class="info-title">Số tiền: </p>
                                     <div class="d-flex align-items-end justify-content-between gap-2">
-                                        <p id="priceCopy" class="content fw-semibold">96,666</p>
+                                        <p id="priceCopy" class="content fw-semibold"> @String.Format("{0:N0}", ViewBag.TotalAmount) VND</p>
                                         <button id="priceCopyBtn" data-clipboard-target="#priceCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                             Sao
                                             chép
@@ -107,7 +91,7 @@
                                 <li class="d-flex flex-column  gap-2">
                                     <p class="info-title">Nội dung chuyển tiền: </p>
                                     <div class="d-flex align-items-end justify-content-between gap-2">
-                                        <p id="textCopy" class="content fw-semibold">INV672F24087C582</p>
+                                        <p id="textCopy" class="content fw-semibold">@ViewBag.OrderCode</p>
                                         <button id="textCopyBtn" data-clipboard-target="#textCopy" type="button" class="btn copyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                             Sao
                                             chép
@@ -143,8 +127,7 @@
                                                     <div class="qrcode_image">
                                                         <img alt="paymentcode"
                                                              class="image-qr-code"
-                                                             src="https://apiqr.web2m.com/api/generate/ACB/35639567/LE PHAM BINH?amount=@ViewBag.TotalAmount&memo=@ViewBag.OrderCode&is_mask=0&bg=0
-                        " />
+                                                             src="https://img.vietqr.io/image/970416-35639567-qr-only.png?amount=@ViewBag.TotalAmount&addInfo=@ViewBag.OrderCode&accountName=LE PHAM BINH" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,7 +230,7 @@
                 params.category = "popup";
                 params.button_name = "confirm";
             }
-            window.location = "/";
+            window.location = "/Checkout/FailedPayment";
         }
 
         function closeCommonModalAndSendEvent() {

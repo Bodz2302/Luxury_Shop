@@ -174,6 +174,10 @@ public class CheckoutController : Controller
     {
         return View();
     }
+    public ActionResult FailedPayment()
+    {
+        return View();
+    }
 
     public ActionResult BankTransfer()
     {
