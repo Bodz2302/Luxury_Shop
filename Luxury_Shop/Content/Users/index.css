@@ -1,0 +1,81 @@
+﻿body {
+    font-family: Poppins, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+/* Container chính */
+.container {
+    width: 75%;
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Tiêu đề */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #2c3e50; /* Màu xám xanh đậm */
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Khung thông tin tài khoản */
+.account-info {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-left: 5px solid #3498db; /* Tạo viền trái nổi bật */
+    background-color: #f9f9f9; /* Nền nhẹ nhàng cho khu vực thông tin */
+    border-radius: 8px;
+}
+
+/* Thông tin tài khoản */
+.info {
+    display: flex;
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    margin-bottom: 20px;
+}
+
+    .info strong {
+        width: 180px; /* Tăng chiều rộng của nhãn */
+        color: #7f8c8d; /* Màu xám nhạt cho nhãn */
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* Cấu hình đoạn văn thông tin */
+    .info p {
+        color: #34495e; /* Màu xám đậm */
+        margin: 0;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+/* Nút chỉnh sửa */
+.edit-button {
+    display: block;
+    margin: 30px auto; /* Căn giữa nút theo chiều ngang và thêm khoảng cách trên-dưới */
+    width: fit-content; /* Kích thước vừa với nội dung */
+    padding: 12px 25px; /* Tăng kích thước padding */
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px; /* Bo góc tròn đẹp hơn */
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Hiệu ứng hover mượt mà */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng nổi */
+}
+
+    .edit-button:hover {
+        background-color: #45a049; /* Màu xanh đậm hơn khi hover */
+        transform: translateY(-3px); /* Tạo hiệu ứng nâng lên khi hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }

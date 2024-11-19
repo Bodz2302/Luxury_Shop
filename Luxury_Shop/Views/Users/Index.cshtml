@@ -12,81 +12,13 @@
     }
     ViewBag.ti = ViewBag.Title;
 }
-<style>
-
-    /* Cài đặt font và màu nền */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-
-    /* Container chính */
-    .container {
-        width: 80%;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Tiêu đề */
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-
-    /* Khung thông tin tài khoản */
-    .account-info {
-        margin-top: 30px;
-    }
-
-    /* Thông tin tài khoản */
-    .info {
-        display: flex;
-        margin-bottom: 15px;
-    }
-
-        .info strong {
-            width: 150px;
-            color: #555;
-        }
-
-        /* Cấu hình đoạn văn thông tin */
-        .info p {
-            color: #333;
-            margin: 0;
-        }
-
-    /* Nút chỉnh sửa */
-    .edit-button {
-        display: block;
-        width: 200px;
-        margin: 20px auto;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-    }
-
-        .edit-button:hover {
-            background-color: #45a049;
-        }
-</style>
-
+<link href="~/Content/Users/index.css" rel="stylesheet" />
 <body>
     <div class="container">
         <h1>Thông Tin Tài Khoản</h1>
         <div class="account-info">
             <div class="info">
-                <strong>Username:</strong>
+                <strong>Tên đăng nhập:</strong>
                 <p>@Model.Username</p>
             </div> <div class="info">
                 <strong>Họ Tên:</strong>
@@ -104,7 +36,7 @@
                 <strong>Địa Chỉ:</strong>
                 <p>@Model.Address</p>
             </div><div class="info">
-                <strong>CreatedAt:</strong>
+                <strong>Ngày tạo tài khoản:</strong>
                 <p>@Model.CreatedAt</p>
 
             </div>

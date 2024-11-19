@@ -1,37 +1,55 @@
 ﻿footer {
-    margin-bottom: 10px;
-    clear: both;
-    width: 100%;
-    min-height: 500px;
-    background-color: #757171;
+    background-color: #f8f8f8; /* Màu nền nhẹ nhàng */
+    padding: 30px 0;
+    font-family: sans-serif;
 }
 
 .row {
-    float: left;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 30px
+    max-width: 1200px; /* Giới hạn chiều rộng nội dung */
+    margin: 0 auto; /* Căn giữa nội dung */
 }
 
 .content-footer {
-    width: 70%;
-    margin: 0 auto;
+    display: flex; /* Sử dụng flexbox để sắp xếp các cột */
+    justify-content: space-between; /* Phân bố đều khoảng cách giữa các cột */
 }
 
-.footer-one {
-    float: left;
-    width: 25%;
-}
-
-.footer-two {
-    float: left;
-    width: 25%;
-}
-
+.footer-one,
+.footer-two,
 .footer-three {
-    float: left;
-    width: 20%;
+    flex: 1; /* Cho phép các cột co giãn đều */
+    margin: 0 15px; /* Khoảng cách giữa các cột */
 }
-.row content-bottom{
-    text-align: center;
+
+.color-footer {
+    color: #333; /* Màu tiêu đề */
+    margin-bottom: 15px;
+    font-size:30px;
+}
+
+.color-a {
+    color: #000000; /* Màu văn bản */
+    line-height: 1.6; /* Khoảng cách giữa các dòng */
+    font-size:50px;
+}
+
+    .color-a a {
+        color: #666; /* Màu liên kết */
+        text-decoration: none; /* Loại bỏ gạch chân liên kết */
+    }
+
+        .color-a a:hover {
+            text-decoration: underline; /* Thêm gạch chân khi hover */
+        }
+
+.image-footer {
+    max-width: 100px; /* Giới hạn chiều rộng ảnh */
+    margin-top: 10px;
+}
+
+.content-bottom {
+    text-align: center; /* Căn giữa văn bản */
+    font-size:20px; /* Giảm kích thước chữ */
+    color: black; /* Màu xám nhạt */
+    margin-top: 30px; /* Khoảng cách với nội dung trên */
 }
