@@ -1,66 +1,90 @@
-﻿
+﻿/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif; /* Choose your preferred font */
     margin: 0;
-    padding: 0;
+    background-color: #f4f4f4; /* Light background color */
+    color: #333; /* Dark text color */
 }
 
-header .item {
+/* Header Styles */
+.header-container {
+    background-color: #fff; /* White background for header */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item p {
+    margin: 0;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0px 0px 10px black;
+}
+
+.search-cart {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: black;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header .logoweb img {
-    height: 200px;
+.search-bar input {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-header nav ul {
-    list-style-type: none;
+.cart img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Navigation Styles */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 10px 0;
 }
 
-    header nav ul li {
+    nav ul li {
         margin: 0 10px;
-       
     }
 
-.cart {
-    position: relative;
-    display: inline-block;
-    margin-left: 20px; /* Khoảng cách với các phần tử khác */
-}
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    .cart img {
-        width: 40px; /* Tăng kích thước biểu tượng giỏ hàng */
-        height: auto;
-    }
+            nav ul li a:hover {
+                background-color: #333;
+                color: white;
+            }
 
-.logoweb p {
-    color: white;
-    font-weight: bolder;
-}
-
-header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
+/* Dropdown */
 .dropdown {
     position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
-    background-color: #ececec;
+    background-color: #f9f9f9;
     min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
     .dropdown-content a {
@@ -71,5 +95,49 @@ header nav ul li a {
     }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-content hr {
+    margin: 5px 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+.content-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-one, .footer-two, .footer-three {
+    width: 30%;
+}
+
+.color-footer {
+    color: #ffc107; /* Gold color for headings */
+}
+
+.color-a {
+    color: white;
+    line-height: 1.5;
+}
+
+.image-footer {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.content-bottom {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 20px;
 }

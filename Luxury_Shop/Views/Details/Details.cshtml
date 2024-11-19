@@ -3,17 +3,15 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/Content/chitietsanpham.css">
+    <link rel="stylesheet" href="~/Content/DetailsSP.css">
     <!-- Thêm font awesome cho icon shopping cart -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
 </head>
 <body>
     <header>
@@ -34,33 +32,69 @@
                 <div class="product-content">
                     <h2 class="product-title">@Model.ProductName</h2>
                     <div class="product-price">
-                        <p><span>@Model.OriginalPrice.ToString("N0") vnd</span></p>
+                        <p><span>@Model.OriginalPrice.ToString("N0")$</span></p>
                     </div>
                     <div class="product-detail">
                         <h2>Thông tin sản phẩm:</h2>
                         <p>@Model.Description</p>
                         <ul>
                             <li>Số lượng còn lại: @Model.StockQuantity</li>
+                            <li>Thương hiệu: @Model.Brand.BrandName</li>
                             <li>Danh mục: <span>@Model.Category.CategoryName</span></li>
                         </ul>
                     </div>
-                    <div class="purchase-info">
+                    <div class="purchase-info" y>
                         <!-- Form gửi thông tin sản phẩm vào giỏ hàng -->
                         <form action="@Url.Action("AddToCart", "ShoppingCart")" method="post">
                             <input type="hidden" name="productId" value="@Model.ProductID">
                             <input type="hidden" name="productName" value="@Model.ProductName">
                             <input type="hidden" name="productPrice" value="@Model.OriginalPrice">
                             <input type="hidden" name="productImage" value="@Model.ImageURL">
-
+                            <label for="size">
+                                Choose your size:
+                                <select id="size" name="size" class="status-dropdown">
+                                    <option value=""></option>
+                                    @if (Model.CategoryID == 1 || Model.CategoryID == 3)
+                                    {
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                    }
+                                    else if (Model.CategoryID == 2)
+                                    {
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
+                                        <option value="32">32</option>
+                                    }
+                                    else if (Model.CategoryID == 4)
+                                    {
+                                        <option value="5 US">5 US</option>
+                                        <option value="6 US">6 US</option>
+                                        <option value="7 US">7 US</option>
+                                        <option value="8 US">8 US</option>
+                                        <option value="9 US">9 US</option>
+                                    }
+                                    else if (Model.CategoryID == 5)
+                                    {
+                                        <option value="free size">free size</option>
+                                    }
+                                </select>
+                            </label>
                             <!-- Nhập số lượng sản phẩm -->
                             <label for="quantity">Số lượng:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="@Model.StockQuantity">
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="@Model.StockQuantity" style="margin-right:10px">
 
                             <!-- Nút thêm vào giỏ hàng -->
                             <button type="submit" class="btn">
-                                Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
+                                Add to Cart <i class="fas fa-shopping-cart"></i>
                             </button>
                         </form>
+                        <button onclick="window.location.href='@Url.Action("HomePage", "HomePage")'" class="btn btn-back">
+                            Trở về trang chủ
+                        </button>
                     </div>
                 </div>
             </div>

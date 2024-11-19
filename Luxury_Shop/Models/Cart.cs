@@ -62,5 +62,6 @@ namespace Luxury_Shop.Models
         public Product Product { get; set; }
         // Số lượng sản phẩm trong giỏ
         public int Quantity { get; set; }
+        public string Size { get; set; }
     }
 }
