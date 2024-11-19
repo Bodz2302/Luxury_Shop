@@ -19,34 +19,34 @@ namespace Luxury_Shop.Controllers
         {
             if (Session["admin"] == null)
             {
+                return RedirectToAction("HomePage", "HomePage");
 
-                {
-                    return RedirectToAction("HomePage", "HomePage");
-                }
             }
             ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             ViewBag.Admin = Session["admin"];
-            var soucess=     db.Orders.Where(c => c.Status == "Completed").ToList();
+            var soucess = db.Orders.Where(c => c.Status == "Completed").ToList();
             var custumer = db.Users.Where(c => c.IsAdmin == false).ToList();
             var chogiao = db.Orders.Where(c => c.Status == "Pending").ToList();
-            var fall=     db.Orders.Where(c => c.Status == "Đã Hủy").ToList();
+            var fall = db.Orders.Where(c => c.Status == "Đã Hủy").ToList();
             var dashboardData = new DashboardViewModel
-            { Totaldagiao = soucess.Count(),
-            Totaldahuy=fall.Count(),    Totaldanggiao = chogiao.Count(),
+            {
+                Totaldagiao = soucess.Count(),
+                Totaldahuy = fall.Count(),
+                Totaldanggiao = chogiao.Count(),
                 TotalBrands = db.Brands.Count(),
                 TotalProducts = db.Products.Count(),
                 TotalCategories = db.Categories.Count(),
                 TotalCustomers = custumer.Count(),
                 TotalOrders = db.Orders.Count(),
                 TotalRevenue = (decimal)(db.Orders.Sum(o => o.TotalAmount) ?? 0),
-                Products = db.Products.ToList(), 
-                Categories = db.Categories.ToList() 
+                Products = db.Products.ToList(),
+                Categories = db.Categories.ToList()
             };
 
-          
+
             return View(dashboardData);
-          
+
         }
         public ActionResult Index()
         {
@@ -56,7 +56,7 @@ namespace Luxury_Shop.Controllers
             if (Session["username"] == null)
             {
                 return RedirectToAction("Index", "Users");
-            }                 
+            }
             string use = Session["username"].ToString();
             var user = db.Users.SingleOrDefault(u => u.Username == use);
             ViewBag.tk = user;
@@ -141,7 +141,7 @@ namespace Luxury_Shop.Controllers
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 TempData["ErrorMessage"] = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu";
-                return View(new User { Username = username }); // Trả lại dữ liệu đã nhập
+                return View(new User { Username = username });
             }
             var user = db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
             if (user == null)
@@ -153,7 +153,7 @@ namespace Luxury_Shop.Controllers
             Session["check"] = true;
             ViewBag.use = Session["username"];
             if (user.IsAdmin.HasValue && user.IsAdmin.HasValue)
-            { 
+            {
                 Session["admin"] = true;
                 return RedirectToAction("Dashboard", "Users");
             }
@@ -163,7 +163,7 @@ namespace Luxury_Shop.Controllers
             }
         }
         public ActionResult Create()
-        {          
+        {
             return View();
         }
         [HttpPost]
@@ -196,7 +196,7 @@ namespace Luxury_Shop.Controllers
             return View(user);
         }
         public ActionResult taomoi()
-        {         
+        {
             return View();
         }
         [HttpPost]
@@ -229,7 +229,7 @@ namespace Luxury_Shop.Controllers
             ViewBag.use = Session["username"];
             if (ModelState.IsValid)
             { }
-                if (id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -238,13 +238,13 @@ namespace Luxury_Shop.Controllers
         new { Value = "false", Text = "Thành Viên" },
         new { Value = "true", Text = "Admin" }
     }, "Value", "Text", user.IsAdmin.ToString());
-          
+
             if (user == null)
             {
                 return HttpNotFound();
             }
             return View(user);
-        }       
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,Username,Password,Email,FullName,Phone,Address,CreatedAt,IsAdmin")] User user)
