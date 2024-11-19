@@ -1,5 +1,4 @@
-﻿
-/* Sản phẩm */
+﻿/* Sản phẩm */
 .sanpham-container {
     display: flex;
     flex-wrap: wrap;
@@ -17,6 +16,7 @@
     background-color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .sanpham-link {
     display: block;
     text-decoration: none;
@@ -29,43 +29,44 @@
         font-weight: bold; /* In đậm */
         /* Thêm các hiệu ứng khác nếu muốn */
     }
-    .sanpham:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.sanpham:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sanpham img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.sanpham h3 {
+    font-size: 18px; /* Tăng kích thước chữ tiêu đề */
+    margin: 10px 0;
+    font-weight: bold; /* Làm chữ tiêu đề đậm */
+    transition: font-weight 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
+
+    .sanpham h3:hover {
+        font-weight: 600; /* Điều chỉnh độ đậm khi hover */
     }
 
-    .sanpham img {
-        width: 100%;
-        height: auto;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 10px;
-    }
+.sanpham p {
+    margin: 5px 0;
+}
 
-    .sanpham h3 {
-        font-size: 18px; /* Tăng kích thước chữ tiêu đề */
-        margin: 10px 0;
-        font-weight: bold; /* Làm chữ tiêu đề đậm */
-        transition: font-weight 0.3s ease;
-        text-decoration: none;
-        color: black;
-    }
-
-        .sanpham h3:hover {
-            font-weight: 600; /* Điều chỉnh độ đậm khi hover */
-        }
-
-    .sanpham p {
-        margin: 5px 0;
-    }
-
-    .sanpham .gia {
-        font-size: 16px;
-        margin: 10px 0;
-        font-weight: bold; /* Làm chữ giá đậm */
-        transition: font-weight 0.3s ease;
-        text-decoration: none;
-        color: black;
-    }
+.sanpham .gia {
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold; /* Làm chữ giá đậm */
+    transition: font-weight 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
 /* Các thẻ điều hướng và liên kết */
 .login > a, .register > a {
     text-decoration: none;
