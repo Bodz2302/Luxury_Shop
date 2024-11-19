@@ -147,17 +147,27 @@ public class CheckoutController : Controller
 
 
     // Phương thức tạo mã đơn hàng ngẫu nhiên
-    private string GenerateOrderId()
+    public string GenerateOrderId()
     {
-        // Tạo một số ngẫu nhiên gồm 4 chữ số
-        Random random = new Random();
-        int randomPart = random.Next(1000, 10000); // Sinh ra một số ngẫu nhiên từ 1000 đến 9999
+        // Kiểm tra xem mã đơn hàng đã tồn tại trong session chưa
+        if (HttpContext.Session["OrderId"] == null)
+        {
+            // Tạo một số ngẫu nhiên gồm 4 chữ số
+            Random random = new Random();
+            int randomPart = random.Next(1000, 10000); // Sinh ra một số ngẫu nhiên từ 1000 đến 9999
 
-        // Kết hợp 4 chữ số đầu là "2024" với phần ngẫu nhiên
-        string orderId = "2024" + randomPart.ToString();
+            // Kết hợp 4 chữ số đầu là "2024" với phần ngẫu nhiên
+            string orderId = "2024" + randomPart.ToString();
 
-        return orderId;
+            // Lưu mã đơn hàng vào session
+            HttpContext.Session["OrderId"] = orderId;
+        }
+
+        // Lấy mã đơn hàng từ session
+        return HttpContext.Session["OrderId"].ToString();
     }
+
+
 
     // Phương thức tính tổng số tiền trong giỏ hàng
     private decimal GetTotalAmount()

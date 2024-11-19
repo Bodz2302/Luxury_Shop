@@ -5,7 +5,7 @@ using System.Web.Mvc;
 public class ShoppingCartController : Controller
 {
     private LuxuryEntities1 database = new LuxuryEntities1();
-
+    [Authorize]
     // GET: ShoppingCart/ShowCart
     public ActionResult ShowCart()
     {
@@ -23,6 +23,7 @@ public class ShoppingCartController : Controller
 
     // POST: ShoppingCart/AddToCart
     [HttpPost]
+    [Authorize]
     public ActionResult AddToCart(int productId, int quantity = 1)
     {
         // Kiểm tra sản phẩm có tồn tại trong cơ sở dữ liệu không
@@ -43,7 +44,7 @@ public class ShoppingCartController : Controller
 
         return RedirectToAction("ShowCart");
     }
-
+    [Authorize]
     // GET: ShoppingCart/Checkout
     public ActionResult Checkout()
     {
