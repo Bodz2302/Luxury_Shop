@@ -195,7 +195,7 @@
         });
     </script>
     <script>
-        var offset = 598626;
+        var offset = 100000;
         var second = offset / 1000;
         var countdown = parseInt(second);
         var retry = 500;
@@ -312,11 +312,12 @@
                                 showCloseButton: true,
                                 focusConfirm: false,
                             }),
-                            (window.location = ""));
+                        (window.location.href = "/Checkout/FailedPayment")); // Điều hướng về trang chủ khi thanh toán không thành công
                 }, 1000);
             $.ajaxSetup({ cache: !1 });
             setUpUI();
         });
+
 
         function redirect(data) {
             if (trackingModel) {
@@ -334,56 +335,32 @@
         function executeXML() {
             var invoiceNumber = "INV-672F24087C582";
             var retry = 5; // số lần retry
-            function checkInvoiceStatus() {
+
+            function checkInvoiceStatus(invoiceNumber) {
                 $.ajax({
-                    url: "/v1/gateway/querySession",
-                    method: "POST",
+                    url: "/Pay2s/CheckInvoiceStatus",
+                    method: "GET",
                     data: { invoiceNumber: invoiceNumber },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.code === "200") {
-                            $("#hide").html("");
-                            $("#hide_2").html("");
-                            $("#dynamic-filter-list").html("");
-                            $("#content-list").html("");
-                            $("#backButton").html("");
-                            $("#thanhcong").html(
-                                '<div class="expire-text">Thanh toán thành công.<br/>Vui lòng chờ trong giây lát.</div>'
-                            );
+                    success: function (response) {
+                        if (response.code === "200") {
+                            $("#thanhcong").html('<div class="expire-text">Thanh toán thành công.<br/>Vui lòng chờ trong giây lát.</div>');
                             setTimeout(function () {
-                                window.location = data.redirect_url;
+                                window.location = response.redirect_url;
                             }, 3000);
-                        } else if (
-                            data.code === "400" &&
-                            data.message === "Invoice is pending"
-                        ) {
-                            retry--;
-                            setTimeout(checkInvoiceStatus, 1000);
-                        } else if (
-                            data.code === "400" &&
-                            data.message === "Invoice has been cancelled"
-                        ) {
-                            $("#hide").html("");
-                            $("#hide_2").html("");
-                            $("#dynamic-filter-list").html("");
-                            $("#content-list").html("");
-                            $("#thanhcong").html(
-                                '<div class="expire-text">Hóa đơn đã bị hủy.</div>'
-                            );
                         } else {
-                            retry--;
-                            setTimeout(checkInvoiceStatus, 1000);
+                            $("#thanhcong").html('<div class="expire-text">' + response.message + '</div>');
                         }
                     },
                     error: function () {
-                        retry--;
-                        setTimeout(checkInvoiceStatus, 1000);
-                    },
+                        $("#thanhcong").html('<div class="expire-text">Đã có lỗi xảy ra khi kiểm tra hóa đơn. Vui lòng thử lại sau.</div>');
+                    }
                 });
             }
 
-            checkInvoiceStatus();
+            // Gọi hàm với invoiceNumber
+            checkInvoiceStatus(invoiceNumber);
         }
+
         $(document).ready(function () {
             $.ajaxSetup({
                 cache: false,
@@ -432,7 +409,7 @@
 
             $("#backButton").click(function () {
                 var stringPartner =
-                    "Bạn chắc chắn muốn hủy giao dịch thanh toán với " +
+                    "Bạn chắc chắn muốn hủy giao dịch thanh toán  " +
                     "<strong>" +
                     "" +
                     "</strong>" +

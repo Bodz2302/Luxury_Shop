@@ -142,6 +142,7 @@
     <Compile Include="Models\CategoryListViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\InvoiceStatusResponse.cs" />
     <Compile Include="Models\Luxury.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
