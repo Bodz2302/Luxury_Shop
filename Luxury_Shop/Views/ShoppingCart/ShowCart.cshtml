@@ -12,6 +12,13 @@
             <p><strong>Quantity:</strong> @item.Quantity</p>
             <p><strong>Price:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice)</p>
             <p><strong>Total:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</p>
+
+            <!-- Nút xóa sản phẩm -->
+            @using (Html.BeginForm("RemoveFromCart", "ShoppingCart", FormMethod.Post))
+            {
+                @Html.Hidden("productId", item.Product.ProductID)
+                <button type="submit" class="btn btn-danger">Xóa</button>
+            }
         </div>
         <hr />
     }
@@ -32,5 +39,5 @@
 }
 else
 {
-    <p>GIỎ HÀNG CÒN TRỐNG<a href="@Url.Action("HomePage", "HomePage")">MUA HÀNG NGAY</a></p>
+    <p>GIỎ HÀNG CÒN TRỐNG <a href="@Url.Action("HomePage", "HomePage")">MUA HÀNG NGAY</a></p>
 }

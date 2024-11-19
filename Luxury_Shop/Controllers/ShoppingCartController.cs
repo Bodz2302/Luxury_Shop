@@ -101,4 +101,21 @@ public class ShoppingCartController : Controller
         // Tính tổng số tiền của các sản phẩm trong giỏ hàng
         return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
     }
+    // POST: ShoppingCart/RemoveFromCart
+    [HttpPost]
+    public ActionResult RemoveFromCart(int productId)
+    {
+        // Lấy giỏ hàng từ session
+        var cart = Session["Cart"] as Cart ?? new Cart();
+
+        // Xóa sản phẩm khỏi giỏ hàng
+        cart.RemoveFromCart(productId);
+
+        // Lưu lại giỏ hàng vào session
+        Session["Cart"] = cart;
+
+        // Chuyển hướng về trang hiển thị giỏ hàng
+        return RedirectToAction("ShowCart");
+    }
+
 }
