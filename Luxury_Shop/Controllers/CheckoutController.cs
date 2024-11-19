@@ -1,6 +1,8 @@
-﻿using Luxury_Shop.Models;
+﻿using Luxury_Shop.Controllers;
+using Luxury_Shop.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 public class CheckoutController : Controller
@@ -181,24 +183,68 @@ public class CheckoutController : Controller
 
     public ActionResult BankTransfer()
     {
-        // Giả sử bạn có lớp `Cart` chứa các mặt hàng trong giỏ hàng
-        var cart = Session["Cart"] as Cart; // Lấy giỏ hàng từ Session
+        // Lấy giỏ hàng từ Session
+        var cart = Session["Cart"] as Cart;
         if (cart == null || !cart.Items.Any())
         {
-            return RedirectToAction("Index", "Cart"); // Chuyển về giỏ hàng nếu trống
+            return RedirectToAction("Index", "ShoppingCart"); // Nếu giỏ hàng trống, quay về giỏ hàng
         }
 
-        // Tính tổng tiền
+        // Tính tổng tiền và mã đơn hàng
         decimal totalAmount = cart.Items.Sum(item => item.Quantity * item.Product.OriginalPrice);
-
-        // Tạo mã đơn hàng (giả sử mã đơn hàng là ngày giờ hiện tại)
         string orderCode = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-        // Truyền dữ liệu sang View
+        // Lưu thông tin đơn hàng vào TempData để sử dụng khi kiểm tra thanh toán
+        TempData["TotalAmount"] = totalAmount;
+        TempData["OrderCode"] = orderCode;
+
+        // Truyền dữ liệu qua View để khách hàng chuyển khoản
         ViewBag.TotalAmount = totalAmount;
         ViewBag.OrderCode = orderCode;
 
         return View();
     }
+
+    public async Task<ActionResult> CheckPaymentStatus()
+    {
+        string orderCode = TempData["OrderCode"]?.ToString();
+        decimal totalAmount = Convert.ToDecimal(TempData["TotalAmount"] ?? 0);
+
+        if (string.IsNullOrEmpty(orderCode) || totalAmount <= 0)
+        {
+            TempData["Error"] = "Thông tin đơn hàng không hợp lệ.";
+            return RedirectToAction("FailedPayment");
+        }
+
+        // Gọi API để lấy lịch sử giao dịch
+        var pay2sController = new Pay2sController();
+        string responseJson = await pay2sController.FetchTransactions(
+            DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy"),
+            DateTime.Now.ToString("dd/MM/yyyy")
+        );
+
+        // Parse JSON từ Pay2s API
+        dynamic transactions = Newtonsoft.Json.JsonConvert.DeserializeObject(responseJson);
+
+        if (transactions != null && transactions.status == true)
+        {
+            foreach (var transaction in transactions.data)
+            {
+                // Kiểm tra giao dịch có trùng OrderCode và tổng tiền không
+                if (transaction.description.Contains(orderCode) &&
+                    Convert.ToDecimal(transaction.amount) == totalAmount)
+                {
+                    // Đánh dấu đơn hàng đã thanh toán thành công
+                    TempData["Success"] = "Thanh toán thành công!";
+                    return RedirectToAction("SuccessCheckout");
+                }
+            }
+        }
+
+        TempData["Error"] = "Không tìm thấy giao dịch phù hợp. Vui lòng kiểm tra lại.";
+        return RedirectToAction("FailedPayment");
+    }
+
+
 
 }

@@ -124,6 +124,7 @@
     <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
+    <Compile Include="Controllers\Pay2sController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QuanlydonhangController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -213,6 +214,7 @@
     <Content Include="Content\payment\payment.css" />
     <Content Include="Content\payment\qr.css" />
     <Content Include="Content\payment\style.css" />
+    <Content Include="Content\payment\successpayment.css" />
     <Content Include="Content\Style1.css" />
     <Content Include="Content\StyleCart.css" />
     <Content Include="favicon.ico" />
@@ -313,6 +315,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Pay2s\" />
     <Folder Include="Views\Transaction\" />
     <Folder Include="Views\Webhook\" />
   </ItemGroup>
