@@ -19,5 +19,6 @@ namespace Luxury_Shop
                 defaults: new { controller = "HomePage", action = "HomePage", id = UrlParameter.Optional }
             );
         }
+
     }
 }
