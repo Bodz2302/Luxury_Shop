@@ -1,5 +1,4 @@
-﻿
-/* Sản phẩm */
+﻿/* Sản phẩm */
 .sanpham-container {
     display: flex;
     flex-wrap: wrap;
@@ -17,6 +16,7 @@
     background-color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .sanpham-link {
     display: block;
     text-decoration: none;
@@ -29,43 +29,44 @@
         font-weight: bold; /* In đậm */
         /* Thêm các hiệu ứng khác nếu muốn */
     }
-    .sanpham:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.sanpham:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sanpham img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.sanpham h3 {
+    font-size: 18px; /* Tăng kích thước chữ tiêu đề */
+    margin: 10px 0;
+    font-weight: bold; /* Làm chữ tiêu đề đậm */
+    transition: font-weight 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
+
+    .sanpham h3:hover {
+        font-weight: 600; /* Điều chỉnh độ đậm khi hover */
     }
 
-    .sanpham img {
-        width: 100%;
-        height: auto;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 10px;
-    }
+.sanpham p {
+    margin: 5px 0;
+}
 
-    .sanpham h3 {
-        font-size: 18px; /* Tăng kích thước chữ tiêu đề */
-        margin: 10px 0;
-        font-weight: bold; /* Làm chữ tiêu đề đậm */
-        transition: font-weight 0.3s ease;
-        text-decoration: none;
-        color: black;
-    }
-
-        .sanpham h3:hover {
-            font-weight: 600; /* Điều chỉnh độ đậm khi hover */
-        }
-
-    .sanpham p {
-        margin: 5px 0;
-    }
-
-    .sanpham .gia {
-        font-size: 16px;
-        margin: 10px 0;
-        font-weight: bold; /* Làm chữ giá đậm */
-        transition: font-weight 0.3s ease;
-        text-decoration: none;
-        color: black;
-    }
+.sanpham .gia {
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold; /* Làm chữ giá đậm */
+    transition: font-weight 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
 /* Các thẻ điều hướng và liên kết */
 .login > a, .register > a {
     text-decoration: none;
@@ -219,7 +220,7 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 50px; /* Tăng kích thước chữ lên */
+    font-size: 3em; /* Tăng kích thước chữ lên */
     font-weight: bold; /* Làm chữ đậm hơn */
     text-align: center;
     text-shadow: 0px 0px 10px black; /* Thêm hiệu ứng đổ bóng cho chữ */
@@ -234,6 +235,17 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Điều chỉnh màu và độ mờ ở đây */
 }
+@media (max-width: 1000px) {
+    .banner-title {
+        font-size: 2em; /* Giảm kích thước font chữ khi màn hình nhỏ hơn 768px */
+    }
+}
+@media (max-width: 640px) {
+    .banner-title {
+        font-size: 1em; /* Giảm kích thước font chữ khi màn hình nhỏ hơn 768px */
+    }
+}
+
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
     .container {

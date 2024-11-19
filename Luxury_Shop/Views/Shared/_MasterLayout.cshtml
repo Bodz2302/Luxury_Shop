@@ -81,13 +81,29 @@
                         <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 1 })">Gucci</a>
                     </div>
                 </li>
-                <li class="login">
-                    @Html.ActionLink("Login", "login", "Users")
+                @if (ViewBag.check == null)
+                {
+                    <li class="login">
+                        @Html.ActionLink("Đăng nhập", "login", "Users")
 
-                </li>
-                <li class="register">
-                    @Html.ActionLink("Register", "create", "Users")
-                </li>
+                    </li>
+                    <li class="register">
+                        @Html.ActionLink("Đăng ký", "create", "Users")
+
+                    </li>
+                }
+                else
+                {
+                    <li class="profile">
+                        <a href="@Url.Action("Index", "Users")"> @ViewBag.use</a>
+                    </li>
+
+
+                    <li class="logout">
+                        @Html.ActionLink("Đăng xuất", "logout", "Users")
+
+                    </li>
+                }
             </ul>
         </nav>
         <script>
