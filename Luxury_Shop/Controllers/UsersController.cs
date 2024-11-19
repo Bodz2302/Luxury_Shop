@@ -152,7 +152,7 @@ namespace Luxury_Shop.Controllers
             Session["username"] = user.Username;
             Session["check"] = true;
             ViewBag.use = Session["username"];
-            if (user.IsAdmin.HasValue && user.IsAdmin.Value)
+            if (user.IsAdmin.HasValue && user.IsAdmin.HasValue)
             { 
                 Session["admin"] = true;
                 return RedirectToAction("Dashboard", "Users");
@@ -227,11 +227,18 @@ namespace Luxury_Shop.Controllers
             ViewBag.Admin = Session["admin"];
             ViewBag.check = Session["check"];  // Sửa thành check thay vì UserID
             ViewBag.use = Session["username"];
-            if (id == null)
+            if (ModelState.IsValid)
+            { }
+                if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+            ViewBag.IsAdminList = new SelectList(new[] {
+        new { Value = "false", Text = "Thành Viên" },
+        new { Value = "true", Text = "Admin" }
+    }, "Value", "Text", user.IsAdmin.ToString());
+          
             if (user == null)
             {
                 return HttpNotFound();
@@ -281,6 +288,14 @@ namespace Luxury_Shop.Controllers
                     return View(user);
                 }
             }
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage); // In ra lỗi cụ thể
+            }
+            ViewBag.IsAdminList = new SelectList(new[] {
+        new { Value = "false", Text = "Thành Viên" },
+        new { Value = "true", Text = "Admin" }
+    }, "Value", "Text", user.IsAdmin.ToString());
             return View(user);
         }
 
