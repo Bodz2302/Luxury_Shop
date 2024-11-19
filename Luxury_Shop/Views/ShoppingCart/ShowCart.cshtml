@@ -1,37 +1,37 @@
 ﻿@model Luxury_Shop.Models.OrderViewModel
-
-<h2>Your Cart</h2>
-
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
 @if (Model.Cart != null && Model.Cart.Items.Any())
 {
-    <!-- Danh sách sản phẩm trong giỏ hàng -->
     foreach (var item in Model.Cart.Items)
     {
-        <div>
-            <p><strong>Product:</strong> @item.Product.ProductName</p>
-            <p><strong>Quantity:</strong> @item.Quantity</p>
-            <p><strong>Price:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice)</p>
-            <p><strong>Total:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</p>
-
-            <!-- Nút xóa sản phẩm -->
-            @using (Html.BeginForm("RemoveFromCart", "ShoppingCart", FormMethod.Post))
-            {
-                @Html.Hidden("productId", item.Product.ProductID)
-                <button type="submit" class="btn btn-danger">Xóa</button>
-            }
+        <div class="cart-container">
+            <div class="col-md-3">
+                <img src="@Url.Content(item.Product.ImageURL)" alt="@item.Product.ProductName" class="img-fluid" />
+            </div>
+            <div class="col-md-9">
+                <p><strong>Product:</strong> @item.Product.ProductName</p>
+                <p><strong>Size:</strong> @item.Size</p>
+                <p><strong>Quantity:</strong> @item.Quantity</p>
+                <p><strong>Price:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice)</p>
+                <p><strong>Total:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</p>
+                @using (Html.BeginForm("RemoveFromCart", "ShoppingCart", FormMethod.Post))
+                {
+                    @Html.Hidden("productId", item.Product.ProductID)
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                }
+            </div>
         </div>
         <hr />
     }
 
-    <!-- Hiển thị tổng tiền -->
     <p><strong>Total: @string.Format("{0:N0} vnd", Model.Cart.GetTotalAmount())</strong></p>
 
-    <!-- Nút điều hướng -->
     <div class="cart-actions">
-        <!-- Nút Tiếp tục mua hàng -->
         <a href="@Url.Action("HomePage", "HomePage")" class="btn btn-secondary">Tiếp tục mua hàng</a>
 
-        <!-- Nút Thanh toán -->
         <form action="@Url.Action("Index", "Checkout")" method="get" style="display: inline;">
             <button type="submit" class="btn btn-primary">Thanh toán</button>
         </form>
@@ -39,5 +39,6 @@
 }
 else
 {
-    <p>GIỎ HÀNG CÒN TRỐNG <a href="@Url.Action("HomePage", "HomePage")">MUA HÀNG NGAY</a></p>
+    <p class="cart-empty">Your cart is empty.</p>
+    <a href="@Url.Action("HomePage", "HomePage")" class="btn btn-primary">Continue Shopping</a>
 }

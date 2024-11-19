@@ -106,38 +106,55 @@ nav ul {
     border-top: 1px solid #eee;
 }
 
-/* Footer Styles */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 20px;
+footer .col-md-12 > p:first-child { /* Chọn thẻ p đầu tiên trong col-md-12 */
+    text-align: center; /* Căn giữa các liên kết */
 }
 
-.content-footer {
-    display: flex;
-    justify-content: space-around;
+    footer .col-md-12 > p:first-child > a { /* Chọn các thẻ a trong thẻ p đầu tiên */
+        display: inline-block;
+        margin: 0 15px; /* Khoảng cách giữa các liên kết */
+    }
+
+.contact-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Căn giữa các mục li */
 }
 
-.footer-one, .footer-two, .footer-three {
-    width: 30%;
-}
+    .contact-list li {
+        display: inline-block;
+        margin: 0 15px; /* Khoảng cách giữa các mục li */
+    }
 
-.color-footer {
-    color: #ffc107; /* Gold color for headings */
-}
+    .contact-list a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+    }
 
-.color-a {
-    color: white;
-    line-height: 1.5;
-}
+        .contact-list a:hover {
+            color: #gold; /* Màu vàng gold khi hover */
+        }
 
-.image-footer {
-    width: 100px;
-    margin-top: 10px;
-}
-
-.content-bottom {
+footer p {
     text-align: center;
-    font-size: 0.8em;
     margin-top: 20px;
+}
+
+footer a {
+    color: #007bff; /* Màu xanh dương cho liên kết */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    footer a:hover {
+        color: #0056b3; /* Màu xanh đậm hơn khi hover */
+    }
+@media (max-width: 768px) {
+    footer .col-md-12 > p:first-child > a {
+        display: block; /* Xếp các liên kết thành cột */
+        margin: 10px 0; /* Khoảng cách trên dưới */
+    }
 }
