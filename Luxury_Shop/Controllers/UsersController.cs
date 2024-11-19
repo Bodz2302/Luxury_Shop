@@ -53,13 +53,10 @@ namespace Luxury_Shop.Controllers
             ViewBag.use = Session["username"];
             ViewBag.check = Session["check"];
             ViewBag.Admin = Session["admin"];
-            if (Session["admin"] == null)
+            if (Session["username"] == null)
             {
-
-                {
-                    return RedirectToAction("loi", "Users");
-                }
-            }
+                return RedirectToAction("Index", "Users");
+            }                 
             string use = Session["username"].ToString();
             var user = db.Users.SingleOrDefault(u => u.Username == use);
             ViewBag.tk = user;
@@ -80,7 +77,6 @@ namespace Luxury_Shop.Controllers
                                    .Skip((pageNumber - 1) * pageSize)
                                    .Take(pageSize)
                                    .ToList();
-
             var model = new AccountListViewModel
             {
                 ListAcc = accounts,
@@ -88,13 +84,13 @@ namespace Luxury_Shop.Controllers
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
-
             return View(model);
         }
         public ActionResult loi()
         {
-
-
+            ViewBag.Admin = Session["admin"];
+            ViewBag.check = Session["check"];  // Sửa thành check thay vì UserID
+            ViewBag.use = Session["username"];
             return View();
         }
         public ActionResult Quanlykh()
@@ -113,7 +109,6 @@ namespace Luxury_Shop.Controllers
             Session["check"] = false;
             Session.Clear();
             return RedirectToAction("HomePage", "HomePage");
-
         }
 
         // GET: Users/Details/5
@@ -133,91 +128,75 @@ namespace Luxury_Shop.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if (Session["check"] != null)
+            if (Session["check"] != null && Session["check"].ToString() == "True")
             {
-                if (Session["check"].ToString() == "True")
-                {
-                    return RedirectToAction("Index", "Users");
-                }
+                return RedirectToAction("Index", "Users");
             }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string email, string password)
+        public ActionResult Login(string username, string password)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                {
-                    {
-                        var data = db.Users.FirstOrDefault(u => u.Username == email && u.Password == password);
-                        if (data != null)
-                        {
-                            try { 
-                            if (data.IsAdmin.Value == null)
-                            {
-                                data.IsAdmin = false;
-                            }
-                            }
-                            catch { data.IsAdmin = false; }
-                            Session["username"] = email;
-                            Session["check"] = true; ViewBag.use = Session["username"];
-                            if (data.IsAdmin.Value == true)
-                            {
-                                Session["admin"] = true;
-                            }
-                            return RedirectToAction("Dashboard", "Users");
-                        }
-                        else
-                        {
-                            Session["check"] = false;
-                            Session["ErrorMessage"] = "Thông tin đăng nhập không hợp lệ.";
-                            return RedirectToAction("Login");
-                        }
-                    }
-                }
+                TempData["ErrorMessage"] = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu";
+                return View(new User { Username = username }); // Trả lại dữ liệu đã nhập
             }
-            return View();
+            var user = db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Tên đăng nhập hoặc mật khẩu không đúng";
+                return View(new User { Username = username });
+            }
+            Session["username"] = user.Username;
+            Session["check"] = true;
+            ViewBag.use = Session["username"];
+            if (user.IsAdmin.HasValue && user.IsAdmin.Value)
+            { 
+                Session["admin"] = true;
+                return RedirectToAction("Dashboard", "Users");
+            }
+            else
+            {
+                return RedirectToAction("HomePage", "HomePage");
+            }
         }
-        // GET: Users/Create
         public ActionResult Create()
-        {
-            if (Session["admin"] == null)
-            {
-
-                {
-                    return RedirectToAction("loi", "Users");
-                }
-            }
+        {          
             return View();
         }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Username,Password,Email,FullName,Phone,Address,CreatedAt,IsAdmin")] User user)
         {
             if (ModelState.IsValid)
             {
-                user.IsAdmin = false;
-                user.CreatedAt = DateTime.Now;
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Login");
+                if (db.Users.Any(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email này đã được đăng ký");
+                }
+                if (db.Users.Any(u => u.Username == user.Username))
+                {
+                    ModelState.AddModelError("Username", "Tên đăng nhập này đã được đăng ký");
+                }
+                if (db.Users.Any(u => u.Phone == user.Phone))
+                {
+                    ModelState.AddModelError("Phone", "Số điện thoại này đã được đăng ký");
+                }
+                if (ModelState.IsValid)
+                {
+                    user.IsAdmin = false;
+                    user.CreatedAt = DateTime.Now;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Login");
+                }
             }
             return View(user);
         }
         public ActionResult taomoi()
-        {
-            if (Session["admin"] == null)
-            {
-
-                {
-                    return RedirectToAction("loi", "Users");
-                }
-            }
+        {         
             return View();
         }
         [HttpPost]
@@ -246,6 +225,8 @@ namespace Luxury_Shop.Controllers
         public ActionResult Edit(int? id)
         {
             ViewBag.Admin = Session["admin"];
+            ViewBag.check = Session["check"];  // Sửa thành check thay vì UserID
+            ViewBag.use = Session["username"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -256,24 +237,49 @@ namespace Luxury_Shop.Controllers
                 return HttpNotFound();
             }
             return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        }       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,Username,Password,Email,FullName,Phone,Address,CreatedAt,IsAdmin")] User user)
         {
+            ViewBag.Admin = Session["admin"];
+            ViewBag.check = Session["check"];  // Sửa thành check
+            ViewBag.use = Session["username"];
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                if (Session["admin"] == null)
+                try
                 {
-                    return RedirectToAction("Index", "Users");
+                    var existingUser = db.Users.Find(user.UserID);
+                    if (existingUser == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    if (Session["admin"] == null || (bool)Session["admin"] == false)
+                    {
+                        user.IsAdmin = existingUser.IsAdmin;
+                    }
+                    if (!string.IsNullOrEmpty(user.Password) && user.Password != existingUser.Password)
+                    {
+                        existingUser.Password = user.Password;
+                    }
+                    existingUser.Email = user.Email;
+                    existingUser.FullName = user.FullName;
+                    existingUser.Phone = user.Phone;
+                    existingUser.Address = user.Address;
+                    existingUser.IsAdmin = user.IsAdmin;
+                    db.SaveChanges();
+                    if (Session["admin"] == null)
+                    {
+                        return RedirectToAction("Index", "Users");
+                    }
+                    return RedirectToAction("Quanlykh");
                 }
-                return RedirectToAction("Quanlykh");
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Có lỗi xảy ra khi lưu dữ liệu: " + ex.Message);
+                    System.Diagnostics.Debug.WriteLine("Error in Edit: " + ex.ToString());
+                    return View(user);
+                }
             }
             return View(user);
         }

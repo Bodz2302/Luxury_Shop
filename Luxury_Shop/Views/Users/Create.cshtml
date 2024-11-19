@@ -5,110 +5,63 @@
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
     ViewBag.ti = ViewBag.Title;
 }
-
-<style>
-    .center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh; /* Full height */
-    }
-
-    .card {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 15px;
-        overflow: hidden;
-        display: flex;
-    }
-
-    .card-body {
-        padding: 30px;
-        background-color: #f8f9fa;
-    }
-
-    h4.card-title {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        color: #007bff;
-    }
-
-    .form-control {
-        border-radius: 50px;
-        padding: 10px 15px;
-        margin-bottom: 20px;
-        font-size: 16px;
-        border: 1px solid #ced4da;
-        transition: all 0.3s ease-in-out;
-    }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        border-radius: 50px;
-        padding: 10px 20px;
-        font-size: 18px;
-        transition: background-color 0.3s ease-in-out;
-        width: 100%;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-    .alert-danger {
-        text-align: center;
-    }
-
-    p.text-center {
-        font-size: 14px;
-        color: #6c757d;
-    }
-</style>
+<link href="~/Content/Users/create.css" rel="stylesheet" />
 <section class="section-conten center">
-    <!-- ============================ COMPONENT LOGIN   ================================= -->
     <div class="card mx-auto" style="max-width: 380px;">
         <div class="card-body">
             <h4 class="card-title mb-4">Đăng Ký</h4>
             @if (Session["ErrorMessage"] != null)
             {
-                <div class="alert alert-danger">@Session["ErrorMessage"] </div>
+                <div class="alert alert-danger">@Session["ErrorMessage"]</div>
             }
-            @using (Html.BeginForm("create", "Users", FormMethod.Post))
+            @using (Html.BeginForm("Create", "Users", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Full name" })
+                    @Html.LabelFor(m => m.FullName, "Họ tên")
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Nhập họ tên..." })
+                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+                    @Html.LabelFor(m => m.Username, "Tên đăng nhập")
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên đăng nhập..." })
+                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
+                    @Html.LabelFor(m => m.Password, "Mật khẩu")
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu..." })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.LabelFor(m => m.Email, "Email")
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email..." })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Phone" })
+                    @Html.LabelFor(m => m.Phone, "Số điện thoại")
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Nhập số điện thoại..." })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address" })
+                    @Html.LabelFor(m => m.Address, "Địa chỉ")
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ..." })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
                 </div>
+
                 <p class="text-center mt-4">
-                    @Html.ActionLink("Bạn đã có tài khoản ?", "Login", "Users", null, new { @class = "button" })
+                    @Html.ActionLink("Bạn đã có tài khoản?", "Login", "Users", null, new { @class = "button" })
                 </p>
             }
         </div>
     </div>
-    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
 </section>
 

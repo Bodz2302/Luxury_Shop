@@ -12,102 +12,77 @@
     }
     ViewBag.ti = ViewBag.Title;
 }
-
-
-
-<link href="~/Css/editprofile.css" rel="stylesheet" />
-
-
-
+<link href="~/Content/Users/edit.css" rel="stylesheet" />
+<h2 class="form-title">Thông tin cá nhân</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <h4>Edit User</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.UserID)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UserID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Username)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, "Mật khảu", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FullName, "Họ và tên", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Phone, "Số điện thoại", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Address, "Địa chỉ", htmlAttributes: new { @class = "control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    @Html.HiddenFor(model => model.CreatedAt)
-
-    @if (ViewBag.Admin != null && ViewBag.Admin == true)
-    {
         <div class="form-group">
-            <label class="control-label" for="IsAdmin">Quyền Admin</label>
+            @Html.LabelFor(model => model.Username, "Tên đăng nhập", htmlAttributes: new { @class = "control-label" })
             <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
 
-
-                <select id="IsAdmin" name="IsAdmin" required class="form-control">
-                    <option value="false">Thành Viên</option>
-                    <option value="true">Admin</option>
-                </select>
             </div>
         </div>
-    }
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input style="
-    width: 785px;
-" type="submit" value="Save" class="btn btn-default" />
-            <p>
-                <input type="button" value="Back to List" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Quanlykh")'" />
-            </p>
-
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, "Mật khẩu", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, "Họ và tên", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, "Số điện thoại", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, "Địa chỉ", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.CreatedAt)
+        @if (ViewBag.Admin != null && ViewBag.Admin == true)
+        {
+            <div class="form-group">
+                <label class="control-label" for="IsAdmin">Quyền Admin</label>
+                <div class="col-md-10">
+                    <select id="IsAdmin" name="IsAdmin" class="form-control">
+                        <option value="@false" @(Model.IsAdmin == false ? "selected" : "")>Thành Viên</option>
+                        <option value="@true" @(Model.IsAdmin == true ? "selected" : "")>Admin</option>
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="form-actions">
+            <button type="submit" class="btn-default">Lưu</button>
+            <a href="@Url.Action("Index", "Users")" class="btn-default">Hủy</a>
         </div>
     </div>
-</div>
+
 }
 
 

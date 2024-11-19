@@ -205,6 +205,12 @@
     <Content Include="Content\payment\successpayment.css" />
     <Content Include="Content\Style1.css" />
     <Content Include="Content\StyleCart.css" />
+    <Content Include="Content\Users\create.css" />
+    <Content Include="Content\Users\delete.css" />
+    <Content Include="Content\Users\detail.css" />
+    <Content Include="Content\Users\edit.css" />
+    <Content Include="Content\Users\index.css" />
+    <Content Include="Content\Users\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

@@ -1,0 +1,69 @@
+﻿/* Style for the delete container */
+.dl-horizontal {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Style for the detail headings */
+dt {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Style for the detail values */
+dd {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Style for the form headings */
+h3, h4 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for the form divider */
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for the submit button */
+.btn-default {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .btn-default:hover {
+        background-color: #c9302c;
+    }
+
+/* Style for action links */
+a {
+    font-size: 16px;
+    color: #337ab7;
+    margin-right: 10px;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: #286090;
+    }
+
+/* Style for form actions */
+.form-actions {
+    margin-top: 20px;
+}
