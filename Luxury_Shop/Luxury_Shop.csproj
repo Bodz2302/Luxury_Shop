@@ -310,6 +310,9 @@
     <Content Include="Views\Checkout\SuccessCheckout.cshtml" />
     <Content Include="Views\Checkout\BankTransfer2.cshtml" />
     <Content Include="Views\Checkout\FailedPayment.cshtml" />
+    <Content Include="Views\Products\ViewProductsByCategory.cshtml" />
+    <Content Include="Views\Products\ViewProductsByBrands.cshtml" />
+    <Content Include="Views\Products\ViewProductsByCategoryAndBrand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

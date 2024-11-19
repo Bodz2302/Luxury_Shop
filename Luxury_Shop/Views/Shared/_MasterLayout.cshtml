@@ -3,97 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIN STORE</title>
-    <link rel="stylesheet" href="~/Content/Style1.css">
+    <title>FARCTECH</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/MasterLayout/header.css" />
     <link rel="stylesheet" href="~/Content/MasterLayout/footer.css" />
-    @RenderSection("Styles", required: false)
 </head>
+
 <body>
-    <header>    
-        <div class="item">
-            <div class="logoweb">
-                <img src="~/Content/images/lgo.jpg" alt="RIN STORE">
-                <p>RIN STORE</p>
+    <header>
+        <div class="header-container">
+            <div class="item" style="flex-grow: 1; text-align: left;">
+                <p>FARCTECH</p>
             </div>
-            <nav>
-                <ul>
-                    <li>@Html.ActionLink("TRANG CHỦ", "HomePage", "HomePage")</li>
-                    <li class="dropdown">
-                        <a href="#">ÁO NAM</a>
-                        <div class="dropdown-content">
-                            @Html.ActionLink("Gucci", "Gucci", "HomePage")
-                            <a href="#">Burberry</a> <hr>
-                            <a href="#">Dsquared2</a> <hr>
-                            <a href="#">Dolce & Gabbana</a> <hr>
-                            <a href="#">Balenciaga</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#">QUẦN NAM</a>
-                        <div class="dropdown-content">
-                            <a href="#">Dsquared2</a> <hr>
-                            <a href="#">Dolce & Gabbana</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#">ÁO KHOÁC NAM</a>
-                        <div class="dropdown-content">
-                            <a href="#">Gucci</a> <hr>
-                            <a href="#">Burberry</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#">DÉP NAM</a>
-                        <div class="dropdown-content">
-                            <a href="#">Gucci</a> <hr>
-                            <a href="#">Burberry</a> <hr>
-                            <a href="#">Dsquared2</a> <hr>
-
-                        </div>
-                    </li>
-                    @if (ViewBag.check == null)
-                    {
-                        <li class="login">
-                            @Html.ActionLink("ĐĂNG NHẬP", "login", "Users")
-
-                        </li>
-                        <li class="register">
-                            @Html.ActionLink("ĐĂNG KÝ", "create", "Users")
-
-                        </li>
-                    }
-                    else
-                    {
-
-
-                <li class="profile">
-                    <a href="@Url.Action("Index", "Users")"> @ViewBag.use</a>
-                </li>
-
-
-                        <li class="logout">
-                            @Html.ActionLink("Đăng xuất", "logout", "Users")
-
-                        </li>
-                    }
-                    <li class="cart">
-                        <a href="@Url.Action("ShowCart", "ShoppingCart")">
-                            <img src="~/Content/images/shopping-cart (1).png" alt="Giỏ hàng">
-                        </a>
-                    </li>
-                </ul>
-                <marquee class="marquee" behavior="" direction="left">
-                    SIÊU SALE MÙA HÈ GIẢM GIÁ SỐC LÊN ĐẾN 30%
-                </marquee>
-            </nav>
+            <div class="search-cart" style="display: flex; align-items: center;">
+                <div class="search-bar" style="margin-right: 20px;">
+                    <form action="/Search" method="get">
+                        <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." style="padding: 5px; width: 200px; border: 1px solid #ccc; border-radius: 4px;">
+                    </form>
+                </div>
+                <div class="cart">
+                    <a href="@Url.Action("ShowCart", "ShoppingCart")">
+                        <img src="~/Content/images/shopping-cart (1).png" alt="Giỏ hàng" style="width: 30px; height: 30px;">
+                    </a>
+                </div>
+            </div>
         </div>
+        <nav>
+            <ul>
+                <li>@Html.ActionLink("TRANG CHỦ", "HomePage", "HomePage")</li>
+                <li class="dropdown">
+                    <a href="@Url.Action("ViewProductsByCategory", "Products", new { categoryId = 1 })">ÁO NAM</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 1, brandId = 1 })">Gucci</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 1, brandId = 2 })">Balenciaga</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 1, brandId = 3 })">Burberry</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 1, brandId = 4 })">Off-White</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand", "Products", new {categoryId = 1, brandId = 5 })">Dsquared2</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="@Url.Action("ViewProductsByCategory", "Products", new { categoryId = 2 })">QUẦN NAM</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 2, brandId = 2 })">Balenciaga</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 2, brandId = 5 })">Dsquared2</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 2, brandId = 4 })">Off-White</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 2, brandId = 3 })">Burberry</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 2, brandId = 1 })">Gucci</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="@Url.Action("ViewProductsByCategory", "Products", new { categoryId = 3 })">ÁO KHOÁC</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 3, brandId = 2 })">Balenciaga</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 3, brandId = 5 })">Dsquared2</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 3, brandId = 4 })">Off-White</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 3, brandId = 3 })">Burberry</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 3, brandId = 1 })">Gucci</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="@Url.Action("ViewProductsByCategory", "Products", new { categoryId = 4 })">DÉP NAM</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 4, brandId = 2 })">Balenciaga</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 4, brandId = 5 })">Dsquared2</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 4, brandId = 4 })">Off-White</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 4, brandId = 3 })">Burberry</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 4, brandId = 1 })">Gucci</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="@Url.Action("ViewProductsByCategory", "Products", new { categoryId = 5 })">PHỤ KIỆN</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 2 })">Balenciaga</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 5 })">Dsquared2</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 4 })">Off-White</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 3 })">Burberry</a> <hr>
+                        <a href="@Url.Action("ViewProductsByCategoryAndBrand","Products", new {categoryId = 5, brandId = 1 })">Gucci</a>
+                    </div>
+                </li>
+                <li class="login">
+                    @Html.ActionLink("Login", "login", "Users")
+
+                </li>
+                <li class="register">
+                    @Html.ActionLink("Register", "create", "Users")
+                </li>
+            </ul>
+        </nav>
+        <script>
+            // Toggle Dropdown Menus
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.addEventListener('mouseenter', function () {
+                    const content = this.querySelector('.dropdown-content');
+                    if (content) content.style.display = 'block';
+                });
+                dropdown.addEventListener('mouseleave', function () {
+                    const content = this.querySelector('.dropdown-content');
+                    if (content) content.style.display = 'none';
+                });
+            });
+            // Dynamic Banner Text Animation
+            const bannerTitle = document.querySelector('.banner-title');
+            if (bannerTitle) {
+                const words = ['SALE NOW ON: UP TO 50% OFF', 'EXCLUSIVE DEALS', 'LIMITED TIME OFFER'];
+                let currentIndex = 0;
+
+                setInterval(() => {
+                    bannerTitle.style.opacity = '0';
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % words.length;
+                        bannerTitle.textContent = words[currentIndex];
+                        bannerTitle.style.opacity = '1';
+                    }, 500);
+                }, 3000);
+            }
+        </script>
     </header>
     @RenderBody()
     <footer>
         <div class="row">
             <div class="content-footer">
-                <div class="footer-one">                    
+                <div class="footer-one">
                     <h4 class="color-footer">TRỢ GIÚP</h4>
                     <div class="color-a">
                         Hệ thống cửa hàng <br>

@@ -14,6 +14,26 @@ namespace Luxury_Shop.Controllers
     {
         private LuxuryEntities1 db = new LuxuryEntities1();
 
+        public ActionResult ViewProductsByCategory(int categoryId)
+        {
+            var productsInCategory = db.Products.Where(p => p.CategoryID == categoryId).ToList();
+            return View(productsInCategory); // Truyền danh sách sản phẩm vào view
+        }
+        public ActionResult ViewProductsByBrands(int brandId)
+        {
+            var productsInBrands = db.Products.Where(p => p.BrandID == brandId).ToList();
+            return View(productsInBrands); // Truyền danh sách sản phẩm vào view
+        }
+        public ActionResult ViewProductsByCategoryAndBrand(int categoryId, int brandId)
+        {
+            // Lọc sản phẩm theo cả CategoryID và BrandID
+            var filteredProducts = db.Products
+                .Where(p => p.CategoryID == categoryId && p.BrandID == brandId)
+                .ToList();
+
+            // Trả về view với danh sách sản phẩm được lọc
+            return View(filteredProducts);
+        }
         // GET: Products1
         [HttpGet]
         public ActionResult Index(int pageNumber = 1, int pageSize = 6)
