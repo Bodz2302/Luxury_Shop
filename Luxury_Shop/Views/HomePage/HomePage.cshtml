@@ -4,7 +4,6 @@
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -24,71 +23,70 @@
         <div class="sanpham-container">
             @foreach (var item in Model)
             {
-                <div class="sanpham">
-                    <a href="@Url.Action("Details", "Details", new { id = item.ProductID })">
-                        <img src="@Url.Content("~/img/" + item.ImageURL)" alt="@item.ProductName" class="sanpham-img" />
-                    </a>
-                    <h3>@item.ProductName</h3>
-                    <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p>
-                </div>
+                <a href="@Url.Action("Details", "Details", new { id = item.ProductID })" class="sanpham-link">
+                    <div class="sanpham">
+                        <img src="@Url.Content("~/img/" + item.ImageURL)" alt="@item.ProductName" />
+                        <h3>@item.ProductName</h3>
+                        <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p>
+                    </div>
+                </a>
             }
-        </div>
 
-        <script>
-            // Thêm animation khi scroll
-            document.addEventListener('DOMContentLoaded', function () {
+            <script>
+                // Thêm animation khi scroll
+                document.addEventListener('DOMContentLoaded', function () {
+                    const products = document.querySelectorAll('.sanpham');
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }
+                        });
+                    }, {
+                        threshold: 0.1
+                    });
+
+                    products.forEach(product => {
+                        product.style.opacity = '0';
+                        product.style.transform = 'translateY(20px)';
+                        observer.observe(product);
+                    });
+                });
+
+                // Thêm hiệu ứng ripple cho nút chi tiết
+                document.querySelectorAll('.btn-detail').forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        let x = e.clientX - e.target.offsetLeft;
+                        let y = e.clientY - e.target.offsetTop;
+
+                        let ripple = document.createElement('span');
+                        ripple.style.left = x + 'px';
+                        ripple.style.top = y + 'px';
+
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 1000);
+                    });
+                });
+                JavaScript
                 const products = document.querySelectorAll('.sanpham');
 
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-
                 products.forEach(product => {
-                    product.style.opacity = '0';
-                    product.style.transform = 'translateY(20px)';
-                    observer.observe(product);
+                    const productName = product.querySelector('h3');
+
+                    product.addEventListener('mouseover', () => {
+                        productName.style.textDecoration = 'underline';
+                    });
+
+                    product.addEventListener('mouseout', () => {
+                        productName.style.textDecoration = 'none';
+                    });
                 });
-            });
-
-            // Thêm hiệu ứng ripple cho nút chi tiết
-            document.querySelectorAll('.btn-detail').forEach(button => {
-                button.addEventListener('click', function (e) {
-                    let x = e.clientX - e.target.offsetLeft;
-                    let y = e.clientY - e.target.offsetTop;
-
-                    let ripple = document.createElement('span');
-                    ripple.style.left = x + 'px';
-                    ripple.style.top = y + 'px';
-
-                    this.appendChild(ripple);
-
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 1000);
-                });
-            });
-            JavaScript
-            const products = document.querySelectorAll('.sanpham');
-
-            products.forEach(product => {
-                const productName = product.querySelector('h3');
-
-                product.addEventListener('mouseover', () => {
-                    productName.style.textDecoration = 'underline';
-                });
-
-                product.addEventListener('mouseout', () => {
-                    productName.style.textDecoration = 'none';
-                });
-            });
-        </script>
-    </article>
+            </script>
+</article>
 </body>
 </html>

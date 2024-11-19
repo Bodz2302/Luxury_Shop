@@ -17,7 +17,18 @@
     background-color: #ffffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+.sanpham-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
 
+    .sanpham-link:hover h3 { /* Thêm hiệu ứng khi hover vào thẻ h3 */
+        text-decoration: underline; /* Gạch chân */
+        color: black; /* Đổi màu chữ */
+        font-weight: bold; /* In đậm */
+        /* Thêm các hiệu ứng khác nếu muốn */
+    }
     .sanpham:hover {
         transform: translateY(-5px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
