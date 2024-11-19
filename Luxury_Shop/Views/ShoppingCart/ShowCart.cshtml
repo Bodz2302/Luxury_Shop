@@ -2,42 +2,49 @@
 
 <h2>Your Cart</h2>
 
-@if (Model.Cart != null && Model.Cart.Items.Any())
+@if (User.Identity.IsAuthenticated)
 {
-    <!-- Danh sách sản phẩm trong giỏ hàng -->
-    foreach (var item in Model.Cart.Items)
+    if (Model.Cart != null && Model.Cart.Items.Any())
     {
-        <div>
-            <p><strong>Product:</strong> @item.Product.ProductName</p>
-            <p><strong>Quantity:</strong> @item.Quantity</p>
-            <p><strong>Price:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice)</p>
-            <p><strong>Total:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</p>
+        <!-- Danh sách sản phẩm trong giỏ hàng -->
+        foreach (var item in Model.Cart.Items)
+        {
+            <div>
+                <p><strong>Product:</strong> @item.Product.ProductName</p>
+                <p><strong>Quantity:</strong> @item.Quantity</p>
+                <p><strong>Price:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice)</p>
+                <p><strong>Total:</strong> @string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</p>
 
-            <!-- Nút xóa sản phẩm -->
-            @using (Html.BeginForm("RemoveFromCart", "ShoppingCart", FormMethod.Post))
-            {
-                @Html.Hidden("productId", item.Product.ProductID)
-                <button type="submit" class="btn btn-danger">Xóa</button>
-            }
+                <!-- Nút xóa sản phẩm -->
+                @using (Html.BeginForm("RemoveFromCart", "ShoppingCart", FormMethod.Post))
+                {
+                    @Html.Hidden("productId", item.Product.ProductID)
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                }
+            </div>
+            <hr />
+        }
+
+        <!-- Hiển thị tổng tiền -->
+        <p><strong>Total: @string.Format("{0:N0} vnd", Model.Cart.GetTotalAmount())</strong></p>
+
+        <!-- Nút điều hướng -->
+        <div class="cart-actions">
+            <!-- Nút Tiếp tục mua hàng -->
+            <a href="@Url.Action("HomePage", "HomePage")" class="btn btn-secondary">Tiếp tục mua hàng</a>
+
+            <!-- Nút Thanh toán -->
+            <form action="@Url.Action("Index", "Checkout")" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-primary">Thanh toán</button>
+            </form>
         </div>
-        <hr />
     }
-
-    <!-- Hiển thị tổng tiền -->
-    <p><strong>Total: @string.Format("{0:N0} vnd", Model.Cart.GetTotalAmount())</strong></p>
-
-    <!-- Nút điều hướng -->
-    <div class="cart-actions">
-        <!-- Nút Tiếp tục mua hàng -->
-        <a href="@Url.Action("HomePage", "HomePage")" class="btn btn-secondary">Tiếp tục mua hàng</a>
-
-        <!-- Nút Thanh toán -->
-        <form action="@Url.Action("Index", "Checkout")" method="get" style="display: inline;">
-            <button type="submit" class="btn btn-primary">Thanh toán</button>
-        </form>
-    </div>
+    else
+    {
+        <p>GIỎ HÀNG CÒN TRỐNG <a href="@Url.Action("HomePage", "HomePage")">MUA HÀNG NGAY</a></p>
+    }
 }
 else
 {
-    <p>GIỎ HÀNG CÒN TRỐNG <a href="@Url.Action("HomePage", "HomePage")">MUA HÀNG NGAY</a></p>
+    <p>Vui lòng <a href="@Url.Action("Login", "Account")">đăng nhập</a> để xem giỏ hàng và thanh toán.</p>
 }
