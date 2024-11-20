@@ -49,6 +49,7 @@ namespace Luxury_Shop.Models
             return Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
         }
 
+
         // Phương thức kiểm tra nếu giỏ hàng có sản phẩm hay không
         public bool HasItems()
         {

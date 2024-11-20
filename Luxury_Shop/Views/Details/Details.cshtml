@@ -49,15 +49,14 @@
                             <input type="hidden" name="productName" value="@Model.ProductName">
                             <input type="hidden" name="productPrice" value="@Model.OriginalPrice">
                             <input type="hidden" name="productImage" value="@Model.ImageURL">
-                            <label for="size">
-                                Choose your size:
+                            <label for="size"> Choose your size:
                                 <select id="size" name="size" class="status-dropdown">
-                                    <option value=""></option>
+                                    <option value="Size"></option>
                                     @if (Model.CategoryID == 1 || Model.CategoryID == 3)
                                     {
                                         <option value="XS">XS</option>
                                         <option value="S">S</option>
-                                        <option value="M">M</option>
+                                        <option value="M">M</option> 
                                         <option value="L">L</option>
                                         <option value="XL">XL</option>
                                     }
