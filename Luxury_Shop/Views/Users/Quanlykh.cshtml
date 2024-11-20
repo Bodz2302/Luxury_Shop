@@ -5,19 +5,19 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.ti = "Quản Lý Thành Viên";
 }
-<link href="~/Css/palisst.css" rel="stylesheet" />
+<link href="~/Content/Admin/palisst.css" rel="stylesheet" />
 <h1>Thông tin tất cả khách hàng</h1>
 <a href="@Url.Action("taomoi", "Users")" class="btn-create">Tạo Mới</a>
 <!-- Bảng thông tin -->
 <table class="table">
     <tr>
-        <th>Full name</th>
-        <th>username</th>
-        <th>password</th>
+        <th>Họ tên</th>
+        <th>Tên đăng nhập</th>
+        <th>Mật khẩu</th>
         <th>Email</th>
-        <th>Phone</th>
-        <th>CreatedAt</th>
-        <th>Address</th>
+        <th>Số điện thoại</th>
+        <th>Ngày tạo tài khoản</th>
+        <th>Địa chỉ</th>
         <th>Chức vụ</th>
         <th>Chức năng</th>
     </tr>

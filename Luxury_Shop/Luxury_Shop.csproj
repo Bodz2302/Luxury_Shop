@@ -207,6 +207,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin\created.css" />
+    <Content Include="Content\Admin\createproducts.css" />
+    <Content Include="Content\Admin\detail.css" />
+    <Content Include="Content\Admin\editprofile.css" />
+    <Content Include="Content\Admin\palisst.css" />
+    <Content Include="Content\Admin\StyleSheet1.css" />
+    <Content Include="Content\Admin\table.css" />
+    <Content Include="Content\images\admin.png" />
+    <Content Include="Content\Admin\adminlayout.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -227,7 +236,7 @@
     <Content Include="Content\DetailsSP.css" />
     <Content Include="Content\images\BANNER.jpeg" />
     <Content Include="Content\images\shopping-cart %281%29.png" />
-    <Content Include="Content\manhne.css" />
+    <Content Include="Content\Admin\admin.css" />
     <Content Include="Content\MasterLayout\footer.css" />
     <Content Include="Content\MasterLayout\header.css" />
     <Content Include="Content\MasterLayout\thanhtoan.css" />
@@ -236,6 +245,7 @@
     <Content Include="Content\payment\payment.css" />
     <Content Include="Content\payment\qr.css" />
     <Content Include="Content\payment\style.css" />
+    <Content Include="Content\Product\details.css" />
     <Content Include="Content\showcart.css" />
     <Content Include="Content\payment\successpayment.css" />
     <Content Include="Content\Style1.css" />
@@ -246,6 +256,7 @@
     <Content Include="Content\Users\edit.css" />
     <Content Include="Content\Users\index.css" />
     <Content Include="Content\Users\login.css" />
+    <Content Include="Content\Users\taomoi.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

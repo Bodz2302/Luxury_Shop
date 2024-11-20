@@ -1,0 +1,166 @@
+﻿/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-color: #f9fafb;
+}
+
+/* Admin Layout */
+.admin-layout {
+    display: flex;
+    width: 100%; /* Chiếm toàn bộ chiều ngang màn hình */
+    height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px; /* Chiều rộng cố định của sidebar */
+    background: linear-gradient(180deg, #06565c, #2c3e50);
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed; /* Giữ sidebar cố định khi cuộn */
+    height: 100%; /* Sidebar cao bằng chiều cao màn hình */
+    z-index: 10;
+}
+
+    .sidebar .logo {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar .menu {
+        margin-top: 20px;
+    }
+
+        .sidebar .menu a {
+            display: block;
+            font-weight: bold;
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+            .sidebar .menu a:hover {
+                background-color: #b9c4bc;
+            }
+
+            .sidebar .menu a.logout {
+                margin-top: auto;
+                background-color: #e74c3c;
+                text-align: center;
+            }
+
+                .sidebar .menu a.logout:hover {
+                    background-color: #c0392b;
+                }
+
+/* Content Area */
+.content {
+    margin-left: 250px; /* Để tránh đè lên sidebar */
+    flex: 1; /* Chiếm toàn bộ không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    height: 100vh; /* Cao bằng chiều cao màn hình */
+    overflow-y: auto;
+}
+
+/* Topbar */
+.topbar {
+    background-color: #f1f2f6;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dfe4ea;
+}
+
+    .topbar h1 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .topbar .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #2c3e50;
+    }
+
+/* Main Content */
+.main-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1; /* Đảm bảo nội dung dàn đều chiều cao */
+}
+
+    .main-content p {
+        font-size: 18px;
+        color: #7f8c8d;
+        line-height: 1.6;
+    }
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.menu-link {
+    display: block;
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+    .menu-link:hover {
+        background-color: #16a085;
+    }
+
+.logout {
+    margin-top: auto;
+    background-color: #e74c3c;
+    text-align: center;
+    color: white;
+}
+
+    .logout:hover {
+        background-color: #c0392b;
+    }

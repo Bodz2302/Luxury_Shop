@@ -1,0 +1,91 @@
+﻿h2, h4 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Container chính */
+.chinh {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng danh sách chi tiết */
+.dl-horizontal {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 10px;
+    column-gap: 20px;
+    align-items: start;
+    font-size: 16px;
+}
+
+    .dl-horizontal dt {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .dl-horizontal dd {
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+/* Hiển thị hình ảnh */
+.product-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .product-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+/* Đường kẻ ngang */
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+/* Liên kết hành động */
+p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    p a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        margin: 0 10px;
+        transition: color 0.3s;
+    }
+
+        p a:hover {
+            color: #0056b3;
+        }
+
+.product-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .product-image img {
+        max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước container */
+        height: auto; /* Tự động điều chỉnh chiều cao theo tỷ lệ */
+        max-height: 300px; /* Giới hạn chiều cao tối đa để vừa mắt */
+        border-radius: 8px; /* Bo góc hình ảnh */
+        border: 1px solid #ddd; /* Thêm viền nhẹ */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+        object-fit: contain; /* Căn chỉnh hình ảnh trong khung */
+    }

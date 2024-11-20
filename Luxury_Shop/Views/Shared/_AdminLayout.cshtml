@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     @RenderSection("Styles", required: false)
-    <link href="~/Css/style.css" rel="stylesheet" />
+    <link href="~/Content/Admin/adminlayout.css" rel="stylesheet" />
 </head>
 <body>
     <div class="admin-layout">
@@ -13,7 +13,7 @@
         <aside class="sidebar">
             <div class="logo">Trang quản lý Admin</div>
             <nav class="menu">
-                @Html.ActionLink("Dashboard", "Dashboard", "Users", null, new { @class = "menu-link" })
+                @Html.ActionLink("Trang chủ", "Dashboard", "Users", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý tài khoản", "Index", "Users", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý người dùng", "Quanlykh", "Users", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý sản phẩm", "Index", "Products", null, new { @class = "menu-link" })
@@ -28,10 +28,10 @@
         <!-- Main content -->
         <main class="content">
             <header class="topbar">
-                <h1> @ViewBag.ti</h1>
+                <h1> Trang Admin</h1>
                 <div class="user-info">
-                    <span>Xin chào, @ViewBag.use</span>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIXIrqiW3R5OstWAjkuFvNwvjYHRaTmwEQWg&s" alt="Avatar" class="avatar">
+                    <span>Xin chào Admin - @ViewBag.use</span>
+                    <img src="~/Content/images/admin.png" alt="Avatar" class="avatar">
                 </div>
             </header>
             <section class="main-content">

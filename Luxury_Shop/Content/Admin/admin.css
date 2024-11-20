@@ -31,13 +31,14 @@
     .stat h3 {
         font-size: 20px;
         color: #333333; /* Màu tiêu đề đậm */
+        font-weight: bold;
         margin-bottom: 15px;
     }
 
     .stat p {
         font-size: 24px;
         font-weight: bold;
-        color: #007bff; /* Màu xanh nổi bật */
+        color: #27ab6d; /* Màu xanh nổi bật */
         margin: 10px 0;
     }
 
@@ -47,14 +48,16 @@
         padding: 10px 15px;
         font-size: 14px;
         color: #ffffff;
-        background-color: #007bff;
+        background-color: #27ab6d;
+        border: 2px solid #43c185; /* Màu viền tương đồng với màu nền */
         border-radius: 5px;
         text-decoration: none;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, border-color 0.3s; /* Thêm hiệu ứng viền */
     }
 
         .stat a:hover {
-            background-color: #0056b3;
+            background-color: #65b880;
+            border-color: #6f9078; /* Màu viền thay đổi khi hover */
         }
 
 @media (max-width: 768px) {

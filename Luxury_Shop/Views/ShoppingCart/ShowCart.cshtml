@@ -21,9 +21,9 @@
                             <caption class="visually-hidden">Giỏ hàng của bạn</caption>
                             <thead>
                                 <tr>
-                                    <th class="caption-with-letter-spacing" colspan="2" scope="col">Product</th>
-                                    <th class="medium-hide large-up-hide right caption-with-letter-spacing" scope="col">Quantity</th>
-                                    <th class="small-hide right caption-with-letter-spacing" scope="col">Total</th>
+                                    <th class="caption-with-letter-spacing" colspan="2" scope="col">Sản phẩm</th>
+                                    <th class="medium-hide large-up-hide right caption-with-letter-spacing" scope="col">Số lượng</th>
+                                    <th class="small-hide right caption-with-letter-spacing" scope="col">Tổng tiền</th>
                                 </tr>
                                 <tr class="divider-row">
                                     <td colspan="5"></td> <!-- Hàng trống -->
@@ -99,7 +99,7 @@
                 </div>
             </form>
 
-            <p><strong>Total: @string.Format("{0:N0} vnd", Model.Cart.GetTotalAmount())</strong></p>
+            <p><strong>Tổng tiền: @string.Format("{0:N0} vnd", Model.Cart.GetTotalAmount())</strong></p>
 
             <div class="cart-actions">
                 <a href="@Url.Action("HomePage", "HomePage")" class="btn btn-secondary">Tiếp tục mua hàng</a>
