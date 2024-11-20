@@ -10,9 +10,7 @@ using System.Web.Mvc;
 public class CheckoutController : Controller
 {
     private readonly LuxuryEntities1 database = new LuxuryEntities1();
-    // URL API Telegram
-    private readonly string _telegramApiUrl = "https://api.telegram.org/bot8148584705:AAFM8WgfHftwUeXuQfdKKUs2Faig-Dia2T4/sendMessage";
-    private readonly string _chatId = "-4570507432"; // ID nhóm hoặc người nhận
+    
 
     // GET: Checkout/Index
     public ActionResult Index()
@@ -47,64 +45,43 @@ public class CheckoutController : Controller
 
     // POST: Checkout/ProcessPayment
     [HttpPost]
-    public async Task<ActionResult> ProcessPayment(OrderViewModel model)
+    public Task<ActionResult> ProcessPayment(OrderViewModel model)
     {
         if (!ModelState.IsValid)
         {
-            // Trả về lại view với thông báo lỗi
             TempData["Error"] = "Dữ liệu không hợp lệ. Vui lòng kiểm tra thông tin.";
-            return RedirectToAction("Index");
+            return Task.FromResult<ActionResult>(RedirectToAction("Index"));
         }
 
-        // Lấy giỏ hàng từ session
         Cart cart = Session["Cart"] as Cart;
         if (cart == null || !cart.Items.Any())
         {
             TempData["Error"] = "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.";
-            return RedirectToAction("Index");
+            return Task.FromResult<ActionResult>(RedirectToAction("Index"));
         }
 
         try
         {
-            // Tạo mã đơn hàng
             string orderId = GenerateOrderId();
-
-            // Lưu đơn hàng vào cơ sở dữ liệu, bao gồm PaymentMethod
             SaveOrderToDatabase(orderId, "confirmed", model);
 
-            // Gửi tin nhắn thông báo đơn hàng thành công qua Telegram
-            string message = $"Đơn hàng #{orderId} đã được đặt thành công!\n" +
-                             $"Tên khách hàng: {model.FullName}\n" +
-                             $"Số điện thoại: {model.PhoneNumber}\n" +
-                             $"Địa chỉ giao hàng: {model.Address}\n" +
-                             $"Tổng tiền: {model.TotalAmount.ToString("C")}";
-            await SendTelegramMessage(message); // Gọi hàm gửi tin nhắn
-
-            // Kiểm tra phương thức thanh toán
             if (model.PaymentMethod == PaymentMethodType.BankTransfer)
             {
-                // Lưu thông tin cần thiết vào TempData để hiển thị trên trang BankTransfer
                 TempData["OrderID"] = orderId;
                 TempData["TotalAmount"] = cart.GetTotalAmount();
-
-                // Chuyển hướng đến trang BankTransfer
-                return RedirectToAction("BankTransfer", "Checkout");
+                return Task.FromResult<ActionResult>(RedirectToAction("BankTransfer", "Checkout"));
             }
 
-            // Nếu thanh toán COD, tiếp tục xử lý
-            // Xóa giỏ hàng sau khi đặt hàng thành công
             Session["Cart"] = null;
-
-            // Chuyển hướng tới trang SuccessCheckout
-            return RedirectToAction("SuccessCheckout");
+            return Task.FromResult<ActionResult>(RedirectToAction("SuccessCheckout"));
         }
         catch (Exception ex)
         {
-            // Ghi lỗi vào log nếu cần
             TempData["Error"] = "Đã xảy ra lỗi khi xử lý đơn hàng: " + ex.Message;
-            return RedirectToAction("Index");
+            return Task.FromResult<ActionResult>(RedirectToAction("Index"));
         }
     }
+
 
     // Phương thức lưu đơn hàng vào cơ sở dữ liệu
     private void SaveOrderToDatabase(string orderId, string status, OrderViewModel model)
@@ -185,27 +162,7 @@ public class CheckoutController : Controller
     }
 
     // Phương thức gửi tin nhắn Telegram
-    private async Task<bool> SendTelegramMessage(string message)
-    {
-        using (var client = new HttpClient())
-        {
-            var content = new StringContent($"{{\"chat_id\": \"{_chatId}\", \"text\": \"{message}\"}}", Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(_telegramApiUrl, content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                // Tin nhắn đã được gửi thành công
-                return true;
-            }
-            else
-            {
-                // Lỗi khi gửi tin nhắn
-                string responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Lỗi gửi tin nhắn: {responseContent}");
-                return false;
-            }
-        }
-    }
+    
 
     // Trang success checkout
     public ActionResult SuccessCheckout()
