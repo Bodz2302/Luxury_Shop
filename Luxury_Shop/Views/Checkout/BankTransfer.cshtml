@@ -171,7 +171,14 @@
                         <a id="backButton"
                            class="momo-color hover-momo-color hover-none-decoration">Hủy giao dịch</a>
                     </div>
+
+                    <!-- Nút xác nhận thanh toán -->
+                    <div class="mt-4">
+                        <a id="confirmPaymentButton"
+                           class="btn btn-success text-white">Xác nhận thanh toán</a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -195,7 +202,7 @@
         });
     </script>
     <script>
-        var offset = 100000;
+        var offset = 1000000;
         var second = offset / 1000;
         var countdown = parseInt(second);
         var retry = 500;
@@ -241,6 +248,10 @@
             $(".common-modal").remove();
             $(".modal-backdrop").remove();
         }
+        document.getElementById('confirmPaymentButton').addEventListener('click', function () {
+            // Chuyển hướng sang trang SuccessPayment
+            window.location.href = '/Checkout/SuccessCheckout';
+        });
 
         function showCommonModal(
             title,
