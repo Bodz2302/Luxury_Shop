@@ -16,16 +16,25 @@ namespace Luxury_Shop.Controllers
 
         public ActionResult ViewProductsByCategory(int categoryId)
         {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
             var productsInCategory = db.Products.Where(p => p.CategoryID == categoryId).ToList();
             return View(productsInCategory); // Truyền danh sách sản phẩm vào view
         }
         public ActionResult ViewProductsByBrands(int brandId)
         {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
             var productsInBrands = db.Products.Where(p => p.BrandID == brandId).ToList();
             return View(productsInBrands); // Truyền danh sách sản phẩm vào view
         }
         public ActionResult ViewProductsByCategoryAndBrand(int categoryId, int brandId)
         {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
             // Lọc sản phẩm theo cả CategoryID và BrandID
             var filteredProducts = db.Products
                 .Where(p => p.CategoryID == categoryId && p.BrandID == brandId)

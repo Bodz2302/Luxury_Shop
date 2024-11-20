@@ -9,6 +9,9 @@ public class ShoppingCartController : Controller
     // GET: ShoppingCart/ShowCart
     public ActionResult ShowCart()
     {
+        ViewBag.use = Session["username"];
+        ViewBag.check = Session["check"];
+        ViewBag.Admin = Session["admin"];
         // Lấy giỏ hàng từ session
         var cart = Session["Cart"] as Cart ?? new Cart();
 

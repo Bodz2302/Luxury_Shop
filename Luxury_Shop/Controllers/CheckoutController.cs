@@ -15,6 +15,9 @@ public class CheckoutController : Controller
     // GET: Checkout/Index
     public ActionResult Index()
     {
+        ViewBag.use = Session["username"];
+        ViewBag.check = Session["check"];
+        ViewBag.Admin = Session["admin"];
         // Kiểm tra xem Cart đã tồn tại trong session hay chưa
         Cart cart = Session["Cart"] as Cart;
         if (cart == null)
@@ -164,6 +167,9 @@ public class CheckoutController : Controller
     // Trang success checkout
     public ActionResult SuccessCheckout()
     {
+        ViewBag.use = Session["username"];
+        ViewBag.check = Session["check"];
+        ViewBag.Admin = Session["admin"];
         return View();
     }
 
