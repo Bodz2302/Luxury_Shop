@@ -159,6 +159,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QuanlydonhangController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\TelegramController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -347,6 +348,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Pay2s\" />
+    <Folder Include="Views\Telegram\" />
     <Folder Include="Views\Transaction\" />
     <Folder Include="Views\Webhook\" />
   </ItemGroup>

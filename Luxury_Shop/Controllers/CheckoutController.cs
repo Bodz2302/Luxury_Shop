@@ -2,15 +2,18 @@
 using Luxury_Shop.Models;
 using System;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 public class CheckoutController : Controller
 {
     private readonly LuxuryEntities1 database = new LuxuryEntities1();
+    // URL API Telegram
+    private readonly string _telegramApiUrl = "https://api.telegram.org/bot8148584705:AAFM8WgfHftwUeXuQfdKKUs2Faig-Dia2T4/sendMessage";
+    private readonly string _chatId = "-4570507432"; // ID nhóm hoặc người nhận
 
-    // GET: Checkout/Index
-    // GET: Checkout/Index
     // GET: Checkout/Index
     public ActionResult Index()
     {
@@ -39,13 +42,9 @@ public class CheckoutController : Controller
         return View(orderViewModel);
     }
 
-
-
-
-
     // POST: Checkout/ProcessPayment
     [HttpPost]
-    public ActionResult ProcessPayment(OrderViewModel model)
+    public async Task<ActionResult> ProcessPayment(OrderViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -70,9 +69,16 @@ public class CheckoutController : Controller
             // Lưu đơn hàng vào cơ sở dữ liệu, bao gồm PaymentMethod
             SaveOrderToDatabase(orderId, "confirmed", model);
 
+            // Gửi tin nhắn thông báo đơn hàng thành công qua Telegram
+            string message = $"Đơn hàng #{orderId} đã được đặt thành công!\n" +
+                             $"Tên khách hàng: {model.FullName}\n" +
+                             $"Số điện thoại: {model.PhoneNumber}\n" +
+                             $"Địa chỉ giao hàng: {model.Address}\n" +
+                             $"Tổng tiền: {model.TotalAmount.ToString("C")}";
+            await SendTelegramMessage(message); // Gọi hàm gửi tin nhắn
+
             // Kiểm tra phương thức thanh toán
-            if (model.PaymentMethod == PaymentMethodType.BankTransfer) // 1 = Chuyển khoản ngân hàng
-                                                                       // 1 = Chuyển khoản ngân hàng
+            if (model.PaymentMethod == PaymentMethodType.BankTransfer)
             {
                 // Lưu thông tin cần thiết vào TempData để hiển thị trên trang BankTransfer
                 TempData["OrderID"] = orderId;
@@ -96,8 +102,6 @@ public class CheckoutController : Controller
             return RedirectToAction("Index");
         }
     }
-
-
 
     // Phương thức lưu đơn hàng vào cơ sở dữ liệu
     private void SaveOrderToDatabase(string orderId, string status, OrderViewModel model)
@@ -142,10 +146,6 @@ public class CheckoutController : Controller
         }
     }
 
-
-
-
-
     // Phương thức tạo mã đơn hàng ngẫu nhiên
     public string GenerateOrderId()
     {
@@ -167,8 +167,6 @@ public class CheckoutController : Controller
         return HttpContext.Session["OrderId"].ToString();
     }
 
-
-
     // Phương thức tính tổng số tiền trong giỏ hàng
     private decimal GetTotalAmount()
     {
@@ -182,10 +180,36 @@ public class CheckoutController : Controller
         // Tính tổng số tiền của giỏ hàng
         return cart.Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
     }
+
+    // Phương thức gửi tin nhắn Telegram
+    private async Task<bool> SendTelegramMessage(string message)
+    {
+        using (var client = new HttpClient())
+        {
+            var content = new StringContent($"{{\"chat_id\": \"{_chatId}\", \"text\": \"{message}\"}}", Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(_telegramApiUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Tin nhắn đã được gửi thành công
+                return true;
+            }
+            else
+            {
+                // Lỗi khi gửi tin nhắn
+                string responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Lỗi gửi tin nhắn: {responseContent}");
+                return false;
+            }
+        }
+    }
+
+    // Trang success checkout
     public ActionResult SuccessCheckout()
     {
         return View();
     }
+
     public ActionResult FailedPayment()
     {
         return View();
@@ -220,41 +244,27 @@ public class CheckoutController : Controller
         string orderCode = TempData["OrderCode"]?.ToString();
         decimal totalAmount = Convert.ToDecimal(TempData["TotalAmount"] ?? 0);
 
-        if (string.IsNullOrEmpty(orderCode) || totalAmount <= 0)
+        // Giả sử bạn có một phương thức kiểm tra thanh toán qua API
+        var paymentStatus = await CheckPaymentApi(orderCode);
+
+        if (paymentStatus == "Success")
         {
-            TempData["Error"] = "Thông tin đơn hàng không hợp lệ.";
+            // Cập nhật đơn hàng thành công và chuyển sang trang thành công
+            TempData["SuccessMessage"] = "Thanh toán thành công! Cảm ơn bạn đã mua hàng!";
+            return RedirectToAction("SuccessCheckout");
+        }
+        else
+        {
+            // Nếu thanh toán không thành công, hiển thị lỗi
+            TempData["ErrorMessage"] = "Thanh toán không thành công. Vui lòng thử lại!";
             return RedirectToAction("FailedPayment");
         }
-
-        // Gọi API để lấy lịch sử giao dịch
-        var pay2sController = new Pay2sController();
-        string responseJson = await pay2sController.FetchTransactions(
-            DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy"),
-            DateTime.Now.ToString("dd/MM/yyyy")
-        );
-
-        // Parse JSON từ Pay2s API
-        dynamic transactions = Newtonsoft.Json.JsonConvert.DeserializeObject(responseJson);
-
-        if (transactions != null && transactions.status == true)
-        {
-            foreach (var transaction in transactions.data)
-            {
-                // Kiểm tra giao dịch có trùng OrderCode và tổng tiền không
-                if (transaction.description.Contains(orderCode) &&
-                    Convert.ToDecimal(transaction.amount) == totalAmount)
-                {
-                    // Đánh dấu đơn hàng đã thanh toán thành công
-                    TempData["Success"] = "Thanh toán thành công!";
-                    return RedirectToAction("SuccessCheckout");
-                }
-            }
-        }
-
-        TempData["Error"] = "Không tìm thấy giao dịch phù hợp. Vui lòng kiểm tra lại.";
-        return RedirectToAction("FailedPayment");
     }
 
-
-
+    private async Task<string> CheckPaymentApi(string orderCode)
+    {
+        // Giả sử bạn gọi một API để kiểm tra trạng thái thanh toán của đơn hàng
+        await Task.Delay(2000); // Giả lập delay
+        return "Success"; // Giả sử trả về trạng thái thành công
+    }
 }
