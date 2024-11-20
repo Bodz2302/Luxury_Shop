@@ -7,10 +7,7 @@
 }
 
 .success-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 50px auto;
     max-width: 500px;
     text-align: center;
     background: #fff;
@@ -18,7 +15,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 
 .success-icon img {
@@ -49,19 +45,19 @@ a.btn {
 }
 
 a.btn-primary {
-    background-color: #007bff;
-    color: #fff;
+    background-color: black;
+    color: white;
 }
 
     a.btn-primary:hover {
-        background-color: #0056b3;
+        background-color: gray;
     }
 
 a.btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
+    background-color: black;
+    color: white;
 }
 
     a.btn-secondary:hover {
-        background-color: #5a6268;
+        background-color: gray;
     }
