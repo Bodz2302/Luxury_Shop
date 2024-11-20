@@ -16,7 +16,7 @@ namespace Luxury_Shop.Models
         }
 
         // Phương thức thêm sản phẩm vào giỏ
-        public void AddToCart(Product product, int quantity)
+        public void AddToCart(Product product, int quantity,string Size)
         {
             // Kiểm tra nếu sản phẩm đã có trong giỏ
             var existingItem = Items.FirstOrDefault(item => item.Product.ProductID == product.ProductID);
@@ -28,7 +28,7 @@ namespace Luxury_Shop.Models
             else
             {
                 // Nếu chưa có sản phẩm trong giỏ, thêm sản phẩm mới vào
-                Items.Add(new CartItem { Product = product, Quantity = quantity });
+                Items.Add(new CartItem { Product = product, Quantity = quantity ,Size=Size});
             }
         }
 
@@ -48,7 +48,12 @@ namespace Luxury_Shop.Models
             // Tính tổng tiền của giỏ hàng
             return Items.Sum(item => item.Product.OriginalPrice * item.Quantity);
         }
-
+        public void Update_quantity(int id, int _new_quan)
+        {
+            var item = Items.Find(s => s.Product.ProductID == id);
+            if (item != null)
+                item.Quantity = _new_quan;
+        }
 
         // Phương thức kiểm tra nếu giỏ hàng có sản phẩm hay không
         public bool HasItems()

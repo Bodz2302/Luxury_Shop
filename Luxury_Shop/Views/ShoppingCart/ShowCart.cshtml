@@ -44,36 +44,47 @@
                                             <div class="product-option">@string.Format("{0:N0} vnd", item.Product.OriginalPrice)</div>
                                             <dl>
                                                 <div class="product-option">
-                                                    <dt>Size:</dt>
-                                                    <dd>@item.Size</dd>
+                                                    <dt>Size: @item.Size</dt>
+                                                  
                                                 </div>
                                             </dl>
                                         </td>
                                         <td class="cart-item__quantity">
-                                            <div class="cart-item__quantity-wrapper">
-                                                <button class="quantity-btn minus-btn" type="button" aria-label="Decrease quantity">−</button>
-                                                <input class="quantity__input"
-                                                       data-quantity-variant-id="@item.Product.ProductID"
-                                                       type="number"
-                                                       name="updates[]"
-                                                       value="@item.Quantity"
-                                                       data-cart-quantity="@item.Quantity"
-                                                       min="1"
-                                                       step="1"
-                                                       aria-label="Quantity for @item.Product.ProductName"
-                                                       id="Quantity-@item.Product.ProductID"
-                                                       data-index="@item.Product.ProductID">
-                                                <button class="quantity-btn plus-btn" type="button" aria-label="Increase quantity">+</button>
-                                            </div>
+                                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart", FormMethod.Post))
+                                            {
+                                               
+                                            }
 
+                                            <form action="@Url.Action("Update_Cart_Quantity", "ShoppingCart")" method="post">
+                                                <div class="quantity-controls">
+                                                    <!-- Nút giảm số lượng -->
+                                                    <button class="quantity-btn minus-btn" type="submit" name="action" value="decrease" aria-label="Decrease quantity">−</button>
+
+                                                    <!-- Input số lượng -->
+                                                    <input class="quantity__input"
+                                                           type="number"
+                                                           name="carQuantity"
+                                                           value="@item.Quantity"
+                                                           min="1"
+                                                           step="1"
+                                                           aria-label="Quantity for @item.Product.ProductName"
+                                                           id="Quantity-@item.Product.ProductID">
+
+                                                    <!-- Input ID sản phẩm (ẩn) -->
+                                                    <input type="hidden" name="idPro" value="@item.Product.ProductID">
+
+                                                    <!-- Nút tăng số lượng -->
+                                                    <button class="quantity-btn plus-btn" type="submit" name="action" value="increase" aria-label="Increase quantity">+</button>
+                                                </div>
+                                            </form>
                                         </td>
                                         <td class="cart-item__totals right small-hide">
                                             <div class="cart-item__price-wrapper">
-                                                <span class="price price--end">@string.Format("{0:N0} vnd", item.Product.OriginalPrice * item.Quantity)</span>
+                                                <span class="price price--end">@string.Format("{0:N0} VND", item.Product.OriginalPrice * item.Quantity)</span>
                                             </div>
                                         </td>
                                         <td class="cart-item__remove last-hide">
-                                            <form action="@Url.Action("RemoveFromCart", "Cart")" method="post">
+                                            <form action="@Url.Action("RemoveFromCart", "ShoppingCart")" method="post">
                                                 <input type="hidden" name="productId" value="@item.Product.ProductID">
                                                 <button type="submit" class="btn">
                                                     X <i class="remove-product"></i>

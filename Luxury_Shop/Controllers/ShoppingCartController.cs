@@ -24,7 +24,7 @@ public class ShoppingCartController : Controller
     // POST: ShoppingCart/AddToCart
     [HttpPost]
     
-    public ActionResult AddToCart(int productId, int quantity = 1)
+    public ActionResult AddToCart(int productId, int quantity = 1,string Size="")
     {
         // Kiểm tra sản phẩm có tồn tại trong cơ sở dữ liệu không
         var product = database.Products.FirstOrDefault(p => p.ProductID == productId);
@@ -37,7 +37,7 @@ public class ShoppingCartController : Controller
         var cart = Session["Cart"] as Cart ?? new Cart();
 
         // Thêm sản phẩm vào giỏ hàng
-        cart.AddToCart(product, quantity);
+        cart.AddToCart(product, quantity,Size);
 
         // Lưu giỏ hàng vào session
         Session["Cart"] = cart;
@@ -81,7 +81,15 @@ public class ShoppingCartController : Controller
         // Chuyển tới trang xác nhận đơn hàng
         return RedirectToAction("OrderConfirmation");
     }
+    public ActionResult Update_Cart_Quantity(FormCollection form)
+    {
+        Cart cart = Session["Cart"] as Cart;
+        int id_pro = int.Parse(Request.Form["idPro"]);
+        int _quantity = int.Parse(Request.Form["carQuantity"]);
+        cart.Update_quantity(id_pro, _quantity);
 
+        return RedirectToAction("ShowCart", "ShoppingCart");
+    }
     // GET: ShoppingCart/OrderConfirmation
     public ActionResult OrderConfirmation()
     {
