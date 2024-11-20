@@ -152,7 +152,7 @@ namespace Luxury_Shop.Controllers
             Session["username"] = user.Username;
             Session["check"] = true;
             ViewBag.use = Session["username"];
-            if (user.IsAdmin.HasValue && user.IsAdmin.HasValue)
+            if (user.IsAdmin!=null&&user.IsAdmin.Value)
             {
                 Session["admin"] = true;
                 return RedirectToAction("Dashboard", "Users");
