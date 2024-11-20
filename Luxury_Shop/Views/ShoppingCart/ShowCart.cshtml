@@ -9,7 +9,7 @@
 <div class="container">
     <cart-items class="page-width section-template--16750597538034__cart-items-padding">
         <div class="title-wrapper-with-link">
-            <h3 class="title title--primary">Your cart</h3>
+            <h3 class="title title--primary">Giỏ hàng của bạn</h3>
         </div>
 
         @if (Model.Cart != null && Model.Cart.Items.Any())
@@ -18,7 +18,7 @@
                 <div class="cart__items" id="main-cart-items" data-id="template--16750597538034__cart-items">
                     <div class="js-contents">
                         <table class="cart-items">
-                            <caption class="visually-hidden">Your cart</caption>
+                            <caption class="visually-hidden">Giỏ hàng của bạn</caption>
                             <thead>
                                 <tr>
                                     <th class="caption-with-letter-spacing" colspan="2" scope="col">Product</th>
@@ -111,8 +111,8 @@
         else
         {
             <div class="cart__warnings">
-                <h1 class="cart__empty-text">Your cart is empty</h1>
-                <a href="@Url.Action("HomePage", "HomePage")" class="button">Continue shopping</a>
+                <h1 class="cart__empty-text">Giỏ hàng của bạn trống</h1>
+                <a href="@Url.Action("HomePage", "HomePage")" class="button">Tiếp tục mua sắm</a>
             </div>
         }
     </cart-items>

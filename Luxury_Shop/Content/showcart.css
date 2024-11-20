@@ -106,3 +106,36 @@ tbody tr {
     background-color:white;
     color:black;
 }
+.cart__warnings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Chiều cao bằng chiều cao màn hình */
+    text-align: center; /* Căn giữa chữ */
+}
+
+.cart__empty-text {
+    font-size: 2rem;
+    margin-bottom: 20px;    
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: black; /* Màu nền đen */
+    color: white; /* Màu chữ trắng */
+    text-decoration: none;
+    border-radius: 5px;
+}
+.cart-actions .btn-secondary {
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+.cart-actions .btn-primary {
+    background-color: black;
+    color: white;
+    border-color: black;
+}

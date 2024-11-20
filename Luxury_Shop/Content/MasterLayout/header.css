@@ -137,8 +137,8 @@ footer .col-md-12 > p:first-child { /* Chọn thẻ p đầu tiên trong col-md-
         .contact-list a:hover {
             color: #gold; /* Màu vàng gold khi hover */
         }
-
 footer p {
+
     text-align: center;
     margin-top: 20px;
 }

@@ -27,7 +27,7 @@
                     <div class="sanpham">
                         <img src="@Url.Content("~/img/" + item.ImageURL)" alt="@item.ProductName" />
                         <h3>@item.ProductName</h3>
-                        <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p>
+                        <p class="gia">Giá: @string.Format("{0:N0} vnd", item.OriginalPrice)</p>
                     </div>
                 </a>
             }

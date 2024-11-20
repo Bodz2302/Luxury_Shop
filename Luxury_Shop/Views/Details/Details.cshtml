@@ -31,7 +31,7 @@
                 <div class="product-content">
                     <h2 class="product-title">@Model.ProductName</h2>
                     <div class="product-price">
-                        <p><span>@Model.OriginalPrice.ToString("N0")$</span></p>
+                        <p><span>@string.Format("{0:N0} vnd", Model.OriginalPrice)</span></p>
                     </div>
                     <div class="product-detail">
                         <h2>Thông tin sản phẩm:</h2>
@@ -47,11 +47,11 @@
                         <form action="@Url.Action("AddToCart", "ShoppingCart")" method="post">
                             <input type="hidden" name="productId" value="@Model.ProductID">
                             <input type="hidden" name="productName" value="@Model.ProductName">
-                            <input type="hidden" name="productPrice" value="@Model.OriginalPrice">
+                            <input type="hidden" name="productPrice" value="@string.Format("{0:N0} vnd", Model.OriginalPrice)">
                             <input type="hidden" name="productImage" value="@Model.ImageURL">
-                            <label for="size"> Choose your size:
-                                <select id="Size" name="Size" class="status-dropdown">
-                                    <option value="Size"></option>
+                            <label for="size">Chọn size:
+                                <select id="Size" name="Size" class="status-dropdown" required>
+                                    <option value="">Size:</option>
                                     @if (Model.CategoryID == 1 || Model.CategoryID == 3)
                                     {
                                         <option value="XS">XS</option>
@@ -87,7 +87,7 @@
 
                             <!-- Nút thêm vào giỏ hàng -->
                             <button type="submit" class="btn">
-                                Add to Cart <i class="fas fa-shopping-cart"></i>
+                                Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                             </button>
                         </form>
                         <button onclick="window.location.href='@Url.Action("HomePage", "HomePage")'" class="btn btn-back">

@@ -228,7 +228,7 @@
                 params.category = "popup";
                 params.button_name = "confirm";
             }
-            window.location = "/Checkout/FailedPayment";
+            window.location = "/Checkout/Index";
         }
 
         function closeCommonModalAndSendEvent() {
@@ -312,7 +312,7 @@
                                 showCloseButton: true,
                                 focusConfirm: false,
                             }),
-                        (window.location.href = "/Checkout/FailedPayment")); // Điều hướng về trang chủ khi thanh toán không thành công
+                        (window.location.href = "/Checkout/Index")); // Điều hướng về trang chủ khi thanh toán không thành công
                 }, 1000);
             $.ajaxSetup({ cache: !1 });
             setUpUI();

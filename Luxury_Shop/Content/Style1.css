@@ -62,7 +62,6 @@
 .sanpham .gia {
     font-size: 16px;
     margin: 10px 0;
-    font-weight: bold; /* Làm chữ giá đậm */
     transition: font-weight 0.3s ease;
     text-decoration: none;
     color: black;

@@ -25,20 +25,13 @@ namespace Luxury_Shop.Controllers
             ViewBag.use = Session["username"];
 
             // Lấy tất cả danh mục cùng với các danh mục con
-            var categories = db.Categories
-                               .Where(c => c.ParentCategoryID == null) // Lọc các danh mục cha
-                               .ToList();
+            var categories = db.Categories.ToList();
 
-            var categoryList = categories.Select(c => new CategoryViewModel
-            {
-                CategoryID = c.CategoryID,
-                CategoryName = c.CategoryName,
-                SubCategories = db.Categories.Where(sub => sub.ParentCategoryID == c.CategoryID).ToList()
-            }).ToList();
 
-            var model = new CategoryListViewModel
+
+            var model = new AccountListViewModel
             {
-                Categories = categoryList,
+                listdanhmuc = categories,
                 TotalRecords = db.Categories.Count(),
                 PageNumber = pageNumber,
                 PageSize = pageSize
