@@ -75,14 +75,29 @@ textarea {
     text-align: center;
 }
 
+.button-container {
+    display: flex; /* Sử dụng flexbox để căn chỉnh */
+    justify-content: center; /* Căn giữa các nút theo chiều ngang */
+    gap: 20px; /* Khoảng cách giữa các nút */
+    margin-top: 20px; /* Khoảng cách từ trên xuống */
+}
+
 .btn-default {
-    background-color: #007bff;
-    color: white;
-    border: none;
+    display: inline-block; /* Tách nút khỏi layout chính */
+    max-width: 300px; /* Chiều rộng tối đa */
+    margin: 0; /* Xóa margin mặc định */
+    padding: 12px 20px; /* Padding trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    background-color: #3498db; /* Màu nền */
+    color: white; /* Màu chữ */
+    border: none; /* Xóa viền */
+    border-radius: 8px; /* Bo góc */
+    cursor: pointer; /* Con trỏ khi hover */
+    transition: background-color 0.3s ease; /* Hiệu ứng hover */
 }
 
     .btn-default:hover {
-        background-color: #0056b3;
+        background-color: #2980b9; /* Màu nền khi hover */
     }
 
 a {
