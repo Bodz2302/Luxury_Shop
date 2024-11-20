@@ -2,60 +2,73 @@
 
 @{
     ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
+
+<link href="~/Content/MasterLayout/thanhtoan.css" rel="stylesheet" />
 
 <h2>Thanh Toán</h2>
 
 @using (Html.BeginForm("ProcessPayment", "Checkout", FormMethod.Post))
 {
-<div class="form-group">
-    <label for="FullName">Họ và Tên</label>
-    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Nhập họ tên" })
-</div>
+    <div class="checkout-container">
+        <div class="customer-info">
+            <div class="form-group">
+                <label for="FullName">Họ và Tên</label>
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Nhập họ tên" })
+            </div>
 
-<div class="form-group">
-    <label for="PhoneNumber">Số Điện Thoại</label>
-    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
-</div>
+            <div class="form-group">
+                <label for="PhoneNumber">Số Điện Thoại</label>
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+            </div>
 
-<div class="form-group">
-    <label for="Address">Địa Chỉ</label>
-    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ giao hàng" })
-</div>
+            <div class="form-group">
+                <label for="Address">Địa Chỉ</label>
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ giao hàng" })
+            </div>
 
-<h3>Thông Tin Giỏ Hàng</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Tên Sản Phẩm</th>
-            <th>Số Lượng</th>
-            <th>Giá</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.CartItems)  // Accessing CartItems
-            {
-        <tr>
-            <td>@item.Product.ProductName</td>
-            <td>@item.Quantity</td>
-            <td>@(item.Product.OriginalPrice * item.Quantity)</td>
-        </tr>
-            }
-    </tbody>
-</table>
+            <div class="form-group">
+                <label for="PaymentMethod">Chọn Phương Thức Thanh Toán</label>
+                <select class="form-control" id="PaymentMethod" name="PaymentMethod">
+                    <option value="0">Thanh toán khi nhận hàng</option>
+                    <option value="1">Chuyển khoản</option>
+                </select>
+            </div>
 
-<div class="form-group">
-    <label for="PaymentMethod">Chọn Phương Thức Thanh Toán</label>
-    <select class="form-control" id="PaymentMethod" name="PaymentMethod">
-        <option value="0">Thanh toán khi nhận hàng</option>
-        <option value="1">Chuyển khoản</option>
-    </select>
-</div>
+            <div class="form-group">
+                <label>Tổng Tiền: @Model.TotalAmount.ToString("0.00 vnd")</label>
+            </div>
 
-<div class="form-group">
-    <label>Tổng Tiền</label>
-    <p>@Model.TotalAmount.ToString("C")</p>
-</div>
+            <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
 
-<button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+        </div>
+
+        <div class="order-summary">
+            <h3>Thông Tin Giỏ Hàng</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Size</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td><img src="@Url.Content("~/img/" + item.Product.ImageURL)" alt="@item.Product" style="max-width: 100px;" /></td>
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Size</td>
+                            <td>@(item.Product.OriginalPrice * item.Quantity)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }

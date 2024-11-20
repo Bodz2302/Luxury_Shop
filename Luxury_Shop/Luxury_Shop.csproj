@@ -232,6 +232,7 @@
     <Content Include="Content\manhne.css" />
     <Content Include="Content\MasterLayout\footer.css" />
     <Content Include="Content\MasterLayout\header.css" />
+    <Content Include="Content\MasterLayout\thanhtoan.css" />
     <Content Include="Content\payment\core.css" />
     <Content Include="Content\payment\failedpayment.css" />
     <Content Include="Content\payment\payment.css" />
