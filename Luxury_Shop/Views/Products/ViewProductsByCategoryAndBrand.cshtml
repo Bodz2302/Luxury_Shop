@@ -31,7 +31,7 @@
                     <img src="@Url.Content("~/img/" + item.ImageURL)" alt="@item.ProductName" class="sanpham-img" />
                 }
                 <h3>@item.ProductName</h3>
-                <p class="gia">Giá: @item.OriginalPrice.ToString("C")</p> <!-- Hiển thị giá sản phẩm -->
+                <p class="gia">Giá: @string.Format("{0:N0} vnd", item.OriginalPrice)</p> <!-- Hiển thị giá sản phẩm -->
                 <a href="@Url.Action("Details", "Details", new { id = item.ProductID })">
                     <button class="btn-detail">Chi tiết</button>
                 </a>

@@ -39,7 +39,6 @@ namespace Luxury_Shop.Controllers
             var filteredProducts = db.Products
                 .Where(p => p.CategoryID == categoryId && p.BrandID == brandId)
                 .ToList();
-
             // Trả về view với danh sách sản phẩm được lọc
             return View(filteredProducts);
         }
