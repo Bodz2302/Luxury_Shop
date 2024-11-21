@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Luxury_Shop.Models.Product>
+
+@{
+    ViewBag.Title = "ViewProductsByCategory";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/Style1.css">
+
+<head>
+    <style>
+        .centered-title {
+            text-align: center; /* Căn giữa */
+            font-weight: bold; /* Chữ in đậm */
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="centered-title">Danh sách sản phẩm</h2>
+</body>
+<div class="sanpham-container">
+    @if (ViewBag.sl == 0)
+    {
+        <h4>Không có sản phẩm nào</h4>
+    }
+    else
+    {
+    foreach (var item in Model)
+    {
+        <div class="sanpham">
+            <a href="@Url.Action("Details", "Details", new { id = item.ProductID })">
+                <img src="@Url.Content("~/img/" + item.ImageURL)" alt="@item.ProductName" class="sanpham-img" />
+            </a>
+            <h3>@item.ProductName</h3>
+            <p class="gia">Giá: @string.Format("{0:N0} vnd", item.OriginalPrice)</p>
+        </div>
+    }}
+</div>
+
+

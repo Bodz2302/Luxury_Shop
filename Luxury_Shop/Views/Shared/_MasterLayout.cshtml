@@ -16,9 +16,11 @@
             </div>
             <div class="search-cart" style="display: flex; align-items: center;">
                 <div class="search-bar" style="margin-right: 20px;">
-                    <form action="/Search" method="get">
+                  @using (Html.BeginForm("timkiem", "Products", FormMethod.Get))
+                  {
                         <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." style="padding: 5px; width: 200px; border: 1px solid #ccc; border-radius: 4px;">
-                    </form>
+                  <input type="submit" value="Tìm kiếm" />  
+                  }
                 </div>
                 <div class="cart">
                     <a href="@Url.Action("ShowCart", "ShoppingCart")">

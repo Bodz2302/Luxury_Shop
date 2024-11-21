@@ -355,6 +355,7 @@
     <Content Include="Views\Products\ViewProductsByCategory.cshtml" />
     <Content Include="Views\Products\ViewProductsByBrands.cshtml" />
     <Content Include="Views\Products\ViewProductsByCategoryAndBrand.cshtml" />
+    <Content Include="Views\Products\timkiem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

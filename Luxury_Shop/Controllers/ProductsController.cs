@@ -14,6 +14,16 @@ namespace Luxury_Shop.Controllers
     {
         private LuxuryEntities1 db = new LuxuryEntities1();
 
+        public ActionResult timkiem(string query)
+        {
+            ViewBag.use = Session["username"];
+            ViewBag.check = Session["check"];
+            ViewBag.Admin = Session["admin"];
+            var tr=db.Products.Where(a=>a.ProductName.Contains(query.Trim())).ToList();
+            ViewBag.sl = tr.Count;
+            return View(tr);
+        }
+
         public ActionResult ViewProductsByCategory(int categoryId)
         {
             ViewBag.use = Session["username"];
@@ -22,6 +32,7 @@ namespace Luxury_Shop.Controllers
             var productsInCategory = db.Products.Where(p => p.CategoryID == categoryId).ToList();
             return View(productsInCategory); // Truyền danh sách sản phẩm vào view
         }
+
         public ActionResult ViewProductsByBrands(int brandId)
         {
             ViewBag.use = Session["username"];
